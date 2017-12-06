@@ -1,0 +1,178 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="win32">
+      <UniqueIdentifier>{84a8ebd7-7cf0-47f6-b75e-d441df67da40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resource">
+      <UniqueIdentifier>{715254bc-d70b-4ec5-bf29-467dd3ace079}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{bb6c862e-70e9-49d9-81b7-3829a6f50471}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Scene">
+      <UniqueIdentifier>{a50edfc1-3388-44ff-a763-0527dbd5912a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Tool">
+      <UniqueIdentifier>{f87d0895-fdea-4161-9f24-8c1420dce9c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Layer">
+      <UniqueIdentifier>{5a4b3e03-7f10-45f7-bee9-980352b8f602}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Delegate">
+      <UniqueIdentifier>{17522a83-6a35-4fbb-b89f-0fb69ce16d05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Model">
+      <UniqueIdentifier>{eea8e2dd-486c-4a8f-9a1c-ceed8edf16a2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\StartMenu.cpp">
+      <Filter>src\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GameData.cpp">
+      <Filter>src\Tool</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GameDynamicData.cpp">
+      <Filter>src\Tool</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Login.cpp">
+      <Filter>src\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\SignOn.cpp">
+      <Filter>src\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\LoginLayer.cpp">
+      <Filter>src\Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\SigOnLayer.cpp">
+      <Filter>src\Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\EndScene.cpp">
+      <Filter>src\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\HelloWorldScene.cpp">
+      <Filter>src\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\AppDelegate.cpp">
+      <Filter>src\Delegate</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\SelectScene.cpp">
+      <Filter>src\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\SelectLayer.cpp">
+      <Filter>src\Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\NewGameScene.cpp">
+      <Filter>src\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\NewGameLayer.cpp">
+      <Filter>src\Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\BeginScene.cpp">
+      <Filter>src\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Animal.cpp">
+      <Filter>src\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Player.cpp">
+      <Filter>src\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\MapLayer.cpp">
+      <Filter>src\Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GameScene.cpp">
+      <Filter>src\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\MapInfo.cpp">
+      <Filter>src\Tool</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="main.h">
+      <Filter>win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\StartMenu.h">
+      <Filter>src\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GameData.h">
+      <Filter>src\Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GameDynamicData.h">
+      <Filter>src\Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Login.h">
+      <Filter>src\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SignOn.h">
+      <Filter>src\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\LoginLayer.h">
+      <Filter>src\Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SigOnLayer.h">
+      <Filter>src\Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\EndScene.h">
+      <Filter>src\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Commen.h">
+      <Filter>src\Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\HelloWorldScene.h">
+      <Filter>src\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\AppDelegate.h">
+      <Filter>src\Delegate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PreProcess.h">
+      <Filter>src\Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\typelist.h">
+      <Filter>src\Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SelectScene.h">
+      <Filter>src\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SelectLayer.h">
+      <Filter>src\Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\NewGameScene.h">
+      <Filter>src\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\NewGameLayer.h">
+      <Filter>src\Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BeginScene.h">
+      <Filter>src\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Animal.h">
+      <Filter>src\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Player.h">
+      <Filter>src\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MapLayer.h">
+      <Filter>src\Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GameScene.h">
+      <Filter>src\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MapInfo.h">
+      <Filter>src\Tool</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="game.rc">
+      <Filter>resource</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\Resources\GameData.xml">
+      <Filter>resource</Filter>
+    </Xml>
+  </ItemGroup>
+</Project>
