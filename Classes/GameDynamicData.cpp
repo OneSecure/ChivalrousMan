@@ -100,5 +100,5 @@ bool  GameDynamicData::init()
 
 void GameDynamicData::release()
 {
-	CC_SAFE_RELEASE_NULL(m_instance);
+	RELEASE_NULL(m_instance);
 }

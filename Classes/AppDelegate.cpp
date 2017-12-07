@@ -2,6 +2,8 @@
 #include"BeginScene.h"
 #include"GameData.h"
 #include"GameDynamicData.h"
+#include"MapInfo.h"
+#include"CameraPlayer.h"
 
 USING_NS_CC;
 
@@ -11,7 +13,10 @@ AppDelegate::AppDelegate() {
 
 AppDelegate::~AppDelegate() 
 {
-
+	GameData::release();
+	GameDynamicData::release();
+	MapInfo::release();
+	CameraPlayer::release();
 }
 
 //if you want a different context,just modify the value of glContextAttrs
@@ -40,7 +45,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     //director->setDisplayStats(true);
 
     // set FPS. the default value is 1.0/60 if you don't call this
-    director->setAnimationInterval(1.0 / 60);
+	director->setAnimationInterval(1.0 / 60);
 
     //FileUtils::getInstance()->addSearchPath("res");
 
@@ -74,7 +79,7 @@ void AppDelegate::applicationWillEnterForeground() {
 void AppDelegate::LoadResource()
 {
 	Animation *Player1Ani = Animation::create();
-	char filename[20] = { 0 };
+	char filename[40] = { 0 };
 	Player1Ani->setDelayPerUnit(FloatValue("PlayerFps"));
 	for (int i = 1; i <= 8; ++i)
 	{
@@ -84,4 +89,10 @@ void AppDelegate::LoadResource()
 		Player1Ani->addSpriteFrameWithTexture(texture, rect);
 	}
 	AnimationCache::getInstance()->addAnimation(Player1Ani, "Player1");
+
+	for (int i = 1; i <=15; ++i)
+	{
+		sprintf_s(filename, "map1/map1_%d", i);
+		auto mapframe = Sprite::create(filename);
+	}
 }

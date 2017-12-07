@@ -16,7 +16,7 @@ GameData::GameData()
 
  GameData::~GameData()
 {
-	 CC_SAFE_RELEASE_NULL(m_dictionary);
+	 RELEASE_NULL(m_dictionary);
 }
 
 GameData*  GameData::getInstance()
@@ -59,8 +59,7 @@ float GameData::getFloatByKey(const std::string& key)
 
 void  GameData::release()
 {
-	if (m_instance != nullptr)
-		CC_SAFE_RELEASE_NULL(m_instance);
+	RELEASE_NULL(m_instance);
 }
 
 bool GameData::init()

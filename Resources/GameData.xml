@@ -2,8 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+  <key>GameBg</key>
+  <string>SceneBg.png</string>
   <key>map1</key>
-  <string>map1.png</string>
+  <string>map1.mp</string>
   <key>ProgressCircle</key>
   <string>ProgressBar.png</string>
   <key>LoginGame</key>

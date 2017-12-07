@@ -22,7 +22,7 @@ public:
 
 	float getFloatByKey(const std::string& key);
 
-	void release();
+	static void release();
 private:
 	GameData();
 	~GameData();

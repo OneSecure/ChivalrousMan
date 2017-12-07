@@ -2,7 +2,6 @@
 #ifndef __GAME_SCENE_H__
 #define __GAME_SCENE_H__
 #include"PreProcess.h"
-#include"Player.h"
 
 class GameScene :public cocos2d::Scene
 {
@@ -10,9 +9,6 @@ class GameScene :public cocos2d::Scene
 	CREATE_FUNC(GameScene)
 public:
 	virtual bool init();
-
-private:
-	Player* m_player;
 };
 
-#endif __GAME_SCENE_H__
+#endif // !__GAME_SCENE_H__

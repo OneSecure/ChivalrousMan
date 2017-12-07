@@ -9,13 +9,7 @@
     public:          \
            virtual ~__TYPE__(){}
 
-#define LISTEN_TOUCH(__TYPE__)  \
-         setTouchEnabled(true); \
-         auto touchListener = EventListenerTouchOneByOne::create();   \
-         touchListener->onTouchBegan = CC_CALLBACK_2(__TYPE__::onTouchBegan, this); \
-         touchListener->onTouchMoved = CC_CALLBACK_2(__TYPE__::onTouchMoved, this);  \
-         touchListener->onTouchEnded = CC_CALLBACK_2(__TYPE__::onTouchEnded, this);   \
-         _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this)
+#define Inherit(__TYPE__) :public __TYPE__
 
 #endif // !__PRE_PRECESS_H__
 

@@ -95,6 +95,39 @@ using namespace cocostudio::timeline;
         SSmenu->setPosition(0, 0); \
         TARGET->addChild(SSmenu)
 
-#endif  // !__COMMEN_H__
+#define NEGATE(NUMBER) (NUMBER)=-(NUMBER);
 
+#define CalcAngle(p1,p2,res) \
+{  \
+    if(p2.x>=p1.x&&p2.y==p1.y) \
+	{ \
+		res = PI*0.5; \
+	} \
+    else if(p2.x<p1.x&&p2.y==p1.y) \
+	{ \
+        res= PI*1.5; \
+	}  \
+	else \
+    { \
+       float dx = p2.x - p1.x; \
+	   float dy = p2.y - p1.y; \
+	   res = atanf(dx/dy); \
+    } \
+} 
 
+#define LISTEN_TOUCH(__TYPE__)  \
+         setTouchEnabled(true); \
+         auto touchListener = EventListenerTouchOneByOne::create();   \
+         touchListener->onTouchBegan = CC_CALLBACK_2(__TYPE__::onTouchBegan, this); \
+         touchListener->onTouchMoved = CC_CALLBACK_2(__TYPE__::onTouchMoved, this);  \
+         touchListener->onTouchEnded = CC_CALLBACK_2(__TYPE__::onTouchEnded, this);   \
+         _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this)
+  
+#define RELEASE_NULL(p) \
+ if(p!=nullptr) \
+ { \
+    delete p; \
+    p = nullptr; \
+  }
+
+#endif  // !__COMMEN_H_

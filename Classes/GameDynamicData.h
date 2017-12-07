@@ -36,7 +36,7 @@ public:
 
 	std::string getStringByKey(const std::string& key);
 
-	void release();
+	static void release();
 private:
 	GameDynamicData();
 	~GameDynamicData();
