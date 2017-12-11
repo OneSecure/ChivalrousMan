@@ -15,9 +15,6 @@ bool GameScene::init()
 		this->addChild(gamemap);
 
 		auto player = Sprite::create();
-		auto animation = AnimationCache::getInstance()->getAnimation("Player1");
-		auto animate = Animate::create(animation);
-		player->runAction(RepeatForever::create(animate));
 		this->addChild(player);
 		SetPlayerVelocity(4);
 		SetPlayerFace(player);

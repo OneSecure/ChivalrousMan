@@ -55,6 +55,15 @@
     <Filter Include="src\Tool\private">
       <UniqueIdentifier>{211f7af5-b5f6-4448-b0ce-1673b6f574a0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\State">
+      <UniqueIdentifier>{3ad7f657-3a4d-4f49-b7e4-30fe0cd90807}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\State\public">
+      <UniqueIdentifier>{4eda35ab-fb3f-47cd-ac04-b02c88794174}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\State\private">
+      <UniqueIdentifier>{bc963fae-74bb-43d6-a0b3-c07257ad7d18}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -126,6 +135,15 @@
     <ClCompile Include="..\Classes\FindRoad.cpp">
       <Filter>src\Tool\private</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\PlayerState.cpp">
+      <Filter>src\State\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PlayerWait.cpp">
+      <Filter>src\State\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PlayerRun.cpp">
+      <Filter>src\State\private</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -191,9 +209,6 @@
     <ClInclude Include="..\Classes\PreProcess.h">
       <Filter>src\Tool\public</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\typelist.h">
-      <Filter>src\Tool\public</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\GameLogicLayer.h">
       <Filter>src\Layer\private</Filter>
     </ClInclude>
@@ -205,6 +220,15 @@
     </ClInclude>
     <ClInclude Include="..\Classes\FindRoad.h">
       <Filter>src\Tool\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PlayerState.h">
+      <Filter>src\State\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PlayerWait.h">
+      <Filter>src\State\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PlayerRun.h">
+      <Filter>src\State\public</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

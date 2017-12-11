@@ -4,8 +4,28 @@
 #include"GameDynamicData.h"
 #include"MapInfo.h"
 #include"CameraPlayer.h"
+#include"Commen.h"
 
-USING_NS_CC;
+#define LoadPlayerAnimation(player) \
+{ \
+	char name[40] = { 0 }; \
+sprintf_s(name, "%sWaitLeft", player); \
+LoadAnimationFromFile(StringValue(name).c_str(), name, 1, FloatValue("PlayerFps")); \
+sprintf_s(name, "%sWaitRight", player); \
+LoadAnimationFromFile(StringValue(name).c_str(), name, 1, FloatValue("PlayerFps")); \
+sprintf_s(name, "%sWaitDown", player); \
+LoadAnimationFromFile(StringValue(name).c_str(), name, 1, FloatValue("PlayerFps")); \
+sprintf_s(name, "%sWaitUp", player); \
+LoadAnimationFromFile(StringValue(name).c_str(), name, 1, FloatValue("PlayerFps")); \
+sprintf_s(name, "%sRunLeft",  player); \
+LoadAnimationFromFile(StringValue(name).c_str(), name, 12, FloatValue("PlayerFps")); \
+sprintf_s(name, "%sRunRight",  player); \
+LoadAnimationFromFile(StringValue(name).c_str(), name, 12, FloatValue("PlayerFps")); \
+sprintf_s(name, "%sRunDown",  player); \
+LoadAnimationFromFile(StringValue(name).c_str(), name, 12, FloatValue("PlayerFps")); \
+sprintf_s(name, "%sRunUp",  player); \
+LoadAnimationFromFile(StringValue(name).c_str(), name, 12, FloatValue("PlayerFps")); \
+}
 
 AppDelegate::AppDelegate() {
 
@@ -90,9 +110,22 @@ void AppDelegate::LoadResource()
 	}
 	AnimationCache::getInstance()->addAnimation(Player1Ani, "Player1");
 
-	for (int i = 1; i <=15; ++i)
+	LoadPlayerAnimation("Player1");
+	LoadPlayerAnimation("Player2");
+	LoadPlayerAnimation("Player3");
+}
+
+void AppDelegate::LoadAnimationFromFile(const char* filename,char* key,int num,float delay) 
+{
+	auto outAni = Animation::create();
+	Texture2D* texture = TextureCache::getInstance()->addImage(filename);
+	float h = texture->getContentSize().height;
+	float w = texture->getContentSize().width / num;
+	outAni->setDelayPerUnit(delay);
+	for (int i = 0; i < num; ++i)
 	{
-		sprintf_s(filename, "map1/map1_%d", i);
-		auto mapframe = Sprite::create(filename);
+		SpriteFrame* frame = SpriteFrame::createWithTexture(texture, Rect{ i*w,0,w,h });
+		outAni->addSpriteFrame(frame);
 	}
+	AnimationCache::getInstance()->addAnimation(outAni, key);
 }

@@ -3,7 +3,6 @@
 #define __FIND_ROAD_H__
 #include"PreProcess.h"
 #include<list>
-#include<set>
 #include<stack>
 
 struct _Pos
@@ -22,11 +21,6 @@ struct _Pos
 		f = 0;
 		parent = NULL;
 	}
-
-	bool operator<(_Pos* pos)
-	{
-		return this->f < pos->f;
-	}
 };
 
 class FindRoad
@@ -39,19 +33,21 @@ public:
 
 	bool IsValid(_Pos& pos);
 
-	int CalcF(_Pos& pos);
+	int CalcH(_Pos& pos);
 
-	bool OnOpenList(_Pos& pos);
+	_Pos* OnOpenList(_Pos& pos);
 
 	bool OnCloseList(_Pos& pos);
 
 	std::stack<cocos2d::Vec2> GetRoadList();
 
 	inline bool isHasRoad() { return hasRoad; }
+
+	std::list<_Pos*>::iterator FindFromOpenMin();
 private:
 	void GetRoad();
 
-	std::set<_Pos*> m_openList;
+	std::list<_Pos*> m_openList;
 	std::list<_Pos*> m_closeList;
 	std::stack<cocos2d::Vec2> m_roadList;
 

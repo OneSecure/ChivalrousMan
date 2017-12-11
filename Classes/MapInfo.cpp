@@ -53,7 +53,7 @@ bool MapInfo::readMapInfoFromFile(const std::string& filename)
 		m_mapinfo[i] = new int[m_countx];
 	}
 	
-	for (int i = 0; i < m_county; ++i)
+	for (int i = m_county-1; i>=0; --i)
 	{
 		fin >> row;
 		regex r4(("\\s*[,]\\s*"));

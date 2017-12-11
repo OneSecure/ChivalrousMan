@@ -36,6 +36,8 @@ public:
     virtual void applicationWillEnterForeground();
 
 	void LoadResource();
+
+	void LoadAnimationFromFile(const char* filename, char* key, int num, float delay);
 };
 
 #endif // _APP_DELEGATE_H_

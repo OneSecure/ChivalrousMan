@@ -2,6 +2,9 @@
 #include"MapInfo.h"
 #include"GameMapLayer.h"
 #include"Commen.h"
+#include"PlayerState.h"
+#include"PlayerWait.h"
+#include"PlayerRun.h"
 
 CameraPlayer* CameraPlayer::m_instance = nullptr;
 
@@ -9,6 +12,7 @@ CameraPlayer::CameraPlayer()
 {
 	m_pos.x = 100;
 	m_pos.y = 100;
+	m_flag = 0;
 }
 
 CameraPlayer::~CameraPlayer()
@@ -28,9 +32,22 @@ CameraPlayer* CameraPlayer::getPlayerInstance()
 void CameraPlayer::setFace(cocos2d::Sprite* face)
 {
 	m_face = face;
+	m_state = new PlayerWait(m_face);
+	m_state->changeAnimation(Dir::Dir_Down);
+	m_face->setAnchorPoint(ccp(0.6, 0.25));
 	std::pair<Vec2, Vec2> pos = changeMapPosToUI();
 	m_face->setPosition(pos.first);
 	MapLayer->drawMap(pos.second.x, pos.second.y);
+}
+
+bool CameraPlayer::trunDir(const float& angle)
+{
+	if (Animal::trunDir(angle))
+	{
+		m_state->changeAnimation(m_dir);
+		return true;
+	}
+	return false;
 }
 
 Sprite* CameraPlayer::getFace()
@@ -79,16 +96,81 @@ bool CameraPlayer::move()
 		std::pair<Vec2, Vec2> pos = changeMapPosToUI();
 		m_face->setPosition(pos.first);
 		MapLayer->drawMap(pos.second.x, pos.second.y);
+		return true;
 	}
-	return true;
+	return false;
 }
 
-void CameraPlayer::moveToTarget(const cocos2d::Vec2& target)
+void CameraPlayer::goNext()
 {
-	
+	Vec2 pos = m_roadList.top();
+	int w = MapGridW;
+	int h = MapGridH;
+	pos.x *= w;
+	pos.y *= h;
+	pos.x += w*0.5;
+	pos.y += h*0.5;
+	if (abs(pos.x - m_pos.x) < w*0.5&&abs(pos.y - m_pos.y) < h*0.5)
+	{
+		m_roadList.pop();
+	}
+	float angle = CalcAngle(m_pos, pos);
+	trunDir(angle);
+}
+
+bool CameraPlayer::canMove()
+{
+	if (!m_roadList.empty())
+	{
+		goNext();
+		if (!m_flag)
+			m_state = m_state->goNextState();
+		m_flag = 1;
+		return true;
+	}
+	if (m_flag)
+		m_state = m_state->goNextState();
+	m_flag = 0;
+	return false;
 }
 
 void CameraPlayer::release()
 {
 	RELEASE_NULL(m_instance);
+}
+
+void CameraPlayer::setMoveRoad(std::stack<cocos2d::Vec2>& road)
+{
+	m_roadList = road;
+}
+
+float  CameraPlayer::CalcAngle(cocos2d::Vec2 start, cocos2d::Vec2 target)
+{
+	if (start.x == target.x)
+	{
+		return start.y < target.y ? 0 : PI;
+	}
+	if (start.y == target.y)
+	{
+		return start.x < target.x ? PI : PI*1.5;
+	}
+	float dx = target.x - start.x;
+	float dy = target.y - start.y;
+	float angle = atanf(abs(dx / dy));
+	if (start.x < target.x&&start.y < target.y)
+	{
+		return angle;
+	}
+	else if (start.x<target.x&&start.y>target.y)
+	{
+		return PI - angle;
+	}
+	else if (start.x > target.x&&start.y > target.y)
+	{
+		return PI + angle;
+	}
+	else
+	{
+		return 2 * PI - angle;
+	}
 }

@@ -32,20 +32,38 @@ FindRoad::~FindRoad()
 void FindRoad::ExecuteAStar()
 {
 	m_curPos = m_startPos;
-	int dir[][2] = { {1,0},{-1,0},{0,1},{0,-1} };
+	int dir[][2] = { {1,0},{-1,0},{0,1},{0,-1},{1,-1},{-1,1},{1,1},{-1,-1} };
+	
 	do
 	{
-		for (int i = 0; i < 4; ++i)
+		for (int i = 0; i < 8; ++i)
 		{
 			_Pos *tmp = new _Pos;
 			tmp->x = m_curPos->x + dir[i][0];
 			tmp->y = m_curPos->y + dir[i][1];
-			tmp->g = m_curPos->g + 1;
-			tmp->h = CalcF(*tmp);
-			tmp->parent = m_curPos;
-			if (!OnOpenList(*tmp)&&!OnCloseList(*tmp)&&IsValid(*tmp))
+			if (IsValid(*tmp) && !OnCloseList(*tmp))
 			{
-				m_openList.insert(tmp);
+				_Pos* it = OnOpenList(*tmp);
+				if (it)
+				{
+					float newg = m_curPos->g + 1;
+					if (newg < it->g)
+					{
+						it->parent = m_curPos;
+						it->g = newg;
+						it->f = it->g + it->h;
+					}
+					delete tmp;
+					tmp = nullptr;
+				}
+				else
+				{
+					tmp->g = m_curPos->g + 1;
+					tmp->h = CalcH(*tmp);
+					tmp->f = tmp->g + tmp->h;
+					tmp->parent = m_curPos;
+					m_openList.push_back(tmp);
+				}
 			}
 			else
 			{
@@ -54,16 +72,16 @@ void FindRoad::ExecuteAStar()
 			}
 		}
 
-		auto it = m_openList.end();
-		--it;
-		m_closeList.push_back(m_curPos);
-		m_curPos = (*it);
-		m_openList.erase(it);
 		if (m_openList.empty())
 		{
 			hasRoad = false;
 			break;
 		}
+
+		auto it=FindFromOpenMin();
+		m_closeList.push_back(m_curPos);
+		m_curPos = (*it);
+		m_openList.erase(it);
 	} while (m_curPos->x != m_targetPos->x || m_curPos->y != m_targetPos->y);
 	GetRoad();
 }
@@ -79,9 +97,9 @@ bool FindRoad::IsValid(_Pos& pos)
 	return false;
 }
 
-int FindRoad::CalcF(_Pos& pos)
+int FindRoad::CalcH(_Pos& pos)
 {
-	return abs(pos.x - m_targetPos->x) + abs(pos.y - m_targetPos->y);
+	return sqrtf((pos.x - m_targetPos->x)*(pos.x - m_targetPos->x) + (pos.y - m_targetPos->y)*(pos.y - m_targetPos->y));
 }
 
 bool FindRoad::OnCloseList(_Pos& pos)
@@ -96,16 +114,29 @@ bool FindRoad::OnCloseList(_Pos& pos)
 	return false;
 }
 
-bool FindRoad::OnOpenList(_Pos& pos)
+_Pos* FindRoad::OnOpenList(_Pos& pos)
 {
 	for (auto it = m_openList.begin(); it != m_openList.end(); ++it)
 	{
 		if ((*it)->x == pos.x && (*it)->y == pos.y)
 		{
-			return true;
+			return *it;
 		}
 	}
-	return false;
+	return NULL;
+}
+
+std::list<_Pos*>::iterator FindRoad::FindFromOpenMin()
+{
+	auto tmp = m_openList.begin();
+	for (auto it=m_openList.begin() ; it != m_openList.end(); ++it)
+	{
+		if ((*tmp)->f > (*it)->f)
+		{
+			tmp = it;
+		}
+	}
+	return tmp;
 }
 
 void FindRoad::GetRoad()

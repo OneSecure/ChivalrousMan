@@ -1,14 +1,10 @@
 #pragma once
 #ifndef __COMMEN_H__
 #define __COMMEN_H__
-#include "cocostudio/CocoStudio.h"
-#include "ui/CocosGUI.h"
 
 USING_NS_CC;
 
 #define PI 3.1415
-
-using namespace cocostudio::timeline;
 
 #define SCREEN Director::getInstance()->getWinSize()
 
@@ -97,24 +93,6 @@ using namespace cocostudio::timeline;
 
 #define NEGATE(NUMBER) (NUMBER)=-(NUMBER);
 
-#define CalcAngle(p1,p2,res) \
-{  \
-    if(p2.x>=p1.x&&p2.y==p1.y) \
-	{ \
-		res = PI*0.5; \
-	} \
-    else if(p2.x<p1.x&&p2.y==p1.y) \
-	{ \
-        res= PI*1.5; \
-	}  \
-	else \
-    { \
-       float dx = p2.x - p1.x; \
-	   float dy = p2.y - p1.y; \
-	   res = atanf(dx/dy); \
-    } \
-} 
-
 #define LISTEN_TOUCH(__TYPE__)  \
          setTouchEnabled(true); \
          auto touchListener = EventListenerTouchOneByOne::create();   \
@@ -130,4 +108,29 @@ using namespace cocostudio::timeline;
     p = nullptr; \
   }
 
-#endif  // !__COMMEN_H_
+#define FOUR_LOSE_FIVE_ADD(number) \
+  if((number)-(int)(number)>=0.5) \
+  { \
+	  (number) = (int)(number) + 1; \
+  } \
+  else \
+  { \
+	  (number) = (int)(number); \
+  }
+
+#define LoadAnimationFromMinFile(name,num,delay,animation) \
+{ \
+  animation = Animation::create(); \
+  char filename[40] = { 0 }; \
+  animation->setDelayPerUnit(delay); \
+  for (int i = 1; i <=num; ++i) \
+  { \
+	  sprintf_s(filename, "%s%d.png", name, i); \
+	  Texture2D *texture = TextureCache::getInstance()->addImage(filename); \
+	  Rect rect{ 0,0,texture->getContentSize().width,texture->getContentSize().height }; \
+	  animation->addSpriteFrameWithTexture(texture, rect); \
+  } \
+}
+
+
+#endif  // !__COMMEN_H__

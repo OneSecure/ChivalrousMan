@@ -2,6 +2,7 @@
 #include"GameData.h"
 #include"StartMenu.h"
 #include"Commen.h"
+#include"GameScene.h"
 
 bool NewGameLayer::init()
 {
@@ -33,12 +34,24 @@ bool NewGameLayer::init()
 		this->addChild(m_bracket[0]);
 		this->addChild(m_bracket[1]);
 
-		auto playerAnimation = AnimationCache::getInstance()->getAnimation("Player1");
+		char playername[40] = { 0 };
+		for (int i = 0; i < 3; ++i)
+		{
+			sprintf_s(playername, "Player%dRunDown", i + 1);
+			auto playerAnimation = AnimationCache::getInstance()->getAnimation(playername);
+			auto playerAnimate = Animate::create(playerAnimation);
+			sprintf_s(playername, "Player%dWaitDown", i + 1);
+			auto player = Sprite::create(StringValue(playername));
+			player->setPosition(SCREEN.width*(0.25 + i*0.25), SCREEN.height*0.625);
+			player->runAction(RepeatForever::create(playerAnimate));
+			this->addChild(player);
+		}
+	/*	auto playerAnimation = AnimationCache::getInstance()->getAnimation("Player1");
 		auto playerAnimate = Animate::create(playerAnimation);
 		auto player = Sprite::create(StringValue("Player1"));
 		player->setPosition(SCREEN.width*0.24, SCREEN.height*0.625);
 		player->runAction(RepeatForever::create(playerAnimate));
-		this->addChild(player);
+		this->addChild(player);*/
 
 		ADD_EDIT(m_username, "PlayerNameTip", ccp(size.width*0.32, size.height*0.35), "PlayerName", "EditBg", false, this, this);
 
@@ -59,7 +72,9 @@ void NewGameLayer::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *unused_ev
 
 void NewGameLayer::onConfirmCallBack(cocos2d::CCObject* sender)
 {
-
+	auto startmap = GameScene::create();
+	auto reScene = CCTransitionFadeDown::create(1.0f, startmap);
+	Director::getInstance()->replaceScene(reScene);
 }
 
 void  NewGameLayer::onCancelCallBack(cocos2d::CCObject* sender)

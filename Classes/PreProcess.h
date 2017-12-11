@@ -11,5 +11,13 @@
 
 #define Inherit(__TYPE__) :public __TYPE__
 
+enum class Dir
+{
+	Dir_Left,
+	Dir_Down,
+	Dir_Right,
+	Dir_Up,
+};
+
 #endif // !__PRE_PRECESS_H__
 

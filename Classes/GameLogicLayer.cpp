@@ -21,20 +21,19 @@ bool GameLogicLayer::init()
 void  GameLogicLayer::onTouchEnded(Touch *touch, Event *unused_event)
 {
 	Vec2 pos = touch->getLocation();
-	Vec2 targetPos{ PlayerPos.x + (pos.x - PlayerPos.x),PlayerPos.y + (pos.y - PlayerPos.y) };
+	int w = MapGridW;
+	Vec2 targetPos{ PlayerPos.x + (pos.x - GetPlayerFace()->getPosition().x),PlayerPos.y + (pos.y - GetPlayerFace()->getPosition().y) };
 	targetPos.x /= MapGridW;
 	targetPos.y /= MapGridH;
+	FOUR_LOSE_FIVE_ADD(targetPos.x);
+	FOUR_LOSE_FIVE_ADD(targetPos.y);
 	Vec2 startPos{ PlayerPos.x / MapGridW,PlayerPos.y / MapGridH };
 	FindRoad fdroad(startPos, targetPos, GetMapInfo(), MapCountX, MapCountY);
 	fdroad.ExecuteAStar();
 	if (fdroad.isHasRoad())
 	{
-		std::stack<Vec2> roadList = fdroad.GetRoadList();
-	}	
-	int a = 2;
-	int b = 2;
-	int c = a + b;
-	int d = c + 1;
+		SetPlayerMoveRoad(fdroad.GetRoadList());
+	}
 }
 
 void GameLogicLayer::update(float dt)
@@ -43,7 +42,7 @@ void GameLogicLayer::update(float dt)
 	time += dt*UpdateSpeed;
 	if (time >= 1)
 	{
-		CameraPlayer::getPlayerInstance()->move();
+		if (PlayerCanMove())
+			PlayerMove();
 	}
 }
-

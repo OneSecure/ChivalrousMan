@@ -2,6 +2,70 @@
 <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+  <key>Player1WaitLeft</key>
+  <string>player2/wait/player2_2.png</string>
+  <key>Player1WaitRight</key>
+  <string>player2/wait/player2_3.png</string>
+  <key>Player1WaitUp</key>
+  <string>player2/wait/player2_4.png</string>
+  <key>Player1WaitDown</key>
+  <string>player2/wait/player2_1.png</string>
+  <key>Player1RunLeft</key>
+  <string>player2/run/player2_2.png</string>
+  <key>Player1RunRight</key>
+  <string>player2/run/player2_3.png</string>
+  <key>Player1RunUp</key>
+  <string>player2/run/player2_4.png</string>
+  <key>Player1RunDown</key>
+  <string>player2/run/player2_1.png</string>
+  <key>Player2WaitLeft</key>
+  <string>player3/wait/player3_2.png</string>
+  <key>Player2WaitRight</key>
+  <string>player3/wait/player3_3.png</string>
+  <key>Player2WaitUp</key>
+  <string>player3/wait/player3_4.png</string>
+  <key>Player2WaitDown</key>
+  <string>player3/wait/player3_1.png</string>
+  <key>Player2RunLeft</key>
+  <string>player3/run/player3_2.png</string>
+  <key>Player2RunRight</key>
+  <string>player3/run/player3_3.png</string>
+  <key>Player2RunUp</key>
+  <string>player3/run/player3_4.png</string>
+  <key>Player2RunDown</key>
+  <string>player3/run/player3_1.png</string>
+  <key>Player3WaitLeft</key>
+  <string>player4/wait/player4_2.png</string>
+  <key>Player3WaitRight</key>
+  <string>player4/wait/player4_3.png</string>
+  <key>Player3WaitUp</key>
+  <string>player4/wait/player4_4.png</string>
+  <key>Player3WaitDown</key>
+  <string>player4/wait/player4_1.png</string>
+  <key>Player3RunLeft</key>
+  <string>player4/run/player4_2.png</string>
+  <key>Player3RunRight</key>
+  <string>player4/run/player4_3.png</string>
+  <key>Player3RunUp</key>
+  <string>player4/run/player4_4.png</string>
+  <key>Player3RunDown</key>
+  <string>player4/run/player4_1.png</string>
+  <key>WaitLeft</key>
+  <string>player1/wait/1_</string>
+  <key>WaitDown</key>
+  <string>player1/wait/2_</string>
+  <key>WaitRight</key>
+  <string>player1/wait/4_</string>
+  <key>WaitUp</key>
+  <string>player1/wait/7_</string>
+  <key>RunLeft</key>
+  <string>player1/run/1_</string>
+  <key>RunDown</key>
+  <string>player1/run/3_</string>
+  <key>RunRight</key>
+  <string>player1/run/5_</string>
+  <key>RunUp</key>
+  <string>player1/run/7_</string>
   <key>GameBg</key>
   <string>SceneBg.png</string>
   <key>map1</key>
@@ -19,7 +83,7 @@
   <key>PlayerNameTip</key>
   <string>输入角色名</string>
   <key>PlayerFps</key>
-  <string>0.15</string>
+  <string>0.08</string>
   <key>Player1</key>
   <string>player1.png</string>
   <key>Arrow</key>

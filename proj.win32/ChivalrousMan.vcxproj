@@ -166,6 +166,9 @@ xcopy /Y /Q "$(COCOS_X_ROOT)\cocos2d-x-3.10\prebuilt\win32\*.*" "$(OutDir)"
     <ClCompile Include="..\Classes\NewGameLayer.cpp" />
     <ClCompile Include="..\Classes\NewGameScene.cpp" />
     <ClCompile Include="..\Classes\CameraPlayer.cpp" />
+    <ClCompile Include="..\Classes\PlayerRun.cpp" />
+    <ClCompile Include="..\Classes\PlayerState.cpp" />
+    <ClCompile Include="..\Classes\PlayerWait.cpp" />
     <ClCompile Include="..\Classes\SelectLayer.cpp" />
     <ClCompile Include="..\Classes\SelectScene.cpp" />
     <ClCompile Include="..\Classes\SignOn.cpp" />
@@ -192,13 +195,15 @@ xcopy /Y /Q "$(COCOS_X_ROOT)\cocos2d-x-3.10\prebuilt\win32\*.*" "$(OutDir)"
     <ClInclude Include="..\Classes\NewGameLayer.h" />
     <ClInclude Include="..\Classes\NewGameScene.h" />
     <ClInclude Include="..\Classes\CameraPlayer.h" />
+    <ClInclude Include="..\Classes\PlayerRun.h" />
+    <ClInclude Include="..\Classes\PlayerState.h" />
+    <ClInclude Include="..\Classes\PlayerWait.h" />
     <ClInclude Include="..\Classes\PreProcess.h" />
     <ClInclude Include="..\Classes\SelectLayer.h" />
     <ClInclude Include="..\Classes\SelectScene.h" />
     <ClInclude Include="..\Classes\SignOn.h" />
     <ClInclude Include="..\Classes\SigOnLayer.h" />
     <ClInclude Include="..\Classes\StartMenu.h" />
-    <ClInclude Include="..\Classes\typelist.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
   <ItemGroup>
