@@ -3,6 +3,8 @@
 #include"StartMenu.h"
 #include"Commen.h"
 #include"GameScene.h"
+#include"GameDynamicData.h"
+#include<string>
 
 bool NewGameLayer::init()
 {
@@ -46,12 +48,6 @@ bool NewGameLayer::init()
 			player->runAction(RepeatForever::create(playerAnimate));
 			this->addChild(player);
 		}
-	/*	auto playerAnimation = AnimationCache::getInstance()->getAnimation("Player1");
-		auto playerAnimate = Animate::create(playerAnimation);
-		auto player = Sprite::create(StringValue("Player1"));
-		player->setPosition(SCREEN.width*0.24, SCREEN.height*0.625);
-		player->runAction(RepeatForever::create(playerAnimate));
-		this->addChild(player);*/
 
 		ADD_EDIT(m_username, "PlayerNameTip", ccp(size.width*0.32, size.height*0.35), "PlayerName", "EditBg", false, this, this);
 
@@ -72,9 +68,37 @@ void NewGameLayer::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *unused_ev
 
 void NewGameLayer::onConfirmCallBack(cocos2d::CCObject* sender)
 {
-	auto startmap = GameScene::create();
-	auto reScene = CCTransitionFadeDown::create(1.0f, startmap);
-	Director::getInstance()->replaceScene(reScene);
+	std::string name = m_username->getString();
+	if (name != "")
+	{
+		recordPlayerType();
+		auto startmap = GameScene::create();
+		auto reScene = CCTransitionFadeDown::create(1.0f, startmap);
+		Director::getInstance()->replaceScene(reScene);
+	}
+	else
+	{
+		MessageBeep(2);
+		MessageBox("角色名不能为空", "提示");
+	}
+}
+
+void NewGameLayer::recordPlayerType()
+{
+	switch (m_playerType)
+	{
+	case Player_Type::Player1_Type:
+		SetStringData("PlayerType", "Player1");
+		break;
+	case Player_Type::Player2_Type:
+		SetStringData("PlayerType", "Player2");
+		break;
+	case Player_Type::Player3_Type:
+		SetStringData("PlayerType", "Player3");
+		break;
+	default:
+		break;
+	}
 }
 
 void  NewGameLayer::onCancelCallBack(cocos2d::CCObject* sender)
@@ -103,12 +127,15 @@ void NewGameLayer::onStoneCallBack(cocos2d::CCObject* sender)
 	switch (dynamic_cast<MenuItemImage*>(sender)->getTag())
 	{
 	case 101:
+		m_playerType = Player_Type::Player1_Type;
 		moveBracket(ccp(SCREEN.width*0.25, SCREEN.height * 0.57), 0.5);
 		break;
 	case 102:
+		m_playerType = Player_Type::Player2_Type;
 		moveBracket(ccp(SCREEN.width*0.25 * 2, SCREEN.height*0.57), 0.5);
 		break;
 	case 103:
+		m_playerType = Player_Type::Player3_Type;
 		moveBracket(ccp(SCREEN.width*0.25 * 3, SCREEN.height*0.57), 0.5);
 		break;
 	default:
@@ -120,6 +147,7 @@ void NewGameLayer::moveBracket(cocos2d::Vec2 dest, float delay)
 {
 	auto move = MoveTo::create(delay, ccp(dest.x - 70, dest.y));
 	m_bracket[0]->runAction(move);
+
 	auto move1 = MoveTo::create(delay, ccp(dest.x + 70, dest.y));
 	m_bracket[1]->runAction(move1);
 }

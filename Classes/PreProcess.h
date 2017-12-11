@@ -19,5 +19,12 @@ enum class Dir
 	Dir_Up,
 };
 
+enum class Player_Type
+{
+	Player1_Type,
+	Player2_Type,
+	Player3_Type,
+};
+
 #endif // !__PRE_PRECESS_H__
 
