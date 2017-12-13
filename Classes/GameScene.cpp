@@ -3,24 +3,25 @@
 #include"GameMapLayer.h"
 #include"GameLogicLayer.h"
 #include"CameraPlayer.h"
+#include"LoadingLayer.h"
 #include"Commen.h"
 
 bool GameScene::init()
 {
 	if (Scene::init())
 	{
-		auto gamemap = GameMapLayer::create();
-		gamemap->loadMapTexture("map1");
-		gamemap->drawMap(0, 0);
-		this->addChild(gamemap);
+		m_mapLayer = GameMapLayer::create();
+		m_mapLayer->loadMapTexture("map1");
+		m_mapLayer->drawMap(0, 0);
+		this->addChild(m_mapLayer);
 
 		auto player = Sprite::create();
 		this->addChild(player);
 		SetPlayerVelocity(4);
 		SetPlayerFace(player);
 
-		auto logicLayer = GameLogicLayer::create();
-		this->addChild(logicLayer);
+		m_logicLayer = GameLogicLayer::create();
+		this->addChild(m_logicLayer);
 		return true;
 	}
 	return false;

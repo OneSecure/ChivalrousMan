@@ -34,7 +34,7 @@ void CameraPlayer::setFace(cocos2d::Sprite* face)
 	m_face = face;
 	m_state = new PlayerWait(m_face);
 	m_state->changeAnimation(Dir::Dir_Down);
-	m_face->setAnchorPoint(ccp(0.6, 0.25));
+	m_face->setAnchorPoint(ccp(0.5, 0.1));
 	std::pair<Vec2, Vec2> pos = changeMapPosToUI();
 	m_face->setPosition(pos.first);
 	MapLayer->drawMap(pos.second.x, pos.second.y);
@@ -48,11 +48,6 @@ bool CameraPlayer::trunDir(const float& angle)
 		return true;
 	}
 	return false;
-}
-
-Sprite* CameraPlayer::getFace()
-{
-	return m_face;
 }
 
 std::pair<Vec2,Vec2> CameraPlayer::changeMapPosToUI()

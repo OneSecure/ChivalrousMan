@@ -12,6 +12,7 @@ public:
 private:
 	void onLoginCallBack(cocos2d::CCObject* sender);
 	void onSigonCallBack(cocos2d::CCObject* sender);
+	void onMusicOnOrOffCallBack(cocos2d::CCObject* sender);
 };
 
 #endif // !__BEGIN_SCENE_H__

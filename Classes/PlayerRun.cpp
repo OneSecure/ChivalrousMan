@@ -3,6 +3,7 @@
 #include"GameData.h"
 #include"PlayerWait.h"
 #include"CameraPlayer.h"
+#include"GameDynamicData.h"
 
 PlayerRun::PlayerRun(Sprite* face):
 	PlayerState(face)
@@ -20,16 +21,24 @@ void PlayerRun::changeAnimation(Dir dir)
 	switch (dir)
 	{
 	case Dir::Dir_Left:
-		change(StringValue("RunLeft").c_str());
+	{
+		change("RunLeft");
+	}
 		break;
 	case Dir::Dir_Down:
-		change(StringValue("RunDown").c_str());
+	{
+		change("RunDown");
+	}
 		break;
 	case Dir::Dir_Right:
-		change(StringValue("RunRight").c_str());
+	{
+		change("RunRight");
+	}
 		break;
 	case Dir::Dir_Up:
-		change(StringValue("RunUp").c_str());
+	{
+		change("RunUp");
+	}
 		break;
 	default:
 		break;

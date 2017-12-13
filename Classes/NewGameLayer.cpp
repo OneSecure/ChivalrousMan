@@ -4,6 +4,8 @@
 #include"Commen.h"
 #include"GameScene.h"
 #include"GameDynamicData.h"
+#include"ExcessiveScene.h"
+#include<functional>
 #include<string>
 
 bool NewGameLayer::init()
@@ -72,9 +74,11 @@ void NewGameLayer::onConfirmCallBack(cocos2d::CCObject* sender)
 	if (name != "")
 	{
 		recordPlayerType();
-		auto startmap = GameScene::create();
-		auto reScene = CCTransitionFadeDown::create(1.0f, startmap);
-		Director::getInstance()->replaceScene(reScene);
+		auto gamescene = GameScene::create();
+		CC_SAFE_RETAIN(gamescene);
+		std::function<bool(void)> func = [] {return true; };
+		ExcessiveScene* excessive = ExcessiveScene::createExcessice(gamescene, func, 2);
+		Director::getInstance()->replaceScene(excessive);
 	}
 	else
 	{

@@ -1,13 +1,10 @@
 #include"GameData.h"
 #include"Commen.h"
-#include<atomic>
-#include<mutex>
 using namespace std;
 
 #define DataFileName "GameData.xml"
-atomic<GameData*> g_load;
-mutex g_mutex;
-GameData * GameData::m_instance = nullptr;
+
+DEFINE_SINGLE_ATTRIBUTES(GameData);
 
 GameData::GameData()
 {
@@ -17,24 +14,6 @@ GameData::GameData()
  GameData::~GameData()
 {
 	 RELEASE_NULL(m_dictionary);
-}
-
-GameData*  GameData::getInstance()
-{
-	m_instance = g_load.load(memory_order_relaxed);
-	atomic_thread_fence(memory_order_acquire);
-	if (m_instance == nullptr)
-	{
-		lock_guard<mutex> lock(g_mutex);
-		m_instance = g_load.load(memory_order_relaxed);
-		if (m_instance == nullptr)
-		{
-			m_instance = new GameData;
-			atomic_thread_fence(memory_order_release);
-			g_load.store(m_instance,memory_order_release);
-		}
-	}
-	return m_instance;
 }
 
 string GameData::getStringByKey(const std::string & key)

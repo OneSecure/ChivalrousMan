@@ -11,6 +11,8 @@ public:
 
 	virtual bool init();
 private:
+	void onMusicOnOrOffCallBack(cocos2d::CCObject* sender);
+
 	void NewBtnCallBack(cocos2d::CCObject* obj);
 
 	void EntryCallBack(cocos2d::CCObject* obj);

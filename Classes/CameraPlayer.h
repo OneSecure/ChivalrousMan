@@ -15,19 +15,22 @@
 #define PlayerCanMove CameraPlayer::getPlayerInstance()->canMove
 #define SetPlayerMoveRoad CameraPlayer::getPlayerInstance()->setMoveRoad
 #define PlayerDir CameraPlayer::getPlayerInstance()->getDir
+#define PlayerFacePos CameraPlayer::getPlayerInstance()->getFacePos
 
 class PlayerState;
 
 /*
 *摄像机玩家
 */
-class CameraPlayer:public Animal
+class CameraPlayer :public Animal
 {
 public:
 	/*
 	*获取摄像机玩家的对象
 	*/
 	static CameraPlayer* getPlayerInstance();
+
+	inline cocos2d::Vec2 getFacePos() { return  m_face->getPosition(); }
 
 	/*
 	*设置玩家的UI
@@ -39,7 +42,7 @@ public:
 	*获取玩家的UI
 	*@return Sprite*：得到的UI
 	*/
-	cocos2d::Sprite* getFace();
+	inline cocos2d::Sprite* getFace() { return m_face; }
 
 	/*
 	*changeMapPosToUI();

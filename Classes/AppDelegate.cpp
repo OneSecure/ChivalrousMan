@@ -5,6 +5,7 @@
 #include"MapInfo.h"
 #include"CameraPlayer.h"
 #include"Commen.h"
+#include"AudioSystem.h"
 
 #define LoadPlayerAnimation(player) \
 { \
@@ -37,6 +38,7 @@ AppDelegate::~AppDelegate()
 	GameDynamicData::release();
 	MapInfo::release();
 	CameraPlayer::release();
+	AudioSystem::releaseAudioSystem();
 }
 
 //if you want a different context,just modify the value of glContextAttrs
@@ -67,10 +69,11 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // set FPS. the default value is 1.0/60 if you don't call this
 	director->setAnimationInterval(1.0 / 60);
 
-    //FileUtils::getInstance()->addSearchPath("res");
+    FileUtils::getInstance()->addSearchPath("res");
 
     // create a scene. it's an autorelease object
 	LoadResource();
+	AudioSystem::getInstance();
 
 	auto scene = BeginScene::create();
 
@@ -113,6 +116,10 @@ void AppDelegate::LoadResource()
 	LoadPlayerAnimation("Player1");
 	LoadPlayerAnimation("Player2");
 	LoadPlayerAnimation("Player3");
+
+	Animation* doorAnimation;
+	LoadAnimationFromMinFile("door/door", 11, 0.1, doorAnimation);
+	AnimationCache::getInstance()->addAnimation(doorAnimation, "DoorAnimation");
 }
 
 void AppDelegate::LoadAnimationFromFile(const char* filename,char* key,int num,float delay) 

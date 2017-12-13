@@ -64,3 +64,24 @@ bool GameMapLayer::drawMap(float startx, float starty)
 	}
 	return true;
 }
+
+void GameMapLayer::setDoorPos(const cocos2d::Vec2& doorPos)
+{
+	m_doorPos = doorPos;
+	if (m_door==nullptr)
+	{
+		m_door = Sprite::create();
+		auto animation = AnimationCache::getInstance()->getAnimation("DoorAnimation");
+		auto animate = Animate::create(animation);
+		m_door->runAction(animate);
+	}
+}
+
+void GameMapLayer::updateDoorScreenPos()
+{
+	auto mappos = PlayerPos;
+	auto screenpos = PlayerFacePos();
+	float offsetX = m_doorPos.x - mappos.x;
+	float offsetY = m_doorPos.y - mappos.y;
+	m_door->setPosition(screenpos.x + offsetX, screenpos.y + offsetY);
+}

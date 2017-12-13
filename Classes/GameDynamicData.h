@@ -1,10 +1,12 @@
 #pragma once
 #ifndef __GAME_DYNAMIC_DATA_H__
 #define __GAME_DYNAMIC_DATA_H__
-#include"cocos2d.h"
+#include"PreProcess.h"
 #include<sstream>
 #include<string>
 #include<map>
+#include<mutex>
+#include<atomic>
 
 #define SetFloatData GameDynamicData::getInstance()->setFloatByKey
 #define SetIntData GameDynamicData::getInstance()->setIntByKey
@@ -17,14 +19,11 @@
 
 class GameDynamicData :public cocos2d::CCObject
 {
+	GET_SINGLE_OBJECT(GameDynamicData);
 public:
-	static GameDynamicData* getInstance();
-
 	void setFloatByKey(const std::string& key, const float& value);
 
 	void setIntByKey(const std::string& key, const int& value);
-
-	void setBoolByKey(const std::string& key, bool value);
 
 	void setStringByKey(const std::string& key, const std::string& value);
 
@@ -32,14 +31,16 @@ public:
 
 	float getFloatByKey(const std::string& key);
 
-	bool getBoolByKey(const std::string& key);
-
 	std::string getStringByKey(const std::string& key);
 
 	static void release();
 private:
 	GameDynamicData();
 	~GameDynamicData();
+
+	void readDataFromFile();
+
+	void writeDateToFile();
 	
 	void setValue(const std::string& key,std::stringstream& ss);
 
@@ -47,7 +48,7 @@ private:
 
 	std::map<std::string, std::string> m_data;
 	
-	static GameDynamicData* m_instance;
+	SINGLE_ATTRIBUTES(GameDynamicData);
 };
 
 #endif // !__GAME_DYNAMIC_DATA_H__

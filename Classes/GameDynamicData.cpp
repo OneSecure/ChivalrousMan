@@ -1,10 +1,10 @@
 #include"GameDynamicData.h"
 #include"Commen.h"
-#include<mutex>
-#include<atomic>
 #include<regex>
+#include<fstream>
 
 using namespace std;
+#define FileName "GameDynamicData.data"
 
 #define SetValue() stringstream ss ;\
                  ss << value; \
@@ -13,9 +13,7 @@ using namespace std;
 #define GetValue() auto it = m_data.find(key); \
         return it != m_data.end() ? stoi(it->second) :-1;
 
-atomic<GameDynamicData*> g_dynaload;
-mutex g_dynamutex;
-GameDynamicData* GameDynamicData::m_instance = nullptr;
+DEFINE_SINGLE_ATTRIBUTES(GameDynamicData);
 
 GameDynamicData::GameDynamicData()
 {
@@ -24,25 +22,7 @@ GameDynamicData::GameDynamicData()
 
 GameDynamicData::~GameDynamicData()
 {
-
-}
-
-GameDynamicData* GameDynamicData::getInstance()
-{
-	m_instance = g_dynaload.load(memory_order_relaxed);
-	atomic_thread_fence(memory_order_acquire);
-	if (m_instance == nullptr)
-	{
-		lock_guard<mutex> lock(g_dynamutex);
-		m_instance = g_dynaload.load(memory_order_relaxed);
-		if (m_instance == nullptr)
-		{
-			m_instance = new GameDynamicData;
-			atomic_thread_fence(memory_order_release);
-			g_dynaload.store(m_instance, memory_order_release);
-		}
-	}
-	return m_instance;
+	writeDateToFile();
 }
 
 void  GameDynamicData::setFloatByKey(const std::string& key, const float& value)
@@ -51,11 +31,6 @@ void  GameDynamicData::setFloatByKey(const std::string& key, const float& value)
 }
 
 void  GameDynamicData::setIntByKey(const std::string& key, const int& value)
-{
-	SetValue();
-}
-
-void GameDynamicData::setBoolByKey(const std::string& key, bool value)
 {
 	SetValue();
 }
@@ -82,11 +57,6 @@ float GameDynamicData::getFloatByKey(const std::string& key)
 	GetValue();
 }
 
-bool GameDynamicData::getBoolByKey(const std::string& key)
-{
-	GetValue();
-}
-
 std::string  GameDynamicData::getStringByKey(const std::string& key)
 {
 	auto it = m_data.find(key);
@@ -95,10 +65,48 @@ std::string  GameDynamicData::getStringByKey(const std::string& key)
 
 bool  GameDynamicData::init()
 {
+	readDataFromFile();
 	return true;
 }
 
 void GameDynamicData::release()
 {
 	RELEASE_NULL(m_instance);
+}
+
+void GameDynamicData::readDataFromFile()
+{
+	ifstream fin;
+	fin.open(FileName, ios::in);
+	if (fin.fail())
+	{
+		return;
+	}
+
+	string key;
+	string value;
+	while (!fin.eof())
+	{
+		fin >> key;
+		fin >> value;
+		m_data[key] = value;
+	}
+	fin.close();
+}
+
+void GameDynamicData::writeDateToFile()
+{
+	ofstream fout;
+	fout.open(FileName, ios::out);
+	if (fout.fail())
+	{
+		return;
+	}
+	
+	for (auto it = m_data.begin(); it != m_data.end(); ++it)
+	{
+		fout << it->first<<" ";
+		fout << it->second << endl;
+	}
+	fout.close();
 }

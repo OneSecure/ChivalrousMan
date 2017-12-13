@@ -64,6 +64,15 @@
     <Filter Include="src\State\private">
       <UniqueIdentifier>{bc963fae-74bb-43d6-a0b3-c07257ad7d18}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\DBConnect">
+      <UniqueIdentifier>{ba4b6466-82d7-4d45-bc50-276ed015d3a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\DBConnect\private">
+      <UniqueIdentifier>{7155d772-f939-40f0-9a96-271ef3acff16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\DBConnect\public">
+      <UniqueIdentifier>{b96e0201-310f-4c86-8c3b-4dbe22818ca9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -123,9 +132,6 @@
     <ClCompile Include="..\Classes\MapInfo.cpp">
       <Filter>src\Tool\private</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\GameLogicLayer.cpp">
-      <Filter>src\Layer\public</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\CameraPlayer.cpp">
       <Filter>src\Model\private</Filter>
     </ClCompile>
@@ -143,6 +149,24 @@
     </ClCompile>
     <ClCompile Include="..\Classes\PlayerRun.cpp">
       <Filter>src\State\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\DBDao.cpp">
+      <Filter>src\DBConnect\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GameLogicLayer.cpp">
+      <Filter>src\Layer\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\LoadingLayer.cpp">
+      <Filter>src\Layer\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExcessiveScene.cpp">
+      <Filter>src\Scene\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\AudioSystem.cpp">
+      <Filter>src\Tool\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\TaskSystem.cpp">
+      <Filter>src\Tool\private</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -209,9 +233,6 @@
     <ClInclude Include="..\Classes\PreProcess.h">
       <Filter>src\Tool\public</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\GameLogicLayer.h">
-      <Filter>src\Layer\private</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\CameraPlayer.h">
       <Filter>src\Model\public</Filter>
     </ClInclude>
@@ -229,6 +250,24 @@
     </ClInclude>
     <ClInclude Include="..\Classes\PlayerRun.h">
       <Filter>src\State\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\DBDao.h">
+      <Filter>src\DBConnect\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GameLogicLayer.h">
+      <Filter>src\Layer\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\LoadingLayer.h">
+      <Filter>src\Layer\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExcessiveScene.h">
+      <Filter>src\Scene\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\AudioSystem.h">
+      <Filter>src\Tool\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TaskSystem.h">
+      <Filter>src\Tool\public</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -17,6 +17,8 @@ class GameMapLayer;
 #define MapGridW MapInfo::getMapInstance()->getMapGridW()
 #define MapGridH MapInfo::getMapInstance()->getMapGridH()
 #define GetMapInfo MapInfo::getMapInstance()->getMapInfo
+#define SetDoorPos MapInfo::getMapInstance()->setDoorPos
+#define GetDoorPos MapInfo::getMapInstance()->getDoorPos
 
 class MapInfo:public cocos2d::CCObject
 {

@@ -1,8 +1,10 @@
 #pragma once
 #ifndef __GAMEDATA_H__
 #define __GAMEDATA_H__
-#include"cocos2d.h"
+#include"PreProcess.h"
 #include<string>
+#include<atomic>
+#include<mutex>
 
 #define StringValue GameData::getInstance()->getStringByKey
 #define IntValue GameData::getInstance()->getIntByKey
@@ -11,9 +13,8 @@
 
 class GameData:public cocos2d::CCObject
 {
+	GET_SINGLE_OBJECT(GameData);
 public:
-	static GameData* getInstance();
-
 	std::string getStringByKey(const std::string& key);
 
 	int getIntByKey(const std::string& key);
@@ -29,7 +30,8 @@ private:
 	bool init();
 
 	cocos2d::Dictionary* m_dictionary;
-	static GameData* m_instance;
+
+	SINGLE_ATTRIBUTES(GameData);
 };
 
 #endif // !__GAMEDATA_H__

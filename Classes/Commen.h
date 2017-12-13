@@ -2,7 +2,7 @@
 #ifndef __COMMEN_H__
 #define __COMMEN_H__
 
-USING_NS_CC;
+using namespace cocos2d;
 
 #define PI 3.1415
 
@@ -102,10 +102,10 @@ USING_NS_CC;
          _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this)
   
 #define RELEASE_NULL(p) \
- if(p!=nullptr) \
+ if((p)!=nullptr) \
  { \
-    delete p; \
-    p = nullptr; \
+    delete (p); \
+    (p) = nullptr; \
   }
 
 #define FOUR_LOSE_FIVE_ADD(number) \
@@ -132,5 +132,17 @@ USING_NS_CC;
   } \
 }
 
+#define ToggleMusic()  \
+{ \
+auto toggle = (MenuItemToggle*)sender; \
+if (toggle->getSelectedIndex() == 1) \
+{ \
+SetIntData("BgMusic", 1); \
+} \
+else \
+{ \
+SetIntData("BgMusic", 0); \
+} \
+}
 
 #endif  // !__COMMEN_H__

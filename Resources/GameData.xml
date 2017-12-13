@@ -2,6 +2,36 @@
 <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+  <key>GradeText</key>
+  <string>等级:</string>
+  <key>BarBg</key>
+  <string>BarBg.png</string>
+  <key>BloodBar</key>
+  <string>BloodBar.png</string>
+  <key>ManaBar</key>
+  <string>ManaBar.png</string>
+  <key>Player1Head</key>
+  <string>player2/player2_head.png</string>
+  <key>Player2Head</key>
+  <string>player3/player3_head.png</string>
+  <key>Player3Head</key>
+  <string>player4/player4_head.png</string>
+  <key>HeadFrame</key>
+  <string>head_frame.png</string>
+  <key>MusicText</key>
+  <string>背景音效:</string>
+  <key>BgMusic</key>
+  <string>Music/BgMusic.WAV</string>
+  <key>TrunOn</key>
+  <string>trunOn.png</string>
+  <key>TrunOff</key>
+  <string>trunOff.png</string>
+  <key>LoadingText</key>
+  <string>场景构建中..........</string>
+  <key>LoadingIcon</key>
+  <string>ProgressBar.png</string>
+  <key>LoadBg</key>
+  <string>loadBg.png</string>
   <key>Player1WaitLeft</key>
   <string>player2/wait/player2_2.png</string>
   <key>Player1WaitRight</key>
@@ -70,8 +100,6 @@
   <string>SceneBg.png</string>
   <key>map1</key>
   <string>map1.mp</string>
-  <key>ProgressCircle</key>
-  <string>ProgressBar.png</string>
   <key>LoginGame</key>
   <string>登录游戏</string>
   <key>LeftBracket</key>

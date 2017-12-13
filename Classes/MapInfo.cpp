@@ -41,13 +41,14 @@ bool MapInfo::readMapInfoFromFile(const std::string& filename)
 		return false;
 	}
 	releaseMapInfo();
+	string row;
+	fin >> row;
 	fin >> m_countx;
 	fin >> m_county;
 	fin >> m_mapSize.width;
 	fin >> m_mapSize.height;
 	fin >> m_maptextures;
 	m_mapinfo = new int*[m_county];
-	string row;
 	for (int i = 0; i < m_county; ++i)
 	{
 		m_mapinfo[i] = new int[m_countx];
