@@ -2,6 +2,22 @@
 <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+  <key>SendBtn</key>
+  <string>SendBtn.png</string>
+  <key>TalkTip</key>
+  <string>世界聊天</string>
+  <key>MessageFrame</key>
+  <string>MessageFrame.png</string>
+  <key>TalkEditECHO</key>
+  <string>输入文字</string>
+  <key>TalkFrame</key>
+  <string>talkframe.png</string>
+  <key>MapIcon</key>
+  <string>MapIcon.png</string>
+  <key>BackPack</key>
+  <string>backpack.png</string>
+  <key>SkillIcon</key>
+  <string>skillicon.png</string>
   <key>GradeText</key>
   <string>等级:</string>
   <key>BarBg</key>

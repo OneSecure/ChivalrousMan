@@ -14,7 +14,6 @@ bool GameLogicLayer::init()
 	if (Layer::init())
 	{
 		LISTEN_TOUCH(GameLogicLayer);
-		generateUserInterface();
 		scheduleUpdate();
 		return true;
 	}
@@ -48,29 +47,4 @@ void GameLogicLayer::update(float dt)
 		if (PlayerCanMove())
 			PlayerMove();
 	}
-}
-
-void GameLogicLayer::generateUserInterface()
-{
-	auto size = SCREEN;
-	auto headFrame = Sprite::create(StringValue("HeadFrame"));
-	headFrame->setPosition(headFrame->getContentSize().width*0.5 + 10, size.height - headFrame->getContentSize().height*0.5 - 15);
-	this->addChild(headFrame);
-	char headname[40] = { 0 };
-	sprintf_s(headname, "%sHead", GetStringData("PlayerType").c_str());
-	m_head = MenuItemImage::create(StringValue(headname), StringValue(headname));
-	m_head->setPosition(headFrame->getPosition().x -5, headFrame->getPosition().y + 5);
-	auto menu = Menu::create();
-	menu->addChild(m_head);
-	menu->setPosition(0, 0);
-
-	auto labelgrade = LabelTTF::create(StringValue("GradeText"), "¿¬Ìå", 20);
-	labelgrade->setColor(ccc3(0, 0, 0));
-	labelgrade->setPosition(labelgrade->getContentSize().width*0.5 + 5, size.height - headFrame->getContentSize().height - 25);
-	this->addChild(labelgrade);
-	m_grade = LabelTTF::create("1", "¿¬Ìå", 20);
-	m_grade->setPosition(labelgrade->getPosition().x + labelgrade->getContentSize().width, labelgrade->getPosition().y);
-	this->addChild(m_grade);
-	
-	this->addChild(menu);
 }

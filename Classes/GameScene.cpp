@@ -4,6 +4,7 @@
 #include"GameLogicLayer.h"
 #include"CameraPlayer.h"
 #include"LoadingLayer.h"
+#include"GameUILayer.h"
 #include"Commen.h"
 
 bool GameScene::init()
@@ -22,6 +23,9 @@ bool GameScene::init()
 
 		m_logicLayer = GameLogicLayer::create();
 		this->addChild(m_logicLayer);
+
+		auto UILayer = GameUILayer::create();
+		this->addChild(UILayer);
 		return true;
 	}
 	return false;
