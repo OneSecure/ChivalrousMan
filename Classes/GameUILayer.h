@@ -42,6 +42,8 @@ private:
 	*点击发送按钮回调函数
 	*/
 	void onSendClickCallBack(cocos2d::CCObject* sender);
+	
+	virtual void onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *unused_event);
 
 	virtual bool onTextFieldAttachWithIME(cocos2d::TextFieldTTF * sender);
 

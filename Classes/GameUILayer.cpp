@@ -21,6 +21,7 @@ bool GameUILayer::init()
 void GameUILayer::generateUserInterface()
 {
 	auto size = SCREEN;
+	LISTEN_TOUCH(GameUILayer);
 
 	auto menu = Menu::create();
 	menu->setPosition(0, 0);
@@ -88,10 +89,11 @@ void GameUILayer::generateUserInterface()
 
 	auto editBg = Sprite::create(StringValue("MessageFrame"));
 	editBg->setPosition(editBg->getContentSize().width*0.5, editBg->getContentSize().height*0.5);
-	m_editFrame = TextFieldTTF::textFieldWithPlaceHolder(StringValue("TalkEditECHO"), "¿¬Ìå", 20);
-	m_editFrame->setColor(ccc3(255, 38, 141));
+	m_editFrame = TextFieldTTF::textFieldWithPlaceHolder(StringValue("TalkEditECHO"), "¿¬Ìå", 16);
+	m_editFrame->setColor(ccc3(195, 195, 195));
 	m_editFrame->setContentSize(editBg->getContentSize());
 	m_editFrame->setPosition(editBg->getPosition());
+	m_editFrame->setWidth(130);
 	m_editFrame->setDelegate(this);
 	m_sendBtn = MenuItemImage::create(StringValue("SendBtn"), StringValue("SendBtn"),
 		this, menu_selector(GameUILayer::onSendClickCallBack));
@@ -135,10 +137,20 @@ void GameUILayer::onSendClickCallBack(cocos2d::CCObject* sender)
 
 bool GameUILayer::onTextFieldAttachWithIME(TextFieldTTF * sender)
 {
+	sender->setScale(1.1);
+	sender->setColor(ccc3(255, 255, 255));
 	return TextFieldDelegate::onTextFieldAttachWithIME(sender);
 }
 
 bool  GameUILayer::onTextFieldDetachWithIME(TextFieldTTF * sender)
 {
+	sender->setScale(1.0);
+	sender->setColor(ccc3(195, 195, 195));
 	return TextFieldDelegate::onTextFieldDetachWithIME(sender);
+}
+void GameUILayer::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *unused_event)
+{
+	auto pos = touch->getLocation();
+	bool res;
+	ATTACH_OR_DETACH(m_editFrame, pos, res);
 }

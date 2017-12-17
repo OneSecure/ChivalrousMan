@@ -34,6 +34,8 @@ public:
 private:
 	void generateSql(int flag);
 
+	std::string generateWhere();
+
 	MYSQL* m_sqlCon;
 	std::string m_host;
 	std::string m_username;
@@ -41,6 +43,7 @@ private:
 	std::string m_dbname;
 	unsigned int m_port = 3306;
 	std::string m_sql;
+	Model m_md;
 };
 
 template<typename Model>
@@ -64,7 +67,7 @@ DBDao<Model>::~DBDao()
 template<typename Model>
 void DBDao<Model>::setModel(Model md)
 {
-
+	m_md = md;
 }
 
 template<typename Model>
@@ -119,6 +122,11 @@ void  DBDao<Model>::generateSql(int flag)
 	switch (flag)
 	{
 	case QUERY:
+	{
+		m_sql.append("select * from ");
+		m_sql.append(m_md->getName());
+		m_sql.append(generateWhere());
+	}
 		break;
 	case INSERT:
 		break;
@@ -129,6 +137,40 @@ void  DBDao<Model>::generateSql(int flag)
 	default:
 		break;
 	}
+}
+
+template<typename Model>
+std::string   DBDao<Model>::generateWhere()
+{
+	std::string wheres = "";
+	int flag = 0;
+	for (int i = 0; i < m_md.getAttributeNums; ++i)
+	{
+		if (flag == 0)
+		{
+			if (m_md[i] != "")
+			{
+				wheres += " where ";
+				wheres += m_md.getAttributeName(i);
+				wheres += "='";
+				wheres += m_md[i];
+				wheres += "'";
+				flag = 1;
+			}
+		}
+		else
+		{
+			if (m_md[i] != "")
+			{
+				wheres += " and ";
+				wheres+= m_md.getAttributeName(i);
+				wheres += "='";
+				wheres += m_md[i];
+				wheres += "'";
+			}
+		}
+	}
+	return wheres;
 }
 
 #endif // !__DB_INTERFACE_H__
