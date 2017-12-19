@@ -21,11 +21,11 @@ class GameDynamicData :public cocos2d::CCObject
 {
 	GET_SINGLE_OBJECT(GameDynamicData);
 public:
-	void setFloatByKey(const std::string& key, const float& value);
+	void setFloatByKey(const std::string& key, const float& value, bool save = false);
 
-	void setIntByKey(const std::string& key, const int& value);
+	void setIntByKey(const std::string& key, const int& value, bool save = false);
 
-	void setStringByKey(const std::string& key, const std::string& value);
+	void setStringByKey(const std::string& key, const std::string& value, bool save = false);
 
 	int getIntByKey(const std::string& key);
 
@@ -42,11 +42,12 @@ private:
 
 	void writeDateToFile();
 	
-	void setValue(const std::string& key,std::stringstream& ss);
+	void setValue(const std::string& key, std::stringstream& ss, bool save);
 
 	bool init();
 
 	std::map<std::string, std::string> m_data;
+	std::map<std::string, std::string> m_saveData;
 	
 	SINGLE_ATTRIBUTES(GameDynamicData);
 };

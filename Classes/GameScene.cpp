@@ -30,3 +30,29 @@ bool GameScene::init()
 	}
 	return false;
 }
+
+void GameScene::pauseAllActions(cocos2d::Node* hoster)
+{
+	hoster->pauseSchedulerAndActions();
+	auto NodeArray = hoster->getChildren();
+	if (NodeArray.size() > 0)
+	{
+		for (auto it : NodeArray)
+		{
+			pauseAllActions(it);
+		}
+	}
+}
+
+void GameScene::resumeAllActions(cocos2d::Node* hoster)
+{
+	hoster->resumeSchedulerAndActions();
+	auto NodeArray = hoster->getChildren();
+	if (NodeArray.size() > 0)
+	{
+		for (auto it : NodeArray)
+		{
+			resumeAllActions(it);
+		}
+	}
+}

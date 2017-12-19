@@ -3,6 +3,9 @@
 #include"BeginScene.h"
 #include"StartMenu.h"
 #include"Commen.h"
+#include"Model.h"
+#include"DBDao.h"
+#include<sstream>
 
 bool SigOnLayer::init()
 {
@@ -27,7 +30,47 @@ bool SigOnLayer::init()
 
 void SigOnLayer::AffirmBtnCallBack(cocos2d::CCObject* obj)
 {
-
+	std::string playername = m_tfUserName->getString();
+	std::string playerpsw = m_tfPasswd->getString();
+	std::string surepsw = m_tfSurePasswd->getString();
+	if (playername == "")
+	{
+		MessageBox("用户名不能为空!", "提示");
+		return;
+	}
+	if (playerpsw == "")
+	{
+		MessageBox("密码不能为空", "提示");
+		return;
+	}
+	if (surepsw == "")
+	{
+		MessageBox("确认密码不能为空", "提示");
+		return;
+	}
+	if (playerpsw != surepsw)
+	{
+		MessageBox("两次密码不一致", "提示");
+		return;
+	}
+	DBDao<Player> dao;
+	Player player;
+	player[1] = playername;
+	player[2] = playerpsw;
+	std::stringstream ss;
+	int i = 0;
+	ss << i;
+	ss >> player[3];
+	dao.setModel(player);
+	if (dao.insertModel())
+	{
+		MessageBox("注册成功", "提示");
+	}
+	else
+	{
+		MessageBox("注册失败", "提示");
+	}
+	GO_BACK_BEGIN();
 }
 
 void SigOnLayer::GoBackBtnCallBack(cocos2d::CCObject* obj)

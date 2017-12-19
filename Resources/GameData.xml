@@ -2,6 +2,16 @@
 <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+  <key>ChangeCount</key>
+  <string>切换账号</string>
+  <key>BackMainMenu</key>
+  <string>返回主菜单</string>
+  <key>BackGame</key>
+  <string>返回游戏</string>
+  <key>MenuBg</key>
+  <string>MenuBg.png</string>
+  <key>MenuBtn</key>
+  <string>MenuBtn.png</string>
   <key>SendBtn</key>
   <string>SendBtn.png</string>
   <key>TalkTip</key>

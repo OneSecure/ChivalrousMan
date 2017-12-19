@@ -6,12 +6,22 @@
 using namespace std;
 #define FileName "GameDynamicData.data"
 
-#define SetValue() stringstream ss ;\
+#define SetValue(SAVE) stringstream ss ;\
                  ss << value; \
-                 setValue(key, ss)
+                 setValue(key, ss,SAVE)
 
-#define GetValue() auto it = m_data.find(key); \
-        return it != m_data.end() ? stoi(it->second) :-1;
+#define GetValue(SUFFIX)	 \
+auto it=m_data.find(key); \
+if (it != m_data.end()) \
+{ \
+	return sto##SUFFIX(it->second); \
+} \
+it = m_saveData.find(key); \
+if (it != m_saveData.end()) \
+{\
+	return sto##SUFFIX(it->second);  \
+} \
+return -1
 
 DEFINE_SINGLE_ATTRIBUTES(GameDynamicData);
 
@@ -25,42 +35,65 @@ GameDynamicData::~GameDynamicData()
 	writeDateToFile();
 }
 
-void  GameDynamicData::setFloatByKey(const std::string& key, const float& value)
+void  GameDynamicData::setFloatByKey(const std::string& key, const float& value,bool save)
 {
-	SetValue();
+	SetValue(save);
 }
 
-void  GameDynamicData::setIntByKey(const std::string& key, const int& value)
+void  GameDynamicData::setIntByKey(const std::string& key, const int& value,bool save)
 {
-	SetValue();
+	SetValue(save);
 }
 
-void GameDynamicData::setStringByKey(const std::string& key, const std::string& value)
+void GameDynamicData::setStringByKey(const std::string& key, const std::string& value,bool save)
 {
-	m_data[key] = value;
+	if (save)
+	{
+		m_saveData[key] = value;
+	}
+	else
+	{
+		m_data[key] = value;
+	}
 }
 
-void  GameDynamicData::setValue(const std::string& key, stringstream& ss)
+void  GameDynamicData::setValue(const std::string& key, stringstream& ss,bool save)
 {
 	string value;
 	ss >> value;
-	m_data[key] = value;
+	if (save)
+	{
+		m_saveData[key] = value;
+	}
+	else
+	{
+		m_data[key] = value;
+	}
 }
 
 int GameDynamicData::getIntByKey(const std::string& key)
 {
-	GetValue();
+	GetValue(i);
 }
 
 float GameDynamicData::getFloatByKey(const std::string& key)
 {
-	GetValue();
+	GetValue(f);
 }
 
 std::string  GameDynamicData::getStringByKey(const std::string& key)
 {
 	auto it = m_data.find(key);
-	return it != m_data.end() ? it->second : "";
+	if (it != m_data.end())
+	{
+		return it->second;
+	}
+	it = m_saveData.find(key);
+	if (it != m_saveData.end())
+	{
+		return it->second;
+	}
+	return "";
 }
 
 bool  GameDynamicData::init()
@@ -89,7 +122,7 @@ void GameDynamicData::readDataFromFile()
 	{
 		fin >> key;
 		fin >> value;
-		m_data[key] = value;
+		m_saveData[key] = value;
 	}
 	fin.close();
 }
@@ -103,7 +136,7 @@ void GameDynamicData::writeDateToFile()
 		return;
 	}
 	
-	for (auto it = m_data.begin(); it != m_data.end(); ++it)
+	for (auto it = m_saveData.begin(); it != m_saveData.end(); ++it)
 	{
 		fout << it->first<<" ";
 		fout << it->second << endl;

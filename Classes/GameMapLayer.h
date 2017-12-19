@@ -26,6 +26,7 @@ private:
 
 	cocos2d::Node* m_curMaps;
 
+	std::vector<cocos2d::Sprite*> m_doors;
 	cocos2d::Sprite* m_door = nullptr;
 	cocos2d::Vec2 m_doorPos;
 };

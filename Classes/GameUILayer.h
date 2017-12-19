@@ -39,6 +39,11 @@ private:
 	void onHeadClickCallBack(cocos2d::CCObject* sender);
 
 	/*
+	*菜单按钮点击回调函数
+	*/
+	void onMenuClickCallBack(cocos2d::CCObject* sender);
+
+	/*
 	*点击发送按钮回调函数
 	*/
 	void onSendClickCallBack(cocos2d::CCObject* sender);
@@ -49,6 +54,7 @@ private:
 
 	virtual bool onTextFieldDetachWithIME(cocos2d::TextFieldTTF * sender);
 
+	cocos2d::LabelTTF* m_roleName;                   //角色名
 	cocos2d::ProgressTimer* m_bloodBar;           //血条
 	cocos2d::ProgressTimer* m_manaBar;           //魔条
 	cocos2d::MenuItemImage* m_head;              //头像
@@ -61,6 +67,7 @@ private:
 	cocos2d::Sprite* m_talkFrame;   //世界聊天框
 	cocos2d::MenuItemImage* m_sendBtn;  //发送按钮
 	cocos2d::TextFieldTTF* m_editFrame;       //编辑消息框
+	cocos2d::MenuItemImage* m_menuBtn;
 };
 
 #endif // !__GAME_UI_LAYER_H__

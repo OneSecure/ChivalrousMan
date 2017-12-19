@@ -137,11 +137,11 @@ using namespace cocos2d;
 auto toggle = (MenuItemToggle*)sender; \
 if (toggle->getSelectedIndex() == 1) \
 { \
-SetIntData("BgMusic", 1); \
+SetIntData("BgMusic", 1,true); \
 } \
 else \
 { \
-SetIntData("BgMusic", 0); \
+SetIntData("BgMusic", 0,true); \
 } \
 }
 

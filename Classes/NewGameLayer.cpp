@@ -5,8 +5,11 @@
 #include"GameScene.h"
 #include"GameDynamicData.h"
 #include"ExcessiveScene.h"
+#include"DBDao.h"
+#include"Model.h"
 #include<functional>
 #include<string>
+#include<sstream>
 
 bool NewGameLayer::init()
 {
@@ -71,9 +74,27 @@ void NewGameLayer::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *unused_ev
 void NewGameLayer::onConfirmCallBack(cocos2d::CCObject* sender)
 {
 	std::string name = m_username->getString();
+	std::string nums = GetStringData("rolenums");
+	if (std::stoi(nums) >= 3)
+	{
+		MessageBox("角色数已达上限", "提示");
+		return;
+	}
 	if (name != "")
 	{
-		recordPlayerType();
+		DBDao<PlayerInfo> dao;
+		PlayerInfo playerinfo;
+		playerinfo.setplayerName(GetStringData("playername"));
+		playerinfo.setroleName(name);
+		recordPlayerType(playerinfo);
+		dao.setModel(playerinfo);
+		if (!dao.insertModel())
+		{
+			MessageBox("创建失败", "提示");
+			return;
+		}
+		addRoleNums();
+		SetStringData("rolename", name);
 		auto gamescene = GameScene::create();
 		CC_SAFE_RETAIN(gamescene);
 		std::function<bool(void)> func = [] {return true; };
@@ -87,18 +108,27 @@ void NewGameLayer::onConfirmCallBack(cocos2d::CCObject* sender)
 	}
 }
 
-void NewGameLayer::recordPlayerType()
+void NewGameLayer::recordPlayerType(PlayerInfo& info)
 {
 	switch (m_playerType)
 	{
 	case Player_Type::Player1_Type:
+	{
+		info.setroleType("Player1");
 		SetStringData("PlayerType", "Player1");
+	}
 		break;
 	case Player_Type::Player2_Type:
+	{
+		info.setroleType("Player2");
 		SetStringData("PlayerType", "Player2");
+	}
 		break;
 	case Player_Type::Player3_Type:
+	{
+		info.setroleType("Player3");
 		SetStringData("PlayerType", "Player3");
+	}
 		break;
 	default:
 		break;
@@ -154,4 +184,17 @@ void NewGameLayer::moveBracket(cocos2d::Vec2 dest, float delay)
 
 	auto move1 = MoveTo::create(delay, ccp(dest.x + 70, dest.y));
 	m_bracket[1]->runAction(move1);
+}
+
+void NewGameLayer::addRoleNums()
+{
+	DBDao<Player> dao;
+	Player player;
+	std::string rolenums = GetStringData("rolenums");
+	int num = std::stoi(rolenums) + 1;
+	std::stringstream ss;
+	ss << num;
+	ss >> player[3];
+	dao.setModel(player);
+	dao.updateModel("playername", GetStringData("playername"));
 }

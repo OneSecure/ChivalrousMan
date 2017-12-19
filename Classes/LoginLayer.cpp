@@ -3,7 +3,11 @@
 #include"GameData.h"
 #include"Commen.h"
 #include"BeginScene.h"
+#include"DBDao.h"
+#include"Model.h"
+#include"GameDynamicData.h"
 #include<string>
+#include<vector>
         
 LoginLayer::~LoginLayer()
 {
@@ -63,6 +67,31 @@ bool LoginLayer::onTextFieldDetachWithIME(TextFieldTTF * sender)
 
 void LoginLayer::LoginCallback(CCObject* obj)
 {
+	std::string playername = tfUserName->getString();
+	std::string playerpsw = tfPasswd->getString();
+	if (playername == "")
+	{
+		MessageBox("用户名不能为空", "提示");
+		return;
+	}
+	if (playerpsw == "")
+	{
+		MessageBox("密码不能为空", "提示");
+		return;
+	}
+	DBDao<Player> dao;
+	Player player;
+	player.setplayerName(playername);
+	player.setplayerPsw(playerpsw);
+	dao.setModel(player);
+	std::vector<Player> list=dao.queryModel();
+	if (list.size() == 0)
+	{
+		MessageBox("用户名不存在", "提示");
+		return;
+	}
+	SetStringData("playername", list[0].getplayerName());
+	SetStringData("rolenums", list[0].getnums());
 	GO_BACK_START_MENU();
 }
 

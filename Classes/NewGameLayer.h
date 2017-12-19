@@ -3,6 +3,8 @@
 #define __NEW_GAME_LAYER_H__
 #include"PreProcess.h"
 
+class PlayerInfo;
+
 class NewGameLayer:public cocos2d::Layer,
 	public cocos2d::TextFieldDelegate
 {
@@ -15,7 +17,7 @@ private:
 	*recordPlayerType();
 	*纪录玩家类型
 	*/
-	void recordPlayerType();
+	void recordPlayerType(PlayerInfo& info);
 
     void onTouchEnded(cocos2d::Touch *touch,cocos2d::Event *unused_event);
 
@@ -47,6 +49,12 @@ private:
 	*@param delay：移动延迟
 	*/
 	void moveBracket(cocos2d::Vec2 dest, float delay);
+
+	/*
+	*addRoleNums();
+	*增加玩家角色个数
+	*/
+	void addRoleNums();
 
 	cocos2d::TextFieldTTF* m_username;
 	cocos2d::Sprite* m_bracket[2];

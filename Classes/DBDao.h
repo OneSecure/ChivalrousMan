@@ -19,6 +19,8 @@ template<typename Model>
 class DBDao
 {
 public:
+	DBDao();
+
 	DBDao(const std::string& host, const std::string& username, const std::string& passwd, const std::string& dbname);
 	~DBDao();
 
@@ -32,9 +34,15 @@ public:
 
 	bool updateModel(const std::string& fieldName, const std::string& value);
 private:
+	void initConnect();
+
 	void generateSql(int flag);
 
 	std::string generateWhere();
+
+	std::string generateValues();
+
+	std::string generateUpdate();
 
 	MYSQL* m_sqlCon;
 	std::string m_host;
@@ -47,15 +55,23 @@ private:
 };
 
 template<typename Model>
+DBDao<Model>::DBDao():
+	m_host("47.93.235.6"),
+	m_passwd("3252918599lsy"),
+	m_username("game"),
+	m_dbname("chivalrousman")
+{
+	initConnect();
+}
+
+template<typename Model>
 DBDao<Model>::DBDao(const std::string& host, const std::string& username, const std::string& passwd, const std::string& dbname) :
 	m_host(host),
 	m_username(username),
 	m_passwd(passwd),
 	m_dbname(dbname)
 {
-	m_sqlCon = mysql_init(0);
-	mysql_real_connect(m_sqlCon, m_host.c_str(), m_username.c_str(),
-		m_passwd.c_str(), m_dbname.c_str(), m_port, NULL, 0);
+	initConnect();
 }
 
 template<typename Model>
@@ -91,31 +107,50 @@ std::vector<Model> DBDao<Model>::queryModel()
 		Model md;
 		for (int i = 0; i < mysql_num_fields(result); ++i)
 		{
-			md[i] = row[i];
+			md[i + 1] = row[i];
 		}
+		resSet.push_back(md);
 	}
+	return resSet;
 }
 
 template<typename Model>
 bool DBDao<Model>::insertModel()
 {
 	generateSql(INSERT);
-	mysql_real_query(m_sqlCon, m_sql.c_str(), m_sql.length());
+	int res=mysql_real_query(m_sqlCon, m_sql.c_str(), m_sql.length());
+	return !res;
 }
 
 template<typename Model>
 bool DBDao<Model>::deleteModel()
 {
 	generateSql(DELETE);
-	mysql_real_query(m_sqlCon, m_sql.c_str(), m_sql.length());
+	int res=mysql_real_query(m_sqlCon, m_sql.c_str(), m_sql.length());
+	return !res;
 }
 
 template<typename Model>
 bool DBDao<Model>::updateModel(const std::string& fieldName,const std::string& value)
 {
 	generateSql(UPDATE);
-	mysql_real_query(m_sqlCon, m_sql.c_str(), m_sql.length());
+	m_sql.append(" where ");
+	m_sql.append(fieldName);
+	m_sql.append("='");
+	m_sql.append(value);
+	m_sql.append("'");
+	int res=mysql_real_query(m_sqlCon, m_sql.c_str(), m_sql.length());
+	return !res;
 }
+
+template<typename Model>
+void DBDao<Model>::initConnect()
+{
+	m_sqlCon = mysql_init(0);
+	MYSQL* con = mysql_real_connect(m_sqlCon, m_host.c_str(), m_username.c_str(),
+		m_passwd.c_str(), m_dbname.c_str(), m_port, NULL, 0);
+}
+
 template<typename Model>
 void  DBDao<Model>::generateSql(int flag)
 {
@@ -124,15 +159,31 @@ void  DBDao<Model>::generateSql(int flag)
 	case QUERY:
 	{
 		m_sql.append("select * from ");
-		m_sql.append(m_md->getName());
+		m_sql.append(m_md.getName());
 		m_sql.append(generateWhere());
 	}
 		break;
 	case INSERT:
+	{
+		m_sql.append("insert into ");
+		m_sql.append(m_md.getName());
+		m_sql.append(generateValues());
+	}
 		break;
 	case DELETE:
+	{
+		m_sql.append("delete from ");
+		m_sql.append(m_md.getName());
+		m_sql.append(generateWhere());
+	}
 		break;
 	case UPDATE:
+	{
+		m_sql.append("update ");
+		m_sql.append(m_md.getName());
+		m_sql.append(" set ");
+		m_sql.append(generateUpdate());
+	}
 		break;
 	default:
 		break;
@@ -144,7 +195,7 @@ std::string   DBDao<Model>::generateWhere()
 {
 	std::string wheres = "";
 	int flag = 0;
-	for (int i = 0; i < m_md.getAttributeNums; ++i)
+	for (int i =1; i <=m_md.getAttributeNums(); ++i)
 	{
 		if (flag == 0)
 		{
@@ -173,5 +224,46 @@ std::string   DBDao<Model>::generateWhere()
 	return wheres;
 }
 
-#endif // !__DB_INTERFACE_H__
+template<typename Model>
+std::string DBDao<Model>::generateValues()
+{
+	std::string values = "";
+	values += " values('";
+	for (int i = 1; i <=m_md.getAttributeNums(); ++i)
+	{
+		if (i == m_md.getAttributeNums())
+		{
+			values.append(m_md[i]);
+			values.append("')");
+		}
+		else
+		{
+			values.append(m_md[i]);
+			values.append("','");
+		}
+	}
+	return values;
+}
 
+template<typename Model>
+std::string DBDao<Model>::generateUpdate()
+{
+	std::string updates = "";
+	int flag = 0;
+	for (int i = 1; i <=m_md.getAttributeNums(); ++i)
+	{
+		if (m_md[i] != "")
+		{
+			if (flag)
+				updates += " , ";
+			updates += m_md.getAttributeName(i);
+			updates += "='";
+			updates += m_md[i];
+			updates += "'";
+			flag = 1;
+		}
+	}
+	return updates;
+}
+
+#endif // !__DB_INTERFACE_H__

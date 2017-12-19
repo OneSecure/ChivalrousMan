@@ -63,6 +63,13 @@ bool MapInfo::readMapInfoFromFile(const std::string& filename)
 		for (sregex_token_iterator iter(row.cbegin(), row.cend(), r4, -1); iter != send; ++iter)
 		{
 			m_mapinfo[i][j] = stoi(*iter);
+			if (m_mapinfo[i][j] == -1)
+			{
+				Vec2 pos;
+				pos.x = j*getMapGridW() + getMapGridW()*0.5;
+				pos.y = i*getMapGridH() + getMapGridH()*0.5;
+				m_doorPos.push_back(pos);
+			}
 			++j;
 		}
 	}

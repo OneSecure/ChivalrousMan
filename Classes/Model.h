@@ -6,7 +6,7 @@
 #define GettingAndSetting(varType,varName,funName) \
 private: varType varName; \
 public: varType& get##funName(void){return varName;} \
-public: void set##funName(const varType& var) {varName=var}
+public: void set##funName(const varType& var) {varName=var;}
 
 class Player
 {
@@ -29,6 +29,7 @@ public:
 		case 3:
 			return nums;
 		default:
+			return playerName;
 			break;
 		}
 	}
@@ -81,6 +82,7 @@ public:
 		case 3:
 			return roleType;
 		default:
+			return playerName;
 			break;
 		}
 	}

@@ -2,10 +2,12 @@
 #include"Commen.h"
 #include"GameData.h"
 #include"GameDynamicData.h"
+#include"GameMenuLayer.h"
+#include"GameScene.h"
 
-#define ClickAction()  \
-	auto move = ScaleTo::create(0.1, 1.2); \
-	auto move1 = ScaleTo::create(0.1, 1.0); \
+#define ClickAction()        \
+	auto move = ScaleTo::create(0.1, 1.2);     \
+	auto move1 = ScaleTo::create(0.1, 1.0);   \
 	((MenuItemImage*)sender)->runAction(Sequence::createWithTwoActions(move, move1))
 
 bool GameUILayer::init()
@@ -45,6 +47,10 @@ void GameUILayer::generateUserInterface()
 	m_grade = LabelTTF::create("1", "¿¬Ìå", 20);
 	m_grade->setPosition(labelgrade->getPosition().x + labelgrade->getContentSize().width, labelgrade->getPosition().y);
 	this->addChild(m_grade);
+	
+	m_roleName = LabelTTF::create(GetStringData("rolename"), "¿¬Ìå", 20);
+	m_roleName->setPosition(labelgrade->getPosition().x, labelgrade->getPosition().y - 20);
+	this->addChild(m_roleName);
 
 	m_backpack = MenuItemImage::create(StringValue("BackPack"), 
 		StringValue("BackPack"),this,
@@ -60,8 +66,14 @@ void GameUILayer::generateUserInterface()
 	m_worldMap = MenuItemImage::create(StringValue("MapIcon"),
 		StringValue("MapIcon"), this,
 		menu_selector(GameUILayer::onMapIconClickCallBack));
-	m_worldMap->setPosition(size.width - m_worldMap->getContentSize().width*0.5 - 10, size.height - m_worldMap->getContentSize().height*0.5 - 20);
+	m_worldMap->setPosition(size.width - m_worldMap->getContentSize().width*0.5, size.height - m_worldMap->getContentSize().height*0.5 - 20);
 	menu->addChild(m_worldMap);
+
+	m_menuBtn = MenuItemImage::create(StringValue("MenuBtn"),
+		StringValue("MenuBtn"), this,
+		menu_selector(GameUILayer::onMenuClickCallBack));
+	m_menuBtn->setPosition(m_worldMap->getPosition().x - m_worldMap->getContentSize().width, m_worldMap->getPosition().y);
+	menu->addChild(m_menuBtn);
 
 	auto bloodBg = Sprite::create(StringValue("BarBg"));
 	bloodBg->setPosition(headFrame->getPosition().x + headFrame->getContentSize().width + 15, headFrame->getPosition().y + 5);
@@ -133,6 +145,14 @@ void GameUILayer::onHeadClickCallBack(cocos2d::CCObject* sender)
 void GameUILayer::onSendClickCallBack(cocos2d::CCObject* sender)
 {
 	ClickAction();
+}
+
+void GameUILayer::onMenuClickCallBack(cocos2d::CCObject* sender)
+{
+	ClickAction();
+	((GameScene*)this->getParent())->pauseAllActions(this->getParent());
+	auto menuLayer = GameMenuLayer::create();
+	this->addChild(menuLayer);
 }
 
 bool GameUILayer::onTextFieldAttachWithIME(TextFieldTTF * sender)

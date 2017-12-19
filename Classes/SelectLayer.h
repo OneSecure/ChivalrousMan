@@ -2,6 +2,7 @@
 #ifndef __SELECT_LAYER_H__
 #define __SELECT_LAYER_H__
 #include"PreProcess.h"
+#include"Model.h"
 
 class SelectLayer :public cocos2d::Layer
 {
@@ -38,11 +39,19 @@ private:
 	*点击取消按钮的回调函数
 	*/
 	void onCancelCallBack(cocos2d::CCObject* sender);
+	
+	/*
+	*initPlayerView();
+	*初始化石台角色形象
+	*/
+	void initPlayerView();
 
 	cocos2d::Sprite* m_arrow;
 
 	//标记选择哪个纪录
 	int m_flag = 0;
+	
+	std::vector<PlayerInfo> m_roleList;
 };
 
 #endif // !__SELECT_LAYER_H__

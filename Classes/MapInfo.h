@@ -2,6 +2,7 @@
 #ifndef __MAP_INFO_H__
 #define __MAP_INFO_H__
 #include"PreProcess.h"
+#include<vector>
 
 class GameMapLayer;
 
@@ -62,6 +63,7 @@ private:
 	int** m_mapinfo = nullptr;
 	int m_countx;
 	int m_county;
+	std::vector<cocos2d::Vec2> m_doorPos;
 
 	static MapInfo* m_instance;
 };

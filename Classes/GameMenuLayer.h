@@ -1,0 +1,28 @@
+#pragma once
+#ifndef __GAME_MENU_LAYER_H__
+#define __GAME_MENU_LAYER_H__
+#include"PreProcess.h"
+
+class GameMenuLayer Inherit(cocos2d::Layer)
+{
+	CLASS_ESSENTAIL(GameMenuLayer)
+	CREATE_FUNC(GameMenuLayer)
+public:
+	bool init();
+
+private:
+	/*
+	*音乐按钮回调函数
+	*/
+	void onMusicCallBack(cocos2d::CCObject* sender);
+
+	/*
+	*返回游戏按钮回调函数
+	*/
+	void onBackGameCallBack(cocos2d::CCObject* sender);
+
+};
+
+
+#endif // !__GAME_MENU_LAYER_H__
+

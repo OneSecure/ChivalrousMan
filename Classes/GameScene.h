@@ -12,7 +12,10 @@ class GameScene Inherit(cocos2d::Scene)
 	CREATE_FUNC(GameScene)
 public:
 	virtual bool init();
+	
+	void pauseAllActions(cocos2d::Node* hoster);
 
+	void resumeAllActions(cocos2d::Node* hoster);
 private:
 	GameLogicLayer* m_logicLayer;
 	GameMapLayer* m_mapLayer;
