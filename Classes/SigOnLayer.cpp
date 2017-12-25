@@ -5,7 +5,18 @@
 #include"Commen.h"
 #include"Model.h"
 #include"DBDao.h"
+#include"LoadingLayer.h"
 #include<sstream>
+
+SigOnLayer::SigOnLayer()
+{
+
+}
+
+SigOnLayer::~SigOnLayer()
+{
+	RELEASE_NULL(m_sigonThread);
+}
 
 bool SigOnLayer::init()
 {
@@ -23,12 +34,51 @@ bool SigOnLayer::init()
 		COMMEN_BTN(this, SigOnLayer::AffirmBtnCallBack,
 			SigOnLayer::GoBackBtnCallBack);
 
+		this->scheduleUpdate();
 		return true;
 	}
 	return false;
 }
 
 void SigOnLayer::AffirmBtnCallBack(cocos2d::CCObject* obj)
+{
+	auto cushion = LoadingLayer::create(StringValue("SigonTipText"), StringValue("CushionProgress"));
+	this->addChild(cushion);
+	m_sigonThread = new std::thread{ &SigOnLayer::SigonEvent,this };
+	m_sigonThread->detach();
+}
+
+void SigOnLayer::GoBackBtnCallBack(cocos2d::CCObject* obj)
+{
+	GO_BACK_BEGIN();
+}
+
+bool SigOnLayer::onTextFieldAttachWithIME(TextFieldTTF * sender)
+{
+	sender->setScale(1.1);
+	sender->setTextColor(ccc4(13, 203, 17, 255));
+	sender->setColorSpaceHolder(ccc4(255, 128, 0, 255));
+	return TextFieldDelegate::onTextFieldAttachWithIME(sender);
+}
+
+bool SigOnLayer::onTextFieldDetachWithIME(TextFieldTTF * sender)
+{
+	sender->setScale(1.0);
+	sender->setTextColor(ccc4(131, 3, 92, 255));
+	sender->setColorSpaceHolder(ccc3(73, 214, 23));
+	return TextFieldDelegate::onTextFieldDetachWithIME(sender);
+}
+
+void SigOnLayer::onTouchEnded(Touch *touch, Event *unused_event)
+{
+	Vec2 pos = touch->getLocation();
+	bool res;
+	ATTACH_OR_DETACH(m_tfUserName, pos, res);
+	ATTACH_OR_DETACH(m_tfPasswd, pos, res);
+	ATTACH_OR_DETACH(m_tfSurePasswd, pos, res);
+}
+
+void SigOnLayer::SigonEvent()
 {
 	std::string playername = m_tfUserName->getString();
 	std::string playerpsw = m_tfPasswd->getString();
@@ -70,35 +120,14 @@ void SigOnLayer::AffirmBtnCallBack(cocos2d::CCObject* obj)
 	{
 		MessageBox("×¢²áÊ§°Ü", "ÌáÊ¾");
 	}
-	GO_BACK_BEGIN();
+	m_goto = 1;
 }
 
-void SigOnLayer::GoBackBtnCallBack(cocos2d::CCObject* obj)
+void SigOnLayer::update(float dt)
 {
-	GO_BACK_BEGIN();
-}
-
-bool SigOnLayer::onTextFieldAttachWithIME(TextFieldTTF * sender)
-{
-	sender->setScale(1.1);
-	sender->setTextColor(ccc4(13, 203, 17, 255));
-	sender->setColorSpaceHolder(ccc4(255, 128, 0, 255));
-	return TextFieldDelegate::onTextFieldAttachWithIME(sender);
-}
-
-bool SigOnLayer::onTextFieldDetachWithIME(TextFieldTTF * sender)
-{
-	sender->setScale(1.0);
-	sender->setTextColor(ccc4(131, 3, 92, 255));
-	sender->setColorSpaceHolder(ccc3(73, 214, 23));
-	return TextFieldDelegate::onTextFieldDetachWithIME(sender);
-}
-
-void SigOnLayer::onTouchEnded(Touch *touch, Event *unused_event)
-{
-	Vec2 pos = touch->getLocation();
-	bool res;
-	ATTACH_OR_DETACH(m_tfUserName, pos, res);
-	ATTACH_OR_DETACH(m_tfPasswd, pos, res);
-	ATTACH_OR_DETACH(m_tfSurePasswd, pos, res);
+	if (m_goto)
+	{
+		unscheduleUpdate();
+		GO_BACK_BEGIN();
+	}
 }

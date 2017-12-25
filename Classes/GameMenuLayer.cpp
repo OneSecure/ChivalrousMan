@@ -33,7 +33,7 @@ bool GameMenuLayer::init()
 			toggle->setSelectedIndex(1);
 		else
 			toggle->setSelectedIndex(0);
-		
+
 		auto backGame = MenuItemLabel::create(Label::create(StringValue("BackGame"), "¿¬Ìå", 40),
 			this, menu_selector(GameMenuLayer::onBackGameCallBack));
 		backGame->setColor(ccc3(0, 0, 0));

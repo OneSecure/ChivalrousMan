@@ -11,7 +11,6 @@ public:
 	virtual bool init();
 
 	void update(float dt);
-
 private:
 	void onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *unused_event);
 };

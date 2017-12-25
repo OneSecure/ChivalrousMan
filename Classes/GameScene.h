@@ -9,9 +9,10 @@ class GameMapLayer;
 class GameScene Inherit(cocos2d::Scene)
 {
 	CLASS_ESSENTAIL(GameScene)
-	CREATE_FUNC(GameScene)
 public:
-	virtual bool init();
+	static GameScene* createWithLevel(const int& level);
+
+	virtual bool init(const int& level);
 	
 	void pauseAllActions(cocos2d::Node* hoster);
 

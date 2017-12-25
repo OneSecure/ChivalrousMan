@@ -37,6 +37,8 @@ public:
 
 	void LoadResource();
 
+	void registerReflectClass();
+
 	void LoadAnimationFromFile(const char* filename, char* key, int num, float delay);
 };
 

@@ -78,7 +78,7 @@ void SelectLayer::onConfirmCallBack(cocos2d::CCObject* sender)
 	}
 	SetStringData("rolename", m_roleList[m_flag].getroleName());
 	SetStringData("PlayerType", m_roleList[m_flag].getroleType());
-	auto startmap = GameScene::create();
+	auto startmap = GameScene::createWithLevel(LEVEL_ONE);
 	CC_SAFE_RETAIN(startmap);
 	std::function<bool(void)> func = [] {  return true; };
 	auto excessive = ExcessiveScene::createExcessice(startmap, func, 1);
@@ -100,13 +100,13 @@ void SelectLayer::initPlayerView()
 	char name[40] = { 0 };
 	for (int i = 0; i < list.size(); ++i)
 	{
-		m_roleList.push_back(list[0]);
+		m_roleList.push_back(list[i]);
 		sprintf_s(name, "%sRunDown", list[i].getroleType().c_str());
 		auto playerAnimation = AnimationCache::getInstance()->getAnimation(name);
 		auto playerAnimate = Animate::create(playerAnimation);
 		sprintf_s(name, "%sWaitDown", list[i].getroleType().c_str());
 		auto player = Sprite::create(StringValue(name));
-		player->setPosition(SCREEN.width*0.25 + i*0.25, SCREEN.height*0.525);
+		player->setPosition(SCREEN.width*(0.25 + i*0.25), SCREEN.height*0.525);
 		player->runAction(RepeatForever::create(playerAnimate));
 		this->addChild(player);
 	}

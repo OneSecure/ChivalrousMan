@@ -37,6 +37,7 @@ bool GameMapLayer::loadMapTexture(std::string name)
 		m_mapList.push_back(mapframe);
 	}
 	InitMapLayer(this);
+	generateDoors();
 	return true;
 }
 
@@ -44,7 +45,7 @@ void GameMapLayer::resetMap()
 {
 	for (int i = 0; i < m_mapList.size(); ++i)
 	{
-		m_mapList[i]->setPosition(-MapInterval, 0);
+		m_mapList[i]->setVisible(false);
 	}
 }
 
@@ -61,27 +62,38 @@ bool GameMapLayer::drawMap(float startx, float starty)
 	for (int i = 0; i<=num; ++i)
 	{
 		m_mapList[i + start]->setPosition(realstartx + i*mapinterval, starty);
+		m_mapList[i + start]->setVisible(true);
 	}
 	return true;
 }
 
-void GameMapLayer::setDoorPos(const cocos2d::Vec2& doorPos)
+void GameMapLayer::updateDoorScreenPos()
 {
-	m_doorPos = doorPos;
-	if (m_door==nullptr)
+	if (m_doors.size() == 0)
 	{
-		m_door = Sprite::create();
-		auto animation = AnimationCache::getInstance()->getAnimation("DoorAnimation");
-		auto animate = Animate::create(animation);
-		m_door->runAction(animate);
+		return;
+	}
+	auto mappos = PlayerPos;
+	auto screenpos = PlayerFacePos();
+	std::vector<Vec2> list = GetDoorPosInfo();
+	for (int i = 0; i < m_doors.size(); ++i)
+	{
+		float offsetX = list[i].x - mappos.x;
+		float offsetY = list[i].y - mappos.y;
+		m_doors[i]->setPosition(screenpos.x + offsetX, screenpos.y + offsetY);
 	}
 }
 
-void GameMapLayer::updateDoorScreenPos()
+void GameMapLayer::generateDoors()
 {
-	auto mappos = PlayerPos;
-	auto screenpos = PlayerFacePos();
-	float offsetX = m_doorPos.x - mappos.x;
-	float offsetY = m_doorPos.y - mappos.y;
-	m_door->setPosition(screenpos.x + offsetX, screenpos.y + offsetY);
+	std::vector<Vec2> list = GetDoorPosInfo();
+	for (int i = 0; i < list.size(); ++i)
+	{
+		auto door = Sprite::create(StringValue("Door"));
+		auto animation = AnimationCache::getInstance()->getAnimation("DoorAnimation");
+		auto animate = Animate::create(animation);
+		door->runAction(RepeatForever::create(animate));
+		m_doors.push_back(door);
+		this->addChild(door);
+	}
 }

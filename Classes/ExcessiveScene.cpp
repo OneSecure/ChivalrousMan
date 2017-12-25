@@ -27,7 +27,7 @@ bool ExcessiveScene::init(cocos2d::Scene* reScene, std::function<bool(void)>& ca
 		m_reScene = reScene;
 		m_exssiveEvent = callEvent;
 		m_delay = delay;
-		auto loadingLayer = LoadingLayer::create(StringValue("LoadingText"));;
+		auto loadingLayer = LoadingLayer::create(StringValue("LoadingText"), StringValue("LoadingIcon"));
 		this->addChild(loadingLayer);
 
 		this->scheduleOnce(schedule_selector(ExcessiveScene::OnExcessiveCallBack), m_delay);

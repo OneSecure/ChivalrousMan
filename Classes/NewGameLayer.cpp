@@ -95,7 +95,7 @@ void NewGameLayer::onConfirmCallBack(cocos2d::CCObject* sender)
 		}
 		addRoleNums();
 		SetStringData("rolename", name);
-		auto gamescene = GameScene::create();
+		auto gamescene = GameScene::createWithLevel(LEVEL_ONE);
 		CC_SAFE_RETAIN(gamescene);
 		std::function<bool(void)> func = [] {return true; };
 		ExcessiveScene* excessive = ExcessiveScene::createExcessice(gamescene, func, 2);

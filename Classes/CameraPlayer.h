@@ -16,6 +16,7 @@
 #define SetPlayerMoveRoad CameraPlayer::getPlayerInstance()->setMoveRoad
 #define PlayerDir CameraPlayer::getPlayerInstance()->getDir
 #define PlayerFacePos CameraPlayer::getPlayerInstance()->getFacePos
+#define InitPlayerState CameraPlayer::getPlayerInstance()->initStateInfo
 
 class PlayerState;
 
@@ -92,7 +93,26 @@ public:
 	*@return float:返回夹角的弧度值
 	*/
 	float CalcAngle(cocos2d::Vec2 start, cocos2d::Vec2 target);
+
+	/*
+	*initStateInfo();
+	*初始化状态信息
+	*@param level:不同地图层
+	*/
+	void initStateInfo(const int& level);
 private:
+	/*
+	*AdjustPlayerAndMapPos()
+	*调整玩家和地图的位置
+	*/
+	void AdjustPlayerAndMapPos();
+
+	/*
+	*clearRoadList();
+	*清空路径队列
+	*/
+	void clearRoadList();
+
 	//前往下一个节点
 	void goNext();
 
@@ -100,7 +120,7 @@ private:
 	~CameraPlayer();
 
 	//玩家UI
-	cocos2d::Sprite* m_face;
+	cocos2d::Sprite* m_face = nullptr;
 
 	//玩家实例
 	static CameraPlayer* m_instance;
@@ -109,9 +129,13 @@ private:
 	std::stack<cocos2d::Vec2> m_roadList;
 
 	//玩家状态
-	PlayerState* m_state;
+	PlayerState* m_state = nullptr;
 
+	//标记状态改变
 	int m_flag;
+
+	//攻击力
+	float m_atk;
 };
 
 #endif // !__PLAYER_H__

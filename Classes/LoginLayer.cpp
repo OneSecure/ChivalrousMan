@@ -6,11 +6,17 @@
 #include"DBDao.h"
 #include"Model.h"
 #include"GameDynamicData.h"
-#include<string>
-#include<vector>
+#include"LoadingLayer.h"
+#include<process.h>
+
+LoginLayer::LoginLayer()
+{
+
+}
         
 LoginLayer::~LoginLayer()
 {
+	RELEASE_NULL(m_loginThread);
 }
  
 bool LoginLayer::init()
@@ -43,7 +49,7 @@ bool LoginLayer::init()
 		Gmenu->setPosition(ccp(0, 0));
 
 		this->addChild(Gmenu);
-		
+		this->scheduleUpdate();
 		return true;
 	}
 	return false;
@@ -67,32 +73,10 @@ bool LoginLayer::onTextFieldDetachWithIME(TextFieldTTF * sender)
 
 void LoginLayer::LoginCallback(CCObject* obj)
 {
-	std::string playername = tfUserName->getString();
-	std::string playerpsw = tfPasswd->getString();
-	if (playername == "")
-	{
-		MessageBox("用户名不能为空", "提示");
-		return;
-	}
-	if (playerpsw == "")
-	{
-		MessageBox("密码不能为空", "提示");
-		return;
-	}
-	DBDao<Player> dao;
-	Player player;
-	player.setplayerName(playername);
-	player.setplayerPsw(playerpsw);
-	dao.setModel(player);
-	std::vector<Player> list=dao.queryModel();
-	if (list.size() == 0)
-	{
-		MessageBox("用户名不存在", "提示");
-		return;
-	}
-	SetStringData("playername", list[0].getplayerName());
-	SetStringData("rolenums", list[0].getnums());
-	GO_BACK_START_MENU();
+	auto cushion = LoadingLayer::create(StringValue("LoginTipText"), StringValue("CushionProgress"));
+	this->addChild(cushion);
+	m_loginThread = new std::thread{ &LoginLayer::LoginEvent,this };
+	m_loginThread->detach();
 }
 
 void LoginLayer::CancelCallBack(CCObject* obj)
@@ -120,4 +104,56 @@ bool LoginLayer::isEntryPasswd(Vec2 pos)
 	bool res;
 	CONTAIN_POINT(tfPasswd, pos, res);
 	return res;
+}
+
+void LoginLayer::update(float dt)
+{
+	switch (m_goto)
+	{
+	case 1:
+	{
+		unscheduleUpdate();
+		GO_BACK_BEGIN();
+	}
+		break;
+	case 2:
+	{
+		unscheduleUpdate();
+		GO_BACK_START_MENU();
+	}
+		break;
+	default:
+		break;
+	}
+}
+
+void LoginLayer::LoginEvent()
+{
+	std::string playername = tfUserName->getString();
+	std::string playerpsw = tfPasswd->getString();
+	if (playername == "")
+	{
+		MessageBox("用户名不能为空", "提示");
+		return;
+	}
+	if (playerpsw == "")
+	{
+		MessageBox("密码不能为空", "提示");
+		return;
+	}
+	DBDao<Player> dao;
+	Player player;
+	player.setplayerName(playername);
+	player.setplayerPsw(playerpsw);
+	dao.setModel(player);
+	std::vector<Player> list = dao.queryModel();
+	if (list.size() == 0)
+	{
+		MessageBox("用户名不存在", "提示");
+		m_goto = 1;
+		return;
+	}
+	SetStringData("playername", list[0].getplayerName());
+	SetStringData("rolenums", list[0].getnums());
+	m_goto = 2;
 }

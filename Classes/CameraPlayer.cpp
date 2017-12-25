@@ -10,9 +10,6 @@ CameraPlayer* CameraPlayer::m_instance = nullptr;
 
 CameraPlayer::CameraPlayer()
 {
-	m_pos.x = 100;
-	m_pos.y = 100;
-	m_flag = 0;
 }
 
 CameraPlayer::~CameraPlayer()
@@ -32,12 +29,7 @@ CameraPlayer* CameraPlayer::getPlayerInstance()
 void CameraPlayer::setFace(cocos2d::Sprite* face)
 {
 	m_face = face;
-	m_state = new PlayerWait(m_face);
-	m_state->changeAnimation(Dir::Dir_Down);
 	m_face->setAnchorPoint(ccp(0.5, 0.1));
-	std::pair<Vec2, Vec2> pos = changeMapPosToUI();
-	m_face->setPosition(pos.first);
-	MapLayer->drawMap(pos.second.x, pos.second.y);
 }
 
 bool CameraPlayer::trunDir(const float& angle)
@@ -168,4 +160,38 @@ float  CameraPlayer::CalcAngle(cocos2d::Vec2 start, cocos2d::Vec2 target)
 	{
 		return 2 * PI - angle;
 	}
+}
+
+void CameraPlayer::initStateInfo(const int& level)
+{
+	switch (level)
+	{
+	case LEVEL_ONE:
+	{
+		m_pos.x = 100;
+		m_pos.y = 100;
+	}
+		break;
+	default:
+		break;
+	}
+	clearRoadList();
+	m_flag = 0;
+	RELEASE_NULL(m_state);
+	m_state = new PlayerWait(m_face);
+	AdjustPlayerAndMapPos();
+}
+
+void CameraPlayer::clearRoadList()
+{
+	while (!m_roadList.empty())
+	{
+		m_roadList.pop();
+	}
+}
+void CameraPlayer::AdjustPlayerAndMapPos()
+{
+	std::pair<Vec2, Vec2> pos = changeMapPosToUI();
+	m_face->setPosition(pos.first);
+	MapLayer->drawMap(pos.second.x, pos.second.y);
 }

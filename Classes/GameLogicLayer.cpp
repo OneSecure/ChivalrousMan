@@ -46,5 +46,6 @@ void GameLogicLayer::update(float dt)
 	{
 		if (PlayerCanMove())
 			PlayerMove();
+		UpdateDoorScreenPos();
 	}
 }

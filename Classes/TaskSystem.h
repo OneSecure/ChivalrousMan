@@ -5,6 +5,10 @@
 #include<atomic>
 #include<mutex>
 
+/*
+*TaskSystem
+*任务系统
+*/
 class TaskSystem
 {
 	GET_SINGLE_OBJECT(TaskSystem);

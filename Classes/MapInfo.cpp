@@ -1,6 +1,7 @@
 #include"MapInfo.h"
 #include"Commen.h"
 #include"GameMapLayer.h"
+#include"NpcGenerater.h"
 #include<fstream>
 #include<string>
 #include<regex>
@@ -63,12 +64,19 @@ bool MapInfo::readMapInfoFromFile(const std::string& filename)
 		for (sregex_token_iterator iter(row.cbegin(), row.cend(), r4, -1); iter != send; ++iter)
 		{
 			m_mapinfo[i][j] = stoi(*iter);
-			if (m_mapinfo[i][j] == -1)
+			if (m_mapinfo[i][j] == -100)
 			{
 				Vec2 pos;
 				pos.x = j*getMapGridW() + getMapGridW()*0.5;
 				pos.y = i*getMapGridH() + getMapGridH()*0.5;
 				m_doorPos.push_back(pos);
+			}
+			if (m_mapinfo[i][j] > -100 && m_mapinfo[i][j] < 0)
+			{
+				Vec2 pos;
+				pos.x = j*getMapGridW() + getMapGridW()*0.5;
+				pos.y = i*getMapGridH() + getMapGridH()*0.5;
+				NpcGenerater::m_NpcList[m_mapinfo[i][j]] = pos;
 			}
 			++j;
 		}
@@ -93,4 +101,12 @@ void MapInfo::releaseMapInfo()
 void MapInfo::setMapLayer(GameMapLayer* maplayer)
 {
 	m_mapLayer = maplayer;
+}
+
+void MapInfo::updateDoorsScreenPos()
+{
+	if (m_mapLayer != nullptr)
+	{
+		m_mapLayer->updateDoorScreenPos();
+	}
 }

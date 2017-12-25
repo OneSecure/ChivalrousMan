@@ -90,7 +90,7 @@ bool FindRoad::IsValid(_Pos& pos)
 {
 	if (pos.x >= 0 && pos.x < m_countx
 		&&pos.y >= 0 && pos.y < m_county
-		&&(m_map[pos.y][pos.x]==0||m_map[pos.y][pos.x]==-1))
+		&&(m_map[pos.y][pos.x]==0||m_map[pos.y][pos.x]==-100))
 	{
 		return true;
 	}

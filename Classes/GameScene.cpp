@@ -1,13 +1,31 @@
 #include"GameScene.h"
 #include"GameData.h"
+#include"GameDynamicData.h"
 #include"GameMapLayer.h"
 #include"GameLogicLayer.h"
 #include"CameraPlayer.h"
 #include"LoadingLayer.h"
 #include"GameUILayer.h"
+#include"ObjectLayer.h"
 #include"Commen.h"
 
-bool GameScene::init()
+GameScene*  GameScene::createWithLevel(const int& level)
+{
+	GameScene* pRet = new GameScene;
+	if (pRet&&pRet->init(level))
+	{
+		pRet->autorelease();
+		return pRet;
+	}
+	else
+	{
+		delete pRet;
+		pRet = nullptr;
+		return nullptr;
+	}
+}
+
+bool GameScene::init(const int& level)
 {
 	if (Scene::init())
 	{
@@ -16,10 +34,16 @@ bool GameScene::init()
 		m_mapLayer->drawMap(0, 0);
 		this->addChild(m_mapLayer);
 
-		auto player = Sprite::create();
+		auto objectLayer = ObjectLayer::createWithLevel(level);
+		this->addChild(objectLayer);
+
+		char name[40] = { 0 };
+		sprintf_s(name, "%sWaitDown", GetStringData("PlayerType").c_str());
+		auto player = Sprite::create(StringValue(name));
 		this->addChild(player);
 		SetPlayerVelocity(4);
 		SetPlayerFace(player);
+		InitPlayerState(level);
 
 		m_logicLayer = GameLogicLayer::create();
 		this->addChild(m_logicLayer);

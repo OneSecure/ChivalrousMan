@@ -12,13 +12,13 @@ class GameMapLayer Inherit(cocos2d::Layer)
 public:
 	bool init() override;
 
-	void setDoorPos(const cocos2d::Vec2& doorPos);
-
 	bool loadMapTexture(std::string name);
 
 	bool drawMap(float startx, float starty);
-private:
+
 	void updateDoorScreenPos();
+private:
+	void generateDoors();
 
 	void resetMap();
 

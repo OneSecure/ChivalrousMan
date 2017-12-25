@@ -6,26 +6,33 @@
 #include"CameraPlayer.h"
 #include"Commen.h"
 #include"AudioSystem.h"
+#include"NpcBlue.h"
+#include"NpcEquip.h"
+#include"NpcManmom.h"
+#include"NpcMonk.h"
+#include"NpcPink.h"
+#include"NpcSkill.h"
+#include"NpcVallige.h"
 
-#define LoadPlayerAnimation(player) \
-{ \
-	char name[40] = { 0 }; \
-sprintf_s(name, "%sWaitLeft", player); \
+#define LoadPlayerAnimation(player)    \
+{      \
+	char name[40] = { 0 };    \
+sprintf_s(name, "%sWaitLeft", player);    \
+LoadAnimationFromFile(StringValue(name).c_str(), name, 1, FloatValue("PlayerFps"));  \
+sprintf_s(name, "%sWaitRight", player);    \
+LoadAnimationFromFile(StringValue(name).c_str(), name, 1, FloatValue("PlayerFps"));  \
+sprintf_s(name, "%sWaitDown", player);    \
 LoadAnimationFromFile(StringValue(name).c_str(), name, 1, FloatValue("PlayerFps")); \
-sprintf_s(name, "%sWaitRight", player); \
-LoadAnimationFromFile(StringValue(name).c_str(), name, 1, FloatValue("PlayerFps")); \
-sprintf_s(name, "%sWaitDown", player); \
-LoadAnimationFromFile(StringValue(name).c_str(), name, 1, FloatValue("PlayerFps")); \
-sprintf_s(name, "%sWaitUp", player); \
-LoadAnimationFromFile(StringValue(name).c_str(), name, 1, FloatValue("PlayerFps")); \
-sprintf_s(name, "%sRunLeft",  player); \
-LoadAnimationFromFile(StringValue(name).c_str(), name, 12, FloatValue("PlayerFps")); \
-sprintf_s(name, "%sRunRight",  player); \
-LoadAnimationFromFile(StringValue(name).c_str(), name, 12, FloatValue("PlayerFps")); \
-sprintf_s(name, "%sRunDown",  player); \
-LoadAnimationFromFile(StringValue(name).c_str(), name, 12, FloatValue("PlayerFps")); \
-sprintf_s(name, "%sRunUp",  player); \
-LoadAnimationFromFile(StringValue(name).c_str(), name, 12, FloatValue("PlayerFps")); \
+sprintf_s(name, "%sWaitUp", player);   \
+LoadAnimationFromFile(StringValue(name).c_str(), name, 1, FloatValue("PlayerFps"));  \
+sprintf_s(name, "%sRunLeft",  player);   \
+LoadAnimationFromFile(StringValue(name).c_str(), name, 12, FloatValue("PlayerFps"));  \
+sprintf_s(name, "%sRunRight",  player);   \
+LoadAnimationFromFile(StringValue(name).c_str(), name, 12, FloatValue("PlayerFps"));  \
+sprintf_s(name, "%sRunDown",  player);   \
+LoadAnimationFromFile(StringValue(name).c_str(), name, 12, FloatValue("PlayerFps"));  \
+sprintf_s(name, "%sRunUp",  player);   \
+LoadAnimationFromFile(StringValue(name).c_str(), name, 12, FloatValue("PlayerFps"));  \
 }
 
 AppDelegate::AppDelegate() {
@@ -72,6 +79,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     FileUtils::getInstance()->addSearchPath("res");
 
     // create a scene. it's an autorelease object
+	registerReflectClass();
 	LoadResource();
 	AudioSystem::getInstance();
 
@@ -135,4 +143,15 @@ void AppDelegate::LoadAnimationFromFile(const char* filename,char* key,int num,f
 		outAni->addSpriteFrame(frame);
 	}
 	AnimationCache::getInstance()->addAnimation(outAni, key);
+}
+
+void AppDelegate::registerReflectClass()
+{
+	REG_REFLECT_CLASS(NpcBlue);
+	REG_REFLECT_CLASS(NpcEquip);
+	REG_REFLECT_CLASS(NpcMamom);
+	REG_REFLECT_CLASS(NpcMonk);
+	REG_REFLECT_CLASS(NpcPink);
+	REG_REFLECT_CLASS(NpcSkill);
+	REG_REFLECT_CLASS(NpcVallige);
 }

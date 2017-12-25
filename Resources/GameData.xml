@@ -2,6 +2,30 @@
 <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+  <key>LoginTipText</key>
+  <string>账号验证中......</string>
+  <key>SigonTipText</key>
+  <string>注册中......</string>
+  <key>CushionProgress</key>
+  <string>cushionProgress.png</string>
+  <key>CushionBg</key>
+  <string>CushionBg.png</string>
+  <key>NpcBlue</key>
+  <string>Npc/NpcBlue.png</string>
+  <key>NpcEquip</key>
+  <string>Npc/NpcEquip.png</string>
+  <key>NpcMamom</key>
+  <string>Npc/NpcMamom.png</string>
+  <key>NpcMonk</key>
+  <string>Npc/NpcMonk.png</string>
+  <key>NpcPink</key>
+  <string>Npc/NpcPink.png</string>
+  <key>NpcSkill</key>
+  <string>Npc/NpcSkill.png</string>
+  <key>NpcVallige</key>
+  <string>Npc/NpcVallige.png</string>
+  <key>Door</key>
+  <string>door/door1.png</string>
   <key>ChangeCount</key>
   <string>切换账号</string>
   <key>BackMainMenu</key>

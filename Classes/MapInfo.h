@@ -20,6 +20,8 @@ class GameMapLayer;
 #define GetMapInfo MapInfo::getMapInstance()->getMapInfo
 #define SetDoorPos MapInfo::getMapInstance()->setDoorPos
 #define GetDoorPos MapInfo::getMapInstance()->getDoorPos
+#define GetDoorPosInfo MapInfo::getMapInstance()->getDoorPosInfo
+#define UpdateDoorScreenPos() MapInfo::getMapInstance()->updateDoorsScreenPos()
 
 class MapInfo:public cocos2d::CCObject
 {
@@ -51,6 +53,10 @@ public:
 	inline int** getMapInfo() { return m_mapinfo; }
 
 	inline float getInterval() { return m_mapSize.width / m_maptextures; }
+
+	std::vector<cocos2d::Vec2>& getDoorPosInfo() { return m_doorPos; }
+
+	void updateDoorsScreenPos();
 private:
 	void releaseMapInfo();
 
@@ -58,7 +64,7 @@ private:
 	~MapInfo();
 
 	int m_maptextures;
-	GameMapLayer* m_mapLayer;
+	GameMapLayer* m_mapLayer = nullptr;
 	cocos2d::Size m_mapSize;
 	int** m_mapinfo = nullptr;
 	int m_countx;

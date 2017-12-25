@@ -8,9 +8,9 @@ class LoadingLayer Inherit(cocos2d::Layer)
 {
 	CLASS_ESSENTAIL(LoadingLayer)
 public:
-	static LoadingLayer* create(const std::string& tip);
+	static LoadingLayer* create(const std::string& tip, const std::string& progressname);
 	
-	bool init(const std::string& tip);
+	bool init(const std::string& tip, const std::string& progressname);
 
 	std::string m_tipText;
 };

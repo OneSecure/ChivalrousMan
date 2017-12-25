@@ -7,8 +7,8 @@ class Animal
 {
 public:
 	Animal();
-	~Animal();
-
+	virtual ~Animal();
+	 
 	/*
 	*getVx()
 	*获取x轴上的分速度
@@ -61,7 +61,6 @@ public:
 protected:
 	cocos2d::Vec2 m_pos;
 	float m_life;
-	float m_atk;
 	Dir m_dir;
 	float m_vx;
 	float m_vy;

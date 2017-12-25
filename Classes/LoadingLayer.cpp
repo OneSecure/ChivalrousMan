@@ -2,10 +2,10 @@
 #include"Commen.h"
 #include"GameData.h"
 
-LoadingLayer* LoadingLayer::create(const std::string& tip)
+LoadingLayer* LoadingLayer::create(const std::string& tip, const std::string& progressname)
 {
 	LoadingLayer* pRet = new LoadingLayer;
-	if (pRet&&pRet->init(tip))
+	if (pRet&&pRet->init(tip,progressname))
 	{
 		pRet->autorelease();
 		return pRet;
@@ -17,7 +17,7 @@ LoadingLayer* LoadingLayer::create(const std::string& tip)
 	}
 }
 
-bool LoadingLayer::init(const std::string& tip)
+bool LoadingLayer::init(const std::string& tip, const std::string& progressname)
 {
 	if (Layer::init())
 	{
@@ -26,7 +26,7 @@ bool LoadingLayer::init(const std::string& tip)
 		back->setPosition(size.width*0.5, size.height*0.5);
 		this->addChild(back);
 
-		auto loadingIcon = Sprite::create(StringValue("LoadingIcon"));
+		auto loadingIcon = Sprite::create(progressname);
 		loadingIcon->setPosition(size.width*0.5, size.height*0.5);
 		auto rotate=RotateBy::create(0.5, 359);
 		loadingIcon->runAction(RepeatForever::create(rotate));

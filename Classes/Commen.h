@@ -9,13 +9,15 @@ using namespace cocos2d;
 #define SCREEN Director::getInstance()->getWinSize()
 
 //转到开始界面
-#define GO_BACK_START_MENU() auto startScene = StartMenu::create(); \
-                           auto rsScene = CCTransitionFadeDown::create(1.0f, startScene); \
-                           Director::getInstance()->replaceScene(rsScene)
-#define GO_BACK_BEGIN() \
- 	auto bs = BeginScene::create(); \
-    auto reScene = CCTransitionFadeDown::create(1.0f, bs); \
-    Director::getInstance()->replaceScene(reScene) 
+#define GO_BACK_START_MENU() \
+auto startScene = StartMenu::create(); \
+auto reScene = CCTransitionFadeDown::create(1,  startScene); \
+Director::getInstance()->replaceScene(reScene)
+
+#define GO_BACK_BEGIN()             \
+ auto bs = BeginScene::create();           \
+ auto reScene = CCTransitionFadeDown::create(1,bs);  \
+ Director::getInstance()->replaceScene(reScene ) 
 
 //是否包含该点
 #define CONTAIN_POINT(WHO,POS,RES)                                           \
