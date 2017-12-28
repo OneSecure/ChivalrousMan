@@ -5,6 +5,7 @@
 #include<vector>
 
 class GameMapLayer;
+class Door;
 
 #define LoadMapInfo MapInfo::getMapInstance()->readMapInfoFromFile
 #define MapCountX MapInfo::getMapInstance()->getCountx()
@@ -18,10 +19,9 @@ class GameMapLayer;
 #define MapGridW MapInfo::getMapInstance()->getMapGridW()
 #define MapGridH MapInfo::getMapInstance()->getMapGridH()
 #define GetMapInfo MapInfo::getMapInstance()->getMapInfo
-#define SetDoorPos MapInfo::getMapInstance()->setDoorPos
-#define GetDoorPos MapInfo::getMapInstance()->getDoorPos
 #define GetDoorPosInfo MapInfo::getMapInstance()->getDoorPosInfo
-#define UpdateDoorScreenPos() MapInfo::getMapInstance()->updateDoorsScreenPos()
+#define UpdateDoorScreenPos MapInfo::getMapInstance()->updateDoorsScreenPos
+#define LoadDoorInfo MapInfo::getMapInstance()->loadDoorInfo
 
 class MapInfo:public cocos2d::CCObject
 {
@@ -54,11 +54,31 @@ public:
 
 	inline float getInterval() { return m_mapSize.width / m_maptextures; }
 
-	std::vector<cocos2d::Vec2>& getDoorPosInfo() { return m_doorPos; }
+	std::vector<Door>& getDoorPosInfo() { return m_doorPos; }
 
+	/*
+	*updateDoorsScreenPos
+	*更新传送门在屏幕上的位置信息
+	*/
 	void updateDoorsScreenPos();
+
+	/*
+	*loadDoorInfo(const std::string& name);
+	*从文件加载地图信息
+	*/
+	void loadDoorInfo(const std::string& name);
 private:
+	/*
+	*releaseMapInfo();
+	*释放地图信息
+	*/
 	void releaseMapInfo();
+
+	/*
+	*reset()
+	*重置
+	*/
+	void reset();
 
 	MapInfo();
 	~MapInfo();
@@ -69,7 +89,7 @@ private:
 	int** m_mapinfo = nullptr;
 	int m_countx;
 	int m_county;
-	std::vector<cocos2d::Vec2> m_doorPos;
+	std::vector<Door> m_doorPos;
 
 	static MapInfo* m_instance;
 };

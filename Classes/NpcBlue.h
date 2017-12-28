@@ -14,6 +14,7 @@ public:
 	NpcBlue();
 	~NpcBlue();
 
+	virtual void collisionEvent() override;
 private:
 };
 

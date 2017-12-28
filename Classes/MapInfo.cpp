@@ -1,7 +1,8 @@
 #include"MapInfo.h"
 #include"Commen.h"
+#include"Door.h"
 #include"GameMapLayer.h"
-#include"NpcGenerater.h"
+#include"GameData.h"
 #include<fstream>
 #include<string>
 #include<regex>
@@ -41,7 +42,7 @@ bool MapInfo::readMapInfoFromFile(const std::string& filename)
 	{
 		return false;
 	}
-	releaseMapInfo();
+	reset();
 	string row;
 	fin >> row;
 	fin >> m_countx;
@@ -54,11 +55,10 @@ bool MapInfo::readMapInfoFromFile(const std::string& filename)
 	{
 		m_mapinfo[i] = new int[m_countx];
 	}
-	
+	regex r4(("\\s*[,]\\s*"));
 	for (int i = m_county-1; i>=0; --i)
 	{
 		fin >> row;
-		regex r4(("\\s*[,]\\s*"));
 		const sregex_token_iterator send;
 		int j = 0;
 		for (sregex_token_iterator iter(row.cbegin(), row.cend(), r4, -1); iter != send; ++iter)
@@ -66,17 +66,10 @@ bool MapInfo::readMapInfoFromFile(const std::string& filename)
 			m_mapinfo[i][j] = stoi(*iter);
 			if (m_mapinfo[i][j] == -100)
 			{
-				Vec2 pos;
+				Door pos;
 				pos.x = j*getMapGridW() + getMapGridW()*0.5;
 				pos.y = i*getMapGridH() + getMapGridH()*0.5;
 				m_doorPos.push_back(pos);
-			}
-			if (m_mapinfo[i][j] > -100 && m_mapinfo[i][j] < 0)
-			{
-				Vec2 pos;
-				pos.x = j*getMapGridW() + getMapGridW()*0.5;
-				pos.y = i*getMapGridH() + getMapGridH()*0.5;
-				NpcGenerater::m_NpcList[m_mapinfo[i][j]] = pos;
 			}
 			++j;
 		}
@@ -109,4 +102,42 @@ void MapInfo::updateDoorsScreenPos()
 	{
 		m_mapLayer->updateDoorScreenPos();
 	}
+}
+
+void MapInfo::loadDoorInfo(const std::string& name)
+{
+	ifstream fin;
+	fin.open(StringValue("DoorInfo"), ios::in);
+	if (fin.fail())
+	{
+		return;
+	}
+	string cur, map;
+	int n;
+	float x, y;
+	fin >> cur;
+	do
+	{
+		fin >> cur;
+		fin >> n;
+		for (int i = 0; i < n; ++i)
+		{
+			fin >> map;
+			fin >> x;
+			fin >> y;
+			if (cur == name) 
+			{
+				m_doorPos[i].dest = map;
+				m_doorPos[i].destPos.x = x*getMapGridW() + getMapGridW()*0.5;
+				m_doorPos[i].destPos.y = y*getMapGridH() + getMapGridH()*0.5;
+			}
+		}
+	} while (!fin.eof());
+	fin.close();
+}
+
+void MapInfo::reset()
+{
+	m_doorPos.clear();
+	releaseMapInfo();
 }

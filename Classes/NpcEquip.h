@@ -14,6 +14,7 @@ public:
 	NpcEquip();
 	~NpcEquip();
 	
+	virtual void collisionEvent() override;
 private:
 };
 

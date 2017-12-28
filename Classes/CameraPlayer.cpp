@@ -5,6 +5,7 @@
 #include"PlayerState.h"
 #include"PlayerWait.h"
 #include"PlayerRun.h"
+#include"GameDynamicData.h"
 
 CameraPlayer* CameraPlayer::m_instance = nullptr;
 
@@ -164,16 +165,17 @@ float  CameraPlayer::CalcAngle(cocos2d::Vec2 start, cocos2d::Vec2 target)
 
 void CameraPlayer::initStateInfo(const int& level)
 {
-	switch (level)
-	{
-	case LEVEL_ONE:
+	float x = GetFloatData("DestX");
+	float y = GetFloatData("DestY");
+	if (x == -1 || y == -1)
 	{
 		m_pos.x = 100;
 		m_pos.y = 100;
 	}
-		break;
-	default:
-		break;
+	else
+	{
+		m_pos.x = x - 40;
+		m_pos.y = y - 40;
 	}
 	clearRoadList();
 	m_flag = 0;

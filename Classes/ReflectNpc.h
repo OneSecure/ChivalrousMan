@@ -46,6 +46,8 @@ public:
 	*@param classname:反射的类名
 	*/
 	Npc* getReflectObject(const std::string& classname);
+
+	static void release();
 private:
 	SINGLE_ATTRIBUTES(ReflectNpc);
 

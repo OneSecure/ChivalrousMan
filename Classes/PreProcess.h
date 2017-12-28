@@ -47,8 +47,8 @@ public: \
 
 #define GettingAndSetting(varType,varName,funName) \
 protected: varType varName; \
-public: varType& get##funName(void){return varName;} \
-public: void set##funName(varType var) {varName=var;}
+public: virtual varType& get##funName(void){return varName;} \
+public: virtual void set##funName(varType var) {varName=var;}
 
 enum class Dir
 {

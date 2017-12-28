@@ -18,3 +18,8 @@ Npc* ReflectNpc::getReflectObject(const std::string& classname)
 	return nullptr;
 }
 
+void ReflectNpc::release()
+{
+	RELEASE_NULL(m_instance);
+}
+

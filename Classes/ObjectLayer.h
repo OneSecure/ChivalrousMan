@@ -12,11 +12,18 @@ public:
 	ObjectLayer();
 	~ObjectLayer();
 
+	/*
+	*createWithLevel(const int& level);
+	*根据地图创建对象层
+	*@param level:地图类型
+	*/
 	static ObjectLayer* createWithLevel(const int& level);
 
 	bool init(const int& level);
 
 	void update(float dt);
+
+	inline std::vector<Npc*>& getNpcList() { return m_npcList; }
 private:
 	/*
 	*updateNpcPos();

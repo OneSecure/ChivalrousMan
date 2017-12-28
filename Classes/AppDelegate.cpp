@@ -13,6 +13,7 @@
 #include"NpcPink.h"
 #include"NpcSkill.h"
 #include"NpcVallige.h"
+#include"CMClient.h"
 
 #define LoadPlayerAnimation(player)    \
 {      \
@@ -35,8 +36,9 @@ sprintf_s(name, "%sRunUp",  player);   \
 LoadAnimationFromFile(StringValue(name).c_str(), name, 12, FloatValue("PlayerFps"));  \
 }
 
-AppDelegate::AppDelegate() {
-
+AppDelegate::AppDelegate()
+{
+	
 }
 
 AppDelegate::~AppDelegate() 
@@ -46,6 +48,8 @@ AppDelegate::~AppDelegate()
 	MapInfo::release();
 	CameraPlayer::release();
 	AudioSystem::releaseAudioSystem();
+	ReflectNpc::release();
+	CMClient::release();
 }
 
 //if you want a different context,just modify the value of glContextAttrs
@@ -79,6 +83,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     FileUtils::getInstance()->addSearchPath("res");
 
     // create a scene. it's an autorelease object
+	CMClient::getInstance();
 	registerReflectClass();
 	LoadResource();
 	AudioSystem::getInstance();

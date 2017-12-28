@@ -29,19 +29,22 @@ bool GameScene::init(const int& level)
 {
 	if (Scene::init())
 	{
+		SetCurGameScene(this);
+		char mapname[40] = { 0 };
+		sprintf_s(mapname, "map%d", level);
 		m_mapLayer = GameMapLayer::create();
-		m_mapLayer->loadMapTexture("map1");
+		m_mapLayer->loadMapTexture(mapname);
 		m_mapLayer->drawMap(0, 0);
 		this->addChild(m_mapLayer);
 
-		auto objectLayer = ObjectLayer::createWithLevel(level);
-		this->addChild(objectLayer);
+		m_objectLayer = ObjectLayer::createWithLevel(level);
+		this->addChild(m_objectLayer);
 
 		char name[40] = { 0 };
 		sprintf_s(name, "%sWaitDown", GetStringData("PlayerType").c_str());
 		auto player = Sprite::create(StringValue(name));
 		this->addChild(player);
-		SetPlayerVelocity(4);
+		SetPlayerVelocity(FloatValue("PlayerSpeed"));
 		SetPlayerFace(player);
 		InitPlayerState(level);
 
@@ -55,7 +58,7 @@ bool GameScene::init(const int& level)
 	return false;
 }
 
-void GameScene::pauseAllActions(cocos2d::Node* hoster)
+void GameScene::pauseAllActions(cocos2d::Node* hoster,cocos2d::Node* except)
 {
 	hoster->pauseSchedulerAndActions();
 	auto NodeArray = hoster->getChildren();
@@ -63,7 +66,8 @@ void GameScene::pauseAllActions(cocos2d::Node* hoster)
 	{
 		for (auto it : NodeArray)
 		{
-			pauseAllActions(it);
+			if (it != except)
+				pauseAllActions(it);
 		}
 	}
 }

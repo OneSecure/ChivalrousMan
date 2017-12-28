@@ -8,6 +8,8 @@
 #include<mutex>
 #include<atomic>
 
+class GameScene;
+
 #define SetFloatData GameDynamicData::getInstance()->setFloatByKey
 #define SetIntData GameDynamicData::getInstance()->setIntByKey
 #define SetBoolData GameDynamicData::getInstance()->setBoolByKey
@@ -16,6 +18,8 @@
 #define GetIntData GameDynamicData::getInstance()->getIntByKey
 #define GetBoolData GameDynamicData::getInstance()->getBoolByKey
 #define GetStringData GameDynamicData::getInstance()->getStringByKey
+#define CurGameScene GameDynamicData::getInstance()->getCurGameScene 
+#define SetCurGameScene GameDynamicData::getInstance()->setCurGameScene
 
 class GameDynamicData :public cocos2d::CCObject
 {
@@ -34,6 +38,10 @@ public:
 	std::string getStringByKey(const std::string& key);
 
 	static void release();
+
+	inline GameScene* getCurGameScene() { return m_curgs; }
+	
+	inline void setCurGameScene(GameScene* gs) { m_curgs = gs; }
 private:
 	GameDynamicData();
 	~GameDynamicData();
@@ -48,6 +56,8 @@ private:
 
 	std::map<std::string, std::string> m_data;
 	std::map<std::string, std::string> m_saveData;
+	//保存当前游戏场景
+	GameScene* m_curgs;
 	
 	SINGLE_ATTRIBUTES(GameDynamicData);
 };

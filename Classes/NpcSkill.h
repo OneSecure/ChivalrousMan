@@ -14,6 +14,7 @@ public:
 	NpcSkill();
 	~NpcSkill();
 
+	virtual void collisionEvent() override;
 private:
 
 };

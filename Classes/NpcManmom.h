@@ -13,6 +13,8 @@ class NpcMamom Inherit(Npc)
 public:
 	NpcMamom();
 	~NpcMamom();
+
+	virtual void collisionEvent() override;
 };
 
 #endif // !__NPC_MAMOM

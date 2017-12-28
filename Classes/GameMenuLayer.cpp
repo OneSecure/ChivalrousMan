@@ -3,6 +3,7 @@
 #include"GameDynamicData.h"
 #include"GameData.h"
 #include"GameScene.h"
+#include"GameUILayer.h"
 #include"StartMenu.h"
 
 bool GameMenuLayer::init()
@@ -66,6 +67,7 @@ void GameMenuLayer::onMusicCallBack(cocos2d::CCObject* sender)
 
 void GameMenuLayer::onBackGameCallBack(cocos2d::CCObject* sender)
 {
-	((GameScene*)(this->getParent()->getParent()))->resumeAllActions(this->getParent()->getParent());
-	this->getParent()->removeChild(this);
+	((GameScene*)(getParent()->getParent()))->resumeAllActions(getParent()->getParent());
+	((GameUILayer*)getParent())->resetMenulayer();
+	getParent()->removeChild(this);
 }

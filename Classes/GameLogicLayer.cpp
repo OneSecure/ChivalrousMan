@@ -4,8 +4,13 @@
 #include"FindRoad.h"
 #include"MapInfo.h"
 #include"GameData.h"
+#include"Door.h"
 #include"GameDynamicData.h"
+#include"ExcessiveScene.h"
+#include"GameScene.h"
+#include"ObjectLayer.h"
 #include<stack>
+#include<functional>
 
 #define UpdateSpeed 60
 
@@ -47,5 +52,74 @@ void GameLogicLayer::update(float dt)
 		if (PlayerCanMove())
 			PlayerMove();
 		UpdateDoorScreenPos();
+		checkEntryDoor();
+		checkCollisionNpc();
+	}
+}
+
+void GameLogicLayer::checkEntryDoor()
+{
+	std::vector<Door> doors = GetDoorPosInfo();
+	int size = doors.size();
+	int count = 0;
+	for (int i = 0; i <size; ++i)
+	{
+		float dis = ccpDistance(PlayerPos, ccp(doors[i].x, doors[i].y));
+		if (dis < 40)
+		{
+			SetFloatData("DestX", doors[i].destPos.x);
+			SetFloatData("DestY", doors[i].destPos.y);
+			unscheduleUpdate();
+			gotoDestMap(doors[i].dest);
+			break;
+		}
+	}
+}
+
+void GameLogicLayer::gotoDestMap(const std::string& dest)
+{
+	std::function<bool(void)> func = [] {return true; };
+	ExcessiveScene* ex = nullptr;
+	if (dest == "map1")
+	{
+		ex = ExcessiveScene::createExcessice(LEVEL_ONE, func, 1);
+	}
+	else if (dest == "map2")
+	{
+		ex = ExcessiveScene::createExcessice(LEVEL_TWO, func, 1);
+	}
+	else if (dest == "map3")
+	{
+		ex = ExcessiveScene::createExcessice(LEVEL_THREE, func, 1);
+	}
+	Director::getInstance()->replaceScene(ex);
+}
+
+void GameLogicLayer::checkCollisionNpc()
+{
+	GameScene* gs = (GameScene*)getParent();
+	std::vector<Npc*>& npclist = gs->getObjectLayer()->getNpcList();
+	int count = 0;
+	for each (auto var in npclist)
+	{
+		float dis = ccpDistance(PlayerPos, ccp(var->getX(), var->getY()));
+		if (dis < 120)
+		{
+			if (GetIntData("CollisionNpc") != 1)
+			{
+				SetIntData("CollisionNpc", 1);
+				var->collisionEvent();
+			}
+			break;
+		}
+		else
+		{
+			++count;
+		}
+	}
+	if (count == npclist.size())
+	{
+		gs->removeChildByName("talkLayer");
+		SetIntData("CollisionNpc", 0);
 	}
 }

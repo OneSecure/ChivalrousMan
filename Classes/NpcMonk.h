@@ -14,6 +14,7 @@ public:
 	NpcMonk();
 	~NpcMonk();
 
+	virtual void collisionEvent() override;
 private:
 
 };

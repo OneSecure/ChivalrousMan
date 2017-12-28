@@ -1,7 +1,15 @@
 #include"ExcessiveScene.h"
 #include"GameData.h"
+#include"GameScene.h"
 #include"LoadingLayer.h"
 #include"Commen.h"
+
+ExcessiveScene* ExcessiveScene::createExcessice(int level, std::function<bool(void)>& callfunc, float delay)
+{
+	auto gc = GameScene::createWithLevel(level);
+	CC_SAFE_RETAIN(gc);
+	return createExcessice(gc, callfunc, delay);
+}
 
  ExcessiveScene* ExcessiveScene::createExcessice(cocos2d::Scene* reScene, std::function<bool(void)>& callEvent, float delay)
 {

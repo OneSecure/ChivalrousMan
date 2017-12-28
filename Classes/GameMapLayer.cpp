@@ -5,6 +5,7 @@
 #include"MapInfo.h"
 #include"CameraPlayer.h"
 #include"GameLogicLayer.h"
+#include"Door.h"
 #include<sstream>
 
 #define UpdateSpeed 60
@@ -27,6 +28,7 @@ bool GameMapLayer::init()
 bool GameMapLayer::loadMapTexture(std::string name)
 {
 	LoadMapInfo(StringValue(name));
+	LoadDoorInfo(name);
 	char filename[40] = { 0 };
 	for (int i = 1; i <=MapTexturesNum; ++i)
 	{
@@ -64,6 +66,11 @@ bool GameMapLayer::drawMap(float startx, float starty)
 		m_mapList[i + start]->setPosition(realstartx + i*mapinterval, starty);
 		m_mapList[i + start]->setVisible(true);
 	}
+	if (num+1 + start <= m_mapList.size() - 1)
+	{
+		m_mapList[num + 1 + start]->setPosition(realstartx + (num + 1)*mapinterval, starty);
+		m_mapList[num + 1 + start]->setVisible(true);
+	}
 	return true;
 }
 
@@ -75,7 +82,7 @@ void GameMapLayer::updateDoorScreenPos()
 	}
 	auto mappos = PlayerPos;
 	auto screenpos = PlayerFacePos();
-	std::vector<Vec2> list = GetDoorPosInfo();
+	std::vector<Door> list = GetDoorPosInfo();
 	for (int i = 0; i < m_doors.size(); ++i)
 	{
 		float offsetX = list[i].x - mappos.x;
@@ -86,7 +93,7 @@ void GameMapLayer::updateDoorScreenPos()
 
 void GameMapLayer::generateDoors()
 {
-	std::vector<Vec2> list = GetDoorPosInfo();
+	std::vector<Door> list = GetDoorPosInfo();
 	for (int i = 0; i < list.size(); ++i)
 	{
 		auto door = Sprite::create(StringValue("Door"));

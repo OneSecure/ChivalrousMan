@@ -147,4 +147,25 @@ SetIntData("BgMusic", 0,true); \
 } \
 }
 
+#define INIT_TALK_IN_NPC(__NPC__)  \
+std::ifstream fin; \
+char filename[40] = { 0 }; \
+sprintf_s(filename, "Talk/%s.tk",#__NPC__); \
+fin.open(filename, std::ios::in); \
+if (!fin.fail()) \
+{ \
+	do \
+ 	{ \
+		std::string tmp;    \
+		fin >> tmp;             \
+		m_talkmsg.push_back(tmp);    \
+	} while (!fin.eof());       \
+}  \
+fin.close()
+
+#define ClickAction()        \
+	auto move = ScaleTo::create(0.1, 1.2);     \
+	auto move1 = ScaleTo::create(0.1, 1.0);   \
+	((MenuItemImage*)sender)->runAction(Sequence::createWithTwoActions(move, move1))
+
 #endif  // !__COMMEN_H__

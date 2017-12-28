@@ -8,6 +8,14 @@ class ExcessiveScene Inherit(cocos2d::Scene)
 {
 	CLASS_ESSENTAIL(ExcessiveScene)
 public:
+	/*
+	*过渡到指定地图
+	*/
+	static ExcessiveScene* createExcessice(int level, std::function<bool(void)>& callfunc, float delay);
+
+	/*
+	*过渡到指定场景
+	*/
 	static ExcessiveScene* createExcessice(cocos2d::Scene* reScene, std::function<bool(void)>& callEvent, float delay);
 
 	bool init(cocos2d::Scene* reScene, std::function<bool(void)>& callEvent, float delay);

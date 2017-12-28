@@ -14,6 +14,7 @@ public:
 	NpcPink();
 	~NpcPink();
 
+	virtual void collisionEvent() override;
 private:
 
 };

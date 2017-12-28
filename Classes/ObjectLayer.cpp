@@ -2,7 +2,6 @@
 #include"Commen.h"
 #include"GameData.h"
 #include"GameDynamicData.h"
-#include"NpcGenerater.h"
 #include"CameraPlayer.h"
 #include"ReflectNpc.h"
 #include"MapInfo.h"

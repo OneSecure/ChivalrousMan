@@ -8,9 +8,14 @@ class GameUILayer:public cocos2d::Layer,
 {
 	CLASS_ESSENTAIL(GameUILayer)
 	CREATE_FUNC(GameUILayer)
-
 public:
 	bool init() override;
+
+	/*
+	*resetMenulayer();
+	*重设菜单层为false
+	*/
+	void resetMenulayer();
 private:
 	/*
 	*generateUserInterface();
@@ -68,6 +73,11 @@ private:
 	cocos2d::MenuItemImage* m_sendBtn;  //发送按钮
 	cocos2d::TextFieldTTF* m_editFrame;       //编辑消息框
 	cocos2d::MenuItemImage* m_menuBtn;
+	
+	bool m_isclickGameMenuLayer = false;
+	bool m_isclickSkillLayer = false;
+	bool m_isclickBackPackLayer = false;
+	bool m_isclickWorldMapLayer = false;
 };
 
 #endif // !__GAME_UI_LAYER_H__

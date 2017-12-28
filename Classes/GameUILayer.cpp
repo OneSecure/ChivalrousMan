@@ -3,12 +3,25 @@
 #include"GameData.h"
 #include"GameDynamicData.h"
 #include"GameMenuLayer.h"
+#include"SkillLayer.h"
+#include"BackPackLayer.h"
+#include"WorldMapLayer.h"
 #include"GameScene.h"
+#include"GameLogicLayer.h"
 
-#define ClickAction()        \
-	auto move = ScaleTo::create(0.1, 1.2);     \
-	auto move1 = ScaleTo::create(0.1, 1.0);   \
-	((MenuItemImage*)sender)->runAction(Sequence::createWithTwoActions(move, move1))
+#define SHOW_AND_DELETE_LAYER(__LAYER__)  \
+m_isclick##__LAYER__ = !m_isclick##__LAYER__;    \
+if (m_isclick##__LAYER__)    \
+{    \
+	((GameScene*)getParent())->pauseAllActions(getParent(), this); \
+	auto layer = __LAYER__::create();    \
+	layer->setName(#__LAYER__);    \
+	getParent()->addChild(layer);    \
+}    \
+else    \
+{    \
+	((GameScene*)getParent())->resumeAllActions(getParent()); \
+	getParent()->removeChildByName(#__LAYER__);   } 
 
 bool GameUILayer::init()
 {
@@ -125,16 +138,19 @@ void GameUILayer::generateUserInterface()
 void GameUILayer::onMapIconClickCallBack(cocos2d::CCObject* sender)
 {
 	ClickAction();
+	SHOW_AND_DELETE_LAYER(WorldMapLayer);
 }
 
 void GameUILayer::onBackPackClickCallBack(cocos2d::CCObject* sender)
 {
 	ClickAction();
+	SHOW_AND_DELETE_LAYER(BackPackLayer);
 }
 
 void GameUILayer::onSkillClickCallBack(cocos2d::CCObject* sender)
 {
 	ClickAction();
+	SHOW_AND_DELETE_LAYER(SkillLayer);
 }
 
 void GameUILayer::onHeadClickCallBack(cocos2d::CCObject* sender)
@@ -150,9 +166,13 @@ void GameUILayer::onSendClickCallBack(cocos2d::CCObject* sender)
 void GameUILayer::onMenuClickCallBack(cocos2d::CCObject* sender)
 {
 	ClickAction();
-	((GameScene*)this->getParent())->pauseAllActions(this->getParent());
-	auto menuLayer = GameMenuLayer::create();
-	this->addChild(menuLayer);
+	if (!m_isclickGameMenuLayer)
+	{
+		m_isclickGameMenuLayer = !m_isclickGameMenuLayer;
+		((GameScene*)this->getParent())->pauseAllActions(getParent(), this);
+		auto menuLayer = GameMenuLayer::create();
+		this->addChild(menuLayer);
+	}
 }
 
 bool GameUILayer::onTextFieldAttachWithIME(TextFieldTTF * sender)
@@ -173,4 +193,9 @@ void GameUILayer::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *unused_eve
 	auto pos = touch->getLocation();
 	bool res;
 	ATTACH_OR_DETACH(m_editFrame, pos, res);
+}
+
+void GameUILayer::resetMenulayer()
+{
+	m_isclickGameMenuLayer = false;
 }

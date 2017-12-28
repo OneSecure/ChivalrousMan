@@ -13,6 +13,8 @@ class NpcVallige Inherit(Npc)
 public:
 	NpcVallige();
 	~NpcVallige();
+
+	virtual void collisionEvent() override;
 };
 
 #endif // !__NPC_VALLIGE_H__
