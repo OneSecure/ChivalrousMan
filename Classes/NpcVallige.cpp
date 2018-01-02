@@ -1,5 +1,6 @@
 #include"NpcVallige.h"
 #include"GameScene.h"
+#include"GameData.h"
 #include"GameDynamicData.h"
 #include"TalkLayer.h"
 #include"Commen.h"

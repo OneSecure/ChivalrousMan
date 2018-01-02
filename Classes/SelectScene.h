@@ -3,6 +3,10 @@
 #define __SELECT_SCENE_H__
 #include"PreProcess.h"
 
+/*
+*class SelectScene
+*½ÇÉ«Ñ¡Ôñ³¡¾°
+*/
 class SelectScene :public cocos2d::Scene
 {
 	CLASS_ESSENTAIL(SelectScene)

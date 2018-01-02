@@ -3,6 +3,10 @@
 #define __NEW_GAME_SCENE_H__
 #include"PreProcess.h"
 
+/*
+*class NewGameScene
+*新建角色场景
+*/
 class NewGameScene :public cocos2d::Scene
 {
 	CLASS_ESSENTAIL(NewGameScene)

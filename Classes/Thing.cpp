@@ -1,9 +1,10 @@
 #include"Thing.h"
 #include"Commen.h"
+#include<fstream>
 
-Thing::Thing()
+Thing::Thing(const std::string& name)
 {
-
+	initDetails(name);
 }
 
 Thing::~Thing()
@@ -11,35 +12,45 @@ Thing::~Thing()
 
 }
 
-Thing* Thing::createWithImage(const std::string& filename)
+void  Thing::showDetail()
 {
-	Thing* pRet = new Thing;
-	if (pRet&&pRet->init(filename))
-	{
-		pRet->autorelease();
-		return pRet;
-	}
-	else
-	{
-		delete pRet;
-		pRet = nullptr;
-		return nullptr;
-	}
+	/*MessageBox("ฯ๊ว้", "");*/
 }
 
-bool Thing::init(const std::string& filename)
+std::string Thing::getName(const std::string& name)
 {
-	if (MenuItemImage::init())
+	std::string targetname;
+	std::string tmp = "";
+	for (size_t i = 0; i < name.length(); i++)
 	{
-		auto image = Sprite::create(filename);
-		this->setNormalImage(image);
-		this->setSelectedImage(image);
-		return true;
+		tmp = name[i];
+		if (tmp == ".")
+		{
+			break;
+		}
+		else
+		{
+			targetname += name[i];
+		}
 	}
-	return false;
+	return targetname;
 }
 
-void Thing::showDetail()
+void  Thing::initDetails(const std::string& name)
 {
-
+	std::string realname = name;
+	realname += ".dec";
+	std::ifstream fin;
+	fin.open(name, std::ios::in);
+	if (fin.fail())
+	{
+		return;
+	}
+	std::string tmp;
+	do
+	{
+		fin >> tmp;
+		m_details.push_back(tmp);
+	} while (!fin.eof());
+	fin.close();
 }

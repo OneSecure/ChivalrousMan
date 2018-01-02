@@ -3,6 +3,10 @@
 #define __LOGIN_H__
 #include"PreProcess.h"
 
+/*
+*class Login
+*µÇÂ¼³¡¾°
+*/
 class Login:public cocos2d::Scene
 {
 public:

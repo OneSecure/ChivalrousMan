@@ -1,5 +1,6 @@
 #include"BackPackLayer.h"
 #include"GameData.h"
+#include"CameraPlayer.h"
 #include"Commen.h"
 
 bool BackPackLayer::init()
@@ -40,13 +41,15 @@ bool BackPackLayer::init()
 		menu->addChild(useBtn);
 
 		auto bp1Btn = MenuItemImage::create(StringValue("Bp1Btn"),
-			StringValue("Bp1SBtn"));
+			StringValue("Bp1SBtn"),this,
+			menu_selector(BackPackLayer::bp1BtnCallBack));
 		float bp1x = m_basePoint.x + 20;
 		float bp1y = m_basePoint.y + 60;
 		bp1Btn->setPosition(bp1x, bp1y);
 		menu->addChild(bp1Btn);
 		auto bp2Btn = MenuItemImage::create(StringValue("Bp2Btn"),
-			StringValue("Bp2SBtn"));
+			StringValue("Bp2SBtn"),this,
+			menu_selector(BackPackLayer::bp2BtnCallBack));
 		bp2Btn->setPosition(bp1x + bp2Btn->getContentSize().width+10, bp1y);
 		menu->addChild(bp2Btn);
 
@@ -54,6 +57,18 @@ bool BackPackLayer::init()
 		m_selector->setContentSize(Size{ 40,40 });
 		m_selector->setPosition(m_basePoint);
 		this->addChild(m_selector);
+
+		auto glodText = LabelTTF::create(StringValue("GlodText"), "¿¬Ìå", 20);
+		glodText->setColor(ccc3(209, 128, 5));
+		float tgx = m_basePoint.x + backpackGrid->getContentSize().width*0.6;
+		float tgy = m_basePoint.y + 63;
+		glodText->setPosition(tgx, tgy);
+		auto glodNums = LabelTTF::create(NumberToString(GetPlayerData().getglod()), "¿¬Ìå", 20);
+		glodNums->setPosition(tgx + glodText->getContentSize().width*0.5, tgy);
+		glodNums->setAnchorPoint(ccp(0, 0.5));
+		glodNums->setColor(ccc3(255, 255, 0));
+		this->addChild(glodText);
+		this->addChild(glodNums);
 
 		return true;
 	}

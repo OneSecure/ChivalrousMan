@@ -1,4 +1,5 @@
 #include"NpcMonk.h"
+#include"GameData.h"
 #include"Commen.h"
 
 DEF_REFLECT_FUNC(NpcMonk)

@@ -191,6 +191,7 @@ void CameraPlayer::clearRoadList()
 		m_roadList.pop();
 	}
 }
+
 void CameraPlayer::AdjustPlayerAndMapPos()
 {
 	std::pair<Vec2, Vec2> pos = changeMapPosToUI();

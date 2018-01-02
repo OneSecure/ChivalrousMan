@@ -6,6 +6,10 @@
 #include<string>
 #include<vector>
 
+/*
+*class LoginLayer
+*µÇÂ¼½çÃæ²ã
+*/
 class LoginLayer:public cocos2d::Layer,
 	public cocos2d::CCTextFieldDelegate
 {

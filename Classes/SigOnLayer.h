@@ -4,6 +4,10 @@
 #include"PreProcess.h"
 #include<thread>
 
+/*
+*class SigOnLayer
+*注册界面层
+*/
 class SigOnLayer :public cocos2d::Layer,
 	public cocos2d::CCTextFieldDelegate
 {
@@ -14,8 +18,14 @@ public:
 
 	virtual bool init();
 
+	/*
+	*确定按钮回调函数
+	*/
 	void AffirmBtnCallBack(cocos2d::CCObject* obj);
 
+	/*
+	*返回按钮回调函数
+	*/
 	void GoBackBtnCallBack(cocos2d::CCObject* obj);
 
 	virtual bool onTextFieldAttachWithIME(cocos2d::TextFieldTTF * sender) override;

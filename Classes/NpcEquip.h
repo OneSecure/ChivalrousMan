@@ -15,6 +15,8 @@ public:
 	~NpcEquip();
 	
 	virtual void collisionEvent() override;
+
+	virtual void talkEndEvent() override;
 private:
 };
 

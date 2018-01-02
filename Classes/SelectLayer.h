@@ -4,7 +4,11 @@
 #include"PreProcess.h"
 #include"Model.h"
 
-class SelectLayer :public cocos2d::Layer
+/*
+*class SelectLayer
+*角色选择层
+*/
+class SelectLayer Inherit(cocos2d::Layer)
 {
 	CLASS_ESSENTAIL(SelectLayer)
 	CREATE_FUNC(SelectLayer)
@@ -18,9 +22,7 @@ private:
 	*@param delay：移动延迟
 	*@param dest：目的地
 	*/
-	void moveArrow(float delay,cocos2d::Vec2 dest);
-
-	virtual void onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *unused_event) override;
+	void moveArrow(float delay, cocos2d::Vec2 dest);
 
 	/*
 	*onMenuCallBack(cocos2d::CCObject* sender);
@@ -45,6 +47,12 @@ private:
 	*初始化石台角色形象
 	*/
 	void initPlayerView();
+
+	/*
+	*initPlayerData()
+	*初始化玩家信息
+	*/
+	void initPlayerData(PlayerInfo& info);
 
 	cocos2d::Sprite* m_arrow;
 

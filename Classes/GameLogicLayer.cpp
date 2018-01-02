@@ -99,27 +99,22 @@ void GameLogicLayer::checkCollisionNpc()
 {
 	GameScene* gs = (GameScene*)getParent();
 	std::vector<Npc*>& npclist = gs->getObjectLayer()->getNpcList();
-	int count = 0;
 	for each (auto var in npclist)
 	{
 		float dis = ccpDistance(PlayerPos, ccp(var->getX(), var->getY()));
 		if (dis < 120)
 		{
-			if (GetIntData("CollisionNpc") != 1)
+			if (!var->getIsCollision())
 			{
-				SetIntData("CollisionNpc", 1);
 				var->collisionEvent();
 			}
-			break;
 		}
 		else
 		{
-			++count;
+			if (var->getIsCollision())
+			{
+				var->endCollisionEvent();
+			}
 		}
-	}
-	if (count == npclist.size())
-	{
-		gs->removeChildByName("talkLayer");
-		SetIntData("CollisionNpc", 0);
 	}
 }

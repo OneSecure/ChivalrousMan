@@ -9,7 +9,7 @@ class ObjectLayer;
 
 /*
 *class GameScene
-*游戏场景
+*游戏主场景
 */
 class GameScene Inherit(cocos2d::Scene)
 {

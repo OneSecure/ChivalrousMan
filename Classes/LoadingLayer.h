@@ -4,6 +4,10 @@
 #include"PreProcess.h"
 #include<string>
 
+/*
+*class LoadingLayer
+*缓冲层，用户显示过渡动画
+*/
 class LoadingLayer Inherit(cocos2d::Layer)
 {
 	CLASS_ESSENTAIL(LoadingLayer)

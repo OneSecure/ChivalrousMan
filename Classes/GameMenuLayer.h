@@ -3,6 +3,10 @@
 #define __GAME_MENU_LAYER_H__
 #include"PreProcess.h"
 
+/*
+*class GameMenuLayer
+*游戏菜单层，用于显示游戏菜单
+*/
 class GameMenuLayer Inherit(cocos2d::Layer)
 {
 	CLASS_ESSENTAIL(GameMenuLayer)

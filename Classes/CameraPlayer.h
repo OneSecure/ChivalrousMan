@@ -2,6 +2,7 @@
 #ifndef __PLAYER_H__
 #define __PLAYER_H__
 #include"Animal.h"
+#include"PlayerData.h"
 #include<iostream>
 #include<utility>
 #include<stack>
@@ -17,11 +18,13 @@
 #define PlayerDir CameraPlayer::getPlayerInstance()->getDir
 #define PlayerFacePos CameraPlayer::getPlayerInstance()->getFacePos
 #define InitPlayerState CameraPlayer::getPlayerInstance()->initStateInfo
+#define GetPlayerData CameraPlayer::getPlayerInstance()->getPlayerData
 
 class PlayerState;
 
 /*
-*摄像机玩家
+class CameraPlayer 
+*主角类，同时充当摄像机
 */
 class CameraPlayer :public Animal
 {
@@ -100,6 +103,11 @@ public:
 	*@param level:不同地图层
 	*/
 	void initStateInfo(const int& level);
+
+	/*
+	*获取玩家数据
+	*/
+	PlayerData& getPlayerData() { return m_playerData; }
 private:
 	/*
 	*AdjustPlayerAndMapPos()
@@ -113,7 +121,10 @@ private:
 	*/
 	void clearRoadList();
 
-	//前往下一个节点
+	/*
+	*goNext();
+	*前往下一个节点
+	*/
 	void goNext();
 
 	CameraPlayer();
@@ -122,7 +133,7 @@ private:
 	//玩家UI
 	cocos2d::Sprite* m_face = nullptr;
 
-	//玩家实例
+	//主角实例
 	static CameraPlayer* m_instance;
 
 	//移动路径列表
@@ -134,9 +145,8 @@ private:
 	//标记状态改变
 	int m_flag;
 
-	//攻击力
-	float m_atk;
+	//保存玩家数据
+	PlayerData m_playerData;
 };
 
 #endif // !__PLAYER_H__
-

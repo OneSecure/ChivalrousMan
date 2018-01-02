@@ -8,6 +8,7 @@
 #include"WorldMapLayer.h"
 #include"GameScene.h"
 #include"GameLogicLayer.h"
+#include"CameraPlayer.h"
 
 #define SHOW_AND_DELETE_LAYER(__LAYER__)  \
 m_isclick##__LAYER__ = !m_isclick##__LAYER__;    \
@@ -57,7 +58,7 @@ void GameUILayer::generateUserInterface()
 	labelgrade->setColor(ccc3(0, 0, 0));
 	labelgrade->setPosition(labelgrade->getContentSize().width*0.5 + 20, size.height - headFrame->getContentSize().height - 25);
 	this->addChild(labelgrade);
-	m_grade = LabelTTF::create("1", "¿¬Ìå", 20);
+	m_grade = LabelTTF::create(NumberToString(GetPlayerData().getgrade()), "¿¬Ìå", 20);
 	m_grade->setPosition(labelgrade->getPosition().x + labelgrade->getContentSize().width, labelgrade->getPosition().y);
 	this->addChild(m_grade);
 	

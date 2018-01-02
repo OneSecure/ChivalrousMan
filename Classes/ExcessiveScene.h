@@ -4,6 +4,10 @@
 #include"PreProcess.h"
 #include<functional>
 
+/*
+*class ExcessiveScene
+*¹ý¶É³¡¾°
+*/
 class ExcessiveScene Inherit(cocos2d::Scene)
 {
 	CLASS_ESSENTAIL(ExcessiveScene)

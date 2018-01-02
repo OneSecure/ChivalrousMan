@@ -1,4 +1,5 @@
 #include"NpcBlue.h"
+#include"GameData.h"
 #include"Commen.h"
 
 DEF_REFLECT_FUNC(NpcBlue)

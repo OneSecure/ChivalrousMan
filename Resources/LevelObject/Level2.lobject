@@ -1,4 +1,5 @@
 //对象名，坐标x、y
-NpcVallige 14 7
-NpcBlue 5 7
-NpcMamom 24 10
+NpcEquip 8 13
+NpcMonk 25 3
+NpcPink 17 18
+NpcSkill 4 18

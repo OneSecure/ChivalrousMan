@@ -149,9 +149,9 @@ SetIntData("BgMusic", 0,true); \
 
 #define INIT_TALK_IN_NPC(__NPC__)  \
 std::ifstream fin; \
-char filename[40] = { 0 }; \
-sprintf_s(filename, "Talk/%s.tk",#__NPC__); \
-fin.open(filename, std::ios::in); \
+char key[40] = { 0 }; \
+sprintf_s(key, "%sTalk",#__NPC__); \
+fin.open(StringValue(key), std::ios::in); \
 if (!fin.fail()) \
 { \
 	do \

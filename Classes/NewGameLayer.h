@@ -2,9 +2,14 @@
 #ifndef __NEW_GAME_LAYER_H__
 #define __NEW_GAME_LAYER_H__
 #include"PreProcess.h"
+#include<string>
 
 class PlayerInfo;
 
+/*
+*class NewGameLayer
+*新建游戏界面层
+*/
 class NewGameLayer:public cocos2d::Layer,
 	public cocos2d::TextFieldDelegate
 {
@@ -56,6 +61,14 @@ private:
 	*/
 	void addRoleNums();
 
+	/*
+	*constructPlayerInfo(PlayerInfo& info);
+	*根据角色名构造初始玩家信息
+	*@param &info:输出玩家信息
+	*@param name：角色名
+	*/
+	void constructPlayerInfo(PlayerInfo& playerinfo, const std::string& name);
+
 	cocos2d::TextFieldTTF* m_username;
 	cocos2d::Sprite* m_bracket[2];
 	
@@ -64,4 +77,3 @@ private:
 };
 
 #endif // !__NEW_GAME_LAYER_H__
-

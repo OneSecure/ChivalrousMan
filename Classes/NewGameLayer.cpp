@@ -7,9 +7,17 @@
 #include"ExcessiveScene.h"
 #include"DBDao.h"
 #include"Model.h"
+#include"CameraPlayer.h"
+#include"PlayerData.h"
 #include<functional>
-#include<string>
 #include<sstream>
+
+#define SetInfo(__TYPE__,NUM)    \
+ss <<NUM;  \
+ss >> tmp;   \
+playerinfo.set##__TYPE__(tmp);  \
+GetPlayerData().set##__TYPE__(NUM);   \
+ss.clear()
 
 bool NewGameLayer::init()
 {
@@ -84,8 +92,7 @@ void NewGameLayer::onConfirmCallBack(cocos2d::CCObject* sender)
 	{
 		DBDao<PlayerInfo> dao;
 		PlayerInfo playerinfo;
-		playerinfo.setplayerName(GetStringData("playername"));
-		playerinfo.setroleName(name);
+		constructPlayerInfo(playerinfo, name);
 		recordPlayerType(playerinfo);
 		dao.setModel(playerinfo);
 		if (!dao.insertModel())
@@ -197,4 +204,21 @@ void NewGameLayer::addRoleNums()
 	ss >> player[3];
 	dao.setModel(player);
 	dao.updateModel("playername", GetStringData("playername"));
+}
+
+void NewGameLayer::constructPlayerInfo(PlayerInfo& playerinfo,const std::string& name)
+{
+	std::stringstream ss;
+	std::string tmp;
+	playerinfo.setplayerName(GetStringData("playername"));
+	playerinfo.setroleName(name);
+	SetInfo(attack, 10);
+	SetInfo(blood, 100);
+	SetInfo(defense, 10);
+	SetInfo(glod, 100);
+	SetInfo(grade, 1);
+	SetInfo(mana, 100);
+	SetInfo(speed, 4);
+	SetInfo(exp, 0);
+	SetInfo(maxExp, 100);
 }

@@ -6,7 +6,7 @@
 
 Npc::Npc()
 {
-
+	m_isCollision = false;
 }
 
 Npc::~Npc()
@@ -16,11 +16,19 @@ Npc::~Npc()
 
 void Npc::collisionEvent()
 {
+	m_isCollision = true;
 	resetIndex();
 	auto gs = CurGameScene();
 	auto talkLayer = TalkLayer::createWithNpc(this);
 	talkLayer->setName("talkLayer");
 	gs->addChild(talkLayer);
+}
+
+void Npc::endCollisionEvent()
+{
+	m_isCollision = false;
+	auto gs = CurGameScene();
+	gs->removeChildByName("talkLayer");
 }
 
 std::string Npc::getNextTalkMsg()
@@ -32,6 +40,11 @@ std::string Npc::getNextTalkMsg()
 	std::string tmp = m_talkmsg[index];
 	++index;
 	return tmp;
+}
+
+void  Npc::talkEndEvent()
+{
+
 }
 
 void Npc::resetIndex()

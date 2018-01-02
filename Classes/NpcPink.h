@@ -15,6 +15,10 @@ public:
 	~NpcPink();
 
 	virtual void collisionEvent() override;
+
+	virtual void endCollisionEvent();
+
+	virtual void talkEndEvent();
 private:
 
 };

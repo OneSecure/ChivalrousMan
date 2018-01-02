@@ -51,3 +51,12 @@ bool GameData::init()
 	CC_SAFE_RETAIN(m_dictionary);
 	return true;
 }
+
+std::string GameData::numberToString(float number)
+{
+	std::string res;
+	std::stringstream ss;
+	ss << number;
+	ss >> res;
+	return res;
+}

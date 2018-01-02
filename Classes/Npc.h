@@ -26,13 +26,25 @@ public:
 	*collisionEvent();
 	*主角碰撞Npc触发的事件
 	*/
-	virtual void collisionEvent();
+	virtual void  collisionEvent();
+
+	/*
+	*endCollisionEvent();
+	*主角结束碰撞Npc
+	*/
+	virtual void endCollisionEvent();
 
 	/*
 	*getNextTalkMsg()
 	*获取下一跳对话信息
 	*/
 	virtual std::string getNextTalkMsg();
+	
+	/*
+	*talkEndEvent();
+	*对话结束事件
+	*/
+	virtual void talkEndEvent();
 
 	/*
 	*resetIndex();
@@ -43,6 +55,8 @@ protected:
 	std::vector<std::string> m_talkmsg;
 	
 	int index = 0;
+
+	PROPERTY__REF(bool,m_isCollision,IsCollision)
 };
 
 #endif // !__NPC_H__

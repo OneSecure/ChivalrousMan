@@ -6,6 +6,7 @@
 #include"GameDynamicData.h"
 #include"DBDao.h"
 #include"GameScene.h"
+#include"CameraPlayer.h"
 #include<functional>
 #include"ExcessiveScene.h"
 
@@ -18,13 +19,8 @@ bool SelectLayer::init()
 		auto back = Sprite::create(StringValue("StartBg"), Rect{ 0,0,SCREEN.width,SCREEN.height });
 		back->setPosition(SCREEN.width*0.5, SCREEN.height*0.5);
 		this->addChild(back);
-
-		LISTEN_TOUCH(SelectLayer);
-
 		STONE_STATION(0.25, 0.4, SelectLayer::onMenuCallBack, this);
-
 		initPlayerView();
-
 		m_arrow = Sprite::create(StringValue("Arrow"));
 		m_arrow->setPosition(SCREEN.width*0.25, SCREEN.height*ARROW_H);
 		this->addChild(m_arrow);                                                                                                                    
@@ -35,11 +31,6 @@ bool SelectLayer::init()
 	}
 
 	return false;
-}
-
-void SelectLayer::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *unused_event)
-{
-
 }
 
 void SelectLayer::onMenuCallBack(cocos2d::CCObject* sender)
@@ -78,6 +69,7 @@ void SelectLayer::onConfirmCallBack(cocos2d::CCObject* sender)
 	}
 	SetStringData("rolename", m_roleList[m_flag].getroleName());
 	SetStringData("PlayerType", m_roleList[m_flag].getroleType());
+	initPlayerData(m_roleList[m_flag]);
 	auto startmap = GameScene::createWithLevel(LEVEL_ONE);
 	CC_SAFE_RETAIN(startmap);
 	std::function<bool(void)> func = [] {  return true; };
@@ -110,4 +102,16 @@ void SelectLayer::initPlayerView()
 		player->runAction(RepeatForever::create(playerAnimate));
 		this->addChild(player);
 	}
+}
+void  SelectLayer::initPlayerData(PlayerInfo& info)
+{
+	GetPlayerData().setattack(std::stof(info.getattack()));
+	GetPlayerData().setblood(std::stof(info.getblood()));
+	GetPlayerData().setdefense(std::stof(info.getdefense()));
+	GetPlayerData().setexp(std::stof(info.getexp()));
+	GetPlayerData().setglod(std::stof(info.getglod()));
+	GetPlayerData().setgrade(std::stof(info.getgrade()));
+	GetPlayerData().setmana(std::stof(info.getmana()));
+	GetPlayerData().setmaxExp(std::stof(info.getmaxExp()));
+	GetPlayerData().setspeed(std::stof(info.getspeed()));
 }

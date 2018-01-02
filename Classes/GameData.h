@@ -10,6 +10,7 @@
 #define IntValue GameData::getInstance()->getIntByKey
 #define BoolValue GameData::getInstance()->getBoolByKey
 #define FloatValue GameData::getInstance()->getFloatByKey
+#define NumberToString GameData::getInstance()->numberToString
 
 class GameData:public cocos2d::CCObject
 {
@@ -22,6 +23,8 @@ public:
 	bool getBoolByKey(const std::string& key);
 
 	float getFloatByKey(const std::string& key);
+
+	std::string numberToString(float number);
 
 	static void release();
 private:

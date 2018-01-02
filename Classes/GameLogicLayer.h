@@ -4,6 +4,10 @@
 #include"PreProcess.h"
 #include<string>
 
+/*
+*class GameLogicLayer
+*游戏逻辑层，处理游戏中的大部分逻辑
+*/
 class GameLogicLayer Inherit(cocos2d::Layer)
 {
 	CLASS_ESSENTAIL(GameLogicLayer)

@@ -6,6 +6,10 @@
 #include<vector>
 #include<string>
 
+/*
+*class ObjectLayer
+*游戏对象层,用于绘制出玩家以外的其它游戏对象
+*/
 class ObjectLayer Inherit(cocos2d::Layer)
 {
 public:

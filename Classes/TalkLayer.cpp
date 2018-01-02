@@ -71,5 +71,6 @@ void TalkLayer::onNextCallBack(cocos2d::CCObject* sender)
 	else
 	{
 		getParent()->removeChild(this);
+		m_npc->talkEndEvent();
 	}
 }

@@ -105,7 +105,8 @@ std::vector<Model> DBDao<Model>::queryModel()
 	while ((row=mysql_fetch_row(result)))
 	{
 		Model md;
-		for (int i = 0; i < mysql_num_fields(result); ++i)
+		int nums = mysql_num_fields(result);
+		for (int i = 0; i <nums; ++i)
 		{
 			md[i + 1] = row[i];
 		}

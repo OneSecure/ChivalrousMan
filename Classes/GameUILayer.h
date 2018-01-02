@@ -3,6 +3,10 @@
 #define __GAME_UI_LAYER_H__
 #include"PreProcess.h"
 
+/*
+*class GameUILayer
+*游戏界面的UI层，用于与用户进行交互
+*/
 class GameUILayer:public cocos2d::Layer,
 	public  cocos2d::TextFieldDelegate
 {

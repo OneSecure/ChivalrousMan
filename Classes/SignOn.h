@@ -3,6 +3,10 @@
 #define __SIGN_ON_H__
 #include"PreProcess.h"
 
+/*
+*class SignOn
+*×¢²áÕËºÅ³¡¾°
+*/
 class SignOn:public cocos2d::Scene
 {
 public:

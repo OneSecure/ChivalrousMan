@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
- <!-- 毫无疑义 -->
+ <!-- 游戏静态数据 -->
 <dict>
+  <!-- 按钮 -->
+  <key>CloseBtn</key>
+  <string>button/closeBtn.png</string>
+  <key>BuyBtn</key>
+  <string>button/buyBtn.png</string>
   <key>Selector</key>
   <string>selector.png</string>
   <key>Bp1Btn</key>
@@ -19,24 +24,80 @@
   <string>button/sortoutBtn.png</string>
   <key>SellBtn</key>
   <string>button/sellBtn.png</string>
-  <key>BackpackGrid</key>
-  <string>BackPackUI.png</string>
   <key>NextBtn</key>
   <string>next.png</string>
-  <key>TalkBg</key>
-  <string>Talk.png</string>
-  <key>ServerConf</key>
-  <string>server.cfg</string>
-  <key>DoorInfo</key>
-  <string>door/doorinfo.info</string>
+  <key>MenuBtn</key>
+  <string>MenuBtn.png</string>
+  <key>SendBtn</key>
+  <string>SendBtn.png</string>
+  <key>BackBtn</key>
+  <string>BackBtn.png</string>
+  <key>BackBtn1</key>
+  <string>BackBtn1.png</string>
+  <key>SureBtn</key>
+  <string>SureBtn.png</string>
+  <key>SureBtn1</key>
+  <string>SureBtn1.png</string>
+  <key>RegisterBtn</key>
+  <String>RegisterBtn.png</String>
+  <key>RegisterBtn1</key>
+  <string>RegisterBtn1.png</string>
+  <key>EntryBtn</key>
+  <string>EntryBtn.png</string>
+  <key>EntryBtn1</key>
+  <string>EntryBtn1.png</string>
+  <key>TrunOn</key>
+  <string>trunOn.png</string>
+  <key>TrunOff</key>
+  <string>trunOff.png</string>
+  <!-- 文本素材 -->
+  <key>GlodText</key>
+  <string>金币数:</string>
   <key>LoginTipText</key>
   <string>账号验证中......</string>
   <key>SigonTipText</key>
   <string>注册中......</string>
-  <key>CushionProgress</key>
-  <string>cushionProgress.png</string>
-  <key>CushionBg</key>
-  <string>CushionBg.png</string>
+  <key>ChangeCount</key>
+  <string>切换账号</string>
+  <key>BackMainMenu</key>
+  <string>返回主菜单</string>
+  <key>BackGame</key>
+  <string>返回游戏</string>
+  <key>TalkEditECHO</key>
+  <string>输入文字</string>
+  <key>TalkTip</key>
+  <string>世界聊天</string>
+  <key>GradeText</key>
+  <string>等级:</string>
+  <key>MusicText</key>
+  <string>背景音效:</string>
+  <key>LoadingText</key>
+  <string>场景构建中..........</string>
+  <key>LoginGame</key>
+  <string>登录游戏</string>
+  <key>PlayerName</key>
+  <string>角色名:</string>
+  <key>PlayerNameTip</key>
+  <string>输入角色名</string>
+  <key>UserName</key>
+  <string>用户名:</string>
+  <key>Passwd</key>
+  <string>密码:</string>
+  <key>SurePasswd</key>
+  <string>确认密码:</string>
+  <key>NewGame</key>
+  <string>新的征程</string>
+  <key>EntryGame</key>
+  <string>进入游戏</string>
+  <key>SigOn</key>
+  <string>注册账号</string>
+  <key>QuitGame</key>
+  <string>退出游戏</string>
+  <key>tfUserName</key>
+  <string>输入用户名</string>
+  <key>tfPasswd</key>
+  <string>输入密码</string>
+  <!--  Npc相关素材  -->
   <key>NpcBlue</key>
   <string>Npc/NpcBlue.png</string>
   <key>NpcEquip</key>
@@ -51,64 +112,26 @@
   <string>Npc/NpcSkill.png</string>
   <key>NpcVallige</key>
   <string>Npc/NpcVallige.png</string>
-  <key>Door</key>
-  <string>door/door1.png</string>
-  <key>ChangeCount</key>
-  <string>切换账号</string>
-  <key>BackMainMenu</key>
-  <string>返回主菜单</string>
-  <key>BackGame</key>
-  <string>返回游戏</string>
+  <!-- 背景素材 -->
   <key>MenuBg</key>
   <string>MenuBg.png</string>
-  <key>MenuBtn</key>
-  <string>MenuBtn.png</string>
-  <key>SendBtn</key>
-  <string>SendBtn.png</string>
-  <key>TalkTip</key>
-  <string>世界聊天</string>
-  <key>MessageFrame</key>
-  <string>MessageFrame.png</string>
-  <key>TalkEditECHO</key>
-  <string>输入文字</string>
-  <key>TalkFrame</key>
-  <string>talkframe.png</string>
-  <key>MapIcon</key>
-  <string>MapIcon.png</string>
-  <key>BackPack</key>
-  <string>backpack.png</string>
-  <key>SkillIcon</key>
-  <string>skillicon.png</string>
-  <key>GradeText</key>
-  <string>等级:</string>
   <key>BarBg</key>
   <string>BarBg.png</string>
-  <key>BloodBar</key>
-  <string>BloodBar.png</string>
-  <key>ManaBar</key>
-  <string>ManaBar.png</string>
-  <key>Player1Head</key>
-  <string>player2/player2_head.png</string>
-  <key>Player2Head</key>
-  <string>player3/player3_head.png</string>
-  <key>Player3Head</key>
-  <string>player4/player4_head.png</string>
-  <key>HeadFrame</key>
-  <string>head_frame.png</string>
-  <key>MusicText</key>
-  <string>背景音效:</string>
-  <key>BgMusic</key>
-  <string>Music/BgMusic.WAV</string>
-  <key>TrunOn</key>
-  <string>trunOn.png</string>
-  <key>TrunOff</key>
-  <string>trunOff.png</string>
-  <key>LoadingText</key>
-  <string>场景构建中..........</string>
-  <key>LoadingIcon</key>
-  <string>ProgressBar.png</string>
+  <key>GameBg</key>
+  <string>SceneBg.png</string>
+  <key>LoginBg</key>
+  <string>lgbg.jpg</string>
+  <key>StartBg</key>
+  <string>bg.jpg</string>
+  <key>TalkBg</key>
+  <string>Talk.png</string>
   <key>LoadBg</key>
   <string>loadBg.png</string>
+  <key>EditBg</key>
+  <string>EditBox.png</string>
+  <key>SigOnBg</key>
+  <string>SigobBg.jpg</string>
+  <!-- 玩家角色素材  -->
   <key>Player1WaitLeft</key>
   <string>player2/wait/player2_2.png</string>
   <key>Player1WaitRight</key>
@@ -173,75 +196,84 @@
   <string>player1/run/5_</string>
   <key>RunUp</key>
   <string>player1/run/7_</string>
-  <key>GameBg</key>
-  <string>SceneBg.png</string>
+  <key>Player1Head</key>
+  <string>player2/player2_head.png</string>
+  <key>Player2Head</key>
+  <string>player3/player3_head.png</string>
+  <key>Player3Head</key>
+  <string>player4/player4_head.png</string>
+  <key>Player1</key>
+  <string>player1.png</string>
+  <!-- 文件素材 -->
+  <key>DealMedication</key>
+  <string>DealThing/Medication.dt</string>
+  <key>DealEquipMent</key>
+  <string>DealThing/EquipMent.dt</string>
+  <key>ServerConf</key>
+  <string>server.cfg</string>
   <key>map1</key>
   <string>map1.mp</string>
   <key>map2</key>
   <string>map2.mp</string>
   <key>map3</key>
   <string>map3.mp</string>
-  <key>LoginGame</key>
-  <string>登录游戏</string>
-  <key>LeftBracket</key>
-  <string>leftbracket.png</string>
-  <key>RightBracket</key>
-  <string>rightbracket.png</string>
-  <key>PlayerName</key>
-  <string>角色名:</string>
-  <key>PlayerNameTip</key>
-  <string>输入角色名</string>
+  <key>BgMusic</key>
+  <string>Music/BgMusic.WAV</string>
+  <key>NpcBlueTalk</key>
+  <string>Talk/NpcBlue.tk</string>
+  <key>NpcEquipTalk</key>
+  <string>Talk/NpcEquip.tk</string>
+  <key>NpcMamomTalk</key>
+  <string>Talk/NpcMamom.tk</string>
+  <key>NpcMonkTalk</key>
+  <string>Talk/NpcMonk.tk</string>
+  <key>NpcPinkTalk</key>
+  <string>Talk/NpcPink.tk</string>
+  <key>NpcSkillTalk</key>
+  <string>Talk/NpcSkill.tk</string>
+  <key>NpcValligeTalk</key>
+  <string>Talk/NpcVallige.tk</string>
+  <!-- 数字素材 -->
   <key>PlayerSpeed</key>
   <string>4</string>
   <key>PlayerFps</key>
   <string>0.06</string>
-  <key>Player1</key>
-  <string>player1.png</string>
+  <!-- 其它素材 -->
+  <key>LeftBracket</key>
+  <string>leftbracket.png</string>
+  <key>RightBracket</key>
+  <string>rightbracket.png</string>
   <key>Arrow</key>
   <string>Arrow.png</string>
   <key>Stone</key>
   <string>StoneStation.png</string>
-  <key>EditBg</key>
-  <string>EditBox.png</string>
-  <key>SigOnBg</key>
-  <string>SigobBg.jpg</string>
-  <key>BackBtn</key>
-  <string>BackBtn.png</string>
-  <key>BackBtn1</key>
-  <string>BackBtn1.png</string>
-  <key>SureBtn</key>
-  <string>SureBtn.png</string>
-  <key>SureBtn1</key>
-  <string>SureBtn1.png</string>
-  <key>RegisterBtn</key>
-  <String>RegisterBtn.png</String>
-  <key>RegisterBtn1</key>
-  <string>RegisterBtn1.png</string>
-  <key>EntryBtn</key>
-  <string>EntryBtn.png</string>
-  <key>EntryBtn1</key>
-  <string>EntryBtn1.png</string>
-  <key>LoginBg</key>
-  <string>lgbg.jpg</string>
-  <key>StartBg</key>
-  <string>bg.jpg</string>
-  <key>UserName</key>
-  <string>用户名:</string>
-  <key>Passwd</key>
-  <string>密码:</string>
-  <key>SurePasswd</key>
-  <string>确认密码:</string>
-  <key>NewGame</key>
-  <string>新的征程</string>
-  <key>EntryGame</key>
-  <string>进入游戏</string>
-  <key>SigOn</key>
-  <string>注册账号</string>
-  <key>QuitGame</key>
-  <string>退出游戏</string>
-  <key>tfUserName</key>
-  <string>输入用户名</string>
-  <key>tfPasswd</key>
-  <string>输入密码</string>
+  <key>LoadingIcon</key>
+  <string>ProgressBar.png</string>
+  <key>MessageFrame</key>
+  <string>MessageFrame.png</string>
+  <key>TalkFrame</key>
+  <string>talkframe.png</string>
+  <key>MapIcon</key>
+  <string>MapIcon.png</string>
+  <key>BackPack</key>
+  <string>backpack.png</string>
+  <key>SkillIcon</key>
+  <string>skillicon.png</string>
+  <key>BloodBar</key>
+  <string>BloodBar.png</string>
+  <key>ManaBar</key>
+  <string>ManaBar.png</string>
+  <key>HeadFrame</key>
+  <string>head_frame.png</string>
+  <key>DealPack</key>
+  <string>dealpack.png</string>
+  <key>BackpackGrid</key>
+  <string>BackPackUI.png</string>
+  <key>Door</key>
+  <string>door/door1.png</string>
+  <key>DoorInfo</key>
+  <string>door/doorinfo.info</string>
+  <key>CushionProgress</key>
+  <string>cushionProgress.png</string>
 </dict>
 </plist>

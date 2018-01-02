@@ -50,6 +50,11 @@ protected: varType varName; \
 public: virtual varType& get##funName(void){return varName;} \
 public: virtual void set##funName(varType var) {varName=var;}
 
+#define PROPERTY__REF(varType, varName, funName)     \
+protected: varType varName;     \
+public: virtual const varType& get##funName(void){return varName;}    \
+public: virtual void set##funName(const varType& var){varName=var;} 
+
 enum class Dir
 {
 	Dir_Left,
@@ -68,6 +73,9 @@ enum class Player_Type
 #define LEVEL_ONE 1
 #define LEVEL_TWO 2
 #define LEVEL_THREE 3
+
+#define MEDICATION 1001
+#define EQUIPMENT 1002
 
 #endif // !__PRE_PRECESS_H__
 
