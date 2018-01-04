@@ -22,6 +22,8 @@ public:
 
 	bool init(const int& type, const std::string& name);
 private:
+	void checkBuy(Thing* thing);
+
 	/*
 	*购买按钮回调函数
 	*/

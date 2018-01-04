@@ -3,6 +3,23 @@
 <plist version="1.0">
  <!-- 游戏静态数据 -->
 <dict>
+  <!--技能-->
+  <key>CrackIt</key>
+  <string>Skill/CrackIt/</string>
+  <key>Dante</key>
+  <string>Skill/Dante/</string>
+  <key>DragonRoar</key>
+  <string>Skill/DragonRoar/</string>
+  <key>LightStrike</key>
+  <string>Skill/LightStrike/</string>
+  <key>Long</key>
+  <string>Skill/Long</string>
+  <key>RecallCountermand/</key>
+  <string>Skill/RecallCountermand/</string>
+  <key>SealOfTheBlade</key>
+  <string>Skill/SealOfTheBlade/</string>
+  <key>XBArrow</key>
+  <string>Skill/XBArrow/</string>
   <!-- 按钮 -->
   <key>CloseBtn</key>
   <string>button/closeBtn.png</string>
@@ -113,6 +130,8 @@
   <key>NpcVallige</key>
   <string>Npc/NpcVallige.png</string>
   <!-- 背景素材 -->
+  <key>DetailBg</key>
+  <string>DetailBg.png</string>
   <key>MenuBg</key>
   <string>MenuBg.png</string>
   <key>BarBg</key>

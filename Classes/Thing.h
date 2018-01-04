@@ -24,7 +24,9 @@ public:
 	*showDetail();
 	*显示物品详情
 	*/
-	virtual void showDetail();
+	virtual void showDetail(cocos2d::Node* node);
+
+	virtual std::vector<std::string>& getDetails();
 
 	static std::string getName(const std::string& name);
 protected:
@@ -35,6 +37,7 @@ protected:
 	*/
 	virtual void initDetails(const std::string& name);
 
+	//细节描述
 	std::vector<std::string> m_details;
 	 //购买价格
 	PROPERTY__REF(float, m_buyglod, buyglod)

@@ -5,6 +5,8 @@
 #include"GameLogicLayer.h"
 #include"Medication.h"
 #include"EquipMent.h"
+#include"PlayerData.h"
+#include"CameraPlayer.h"
 #include<fstream>
 
 #define BASENUM 8
@@ -37,7 +39,7 @@ do   \
     menu->addChild(ob);    \
     ++index;       \
 } while (!fin.eof());  fin.close();
-
+ 
 DealLayer* DealLayer::createWithType(const int& type,const std::string& name)
 {
 	DealLayer* pRet = new DealLayer;
@@ -97,6 +99,7 @@ bool  DealLayer::init(const int& type,const std::string& name)
 void DealLayer::onBuyBtnCallBack(cocos2d::CCObject* sender)
 {
 	ClickAction();
+	checkBuy(dynamic_cast<Thing*>(sender));
 }
 
 void DealLayer::onCloseBtnCallBack(cocos2d::CCObject* sender)
@@ -132,5 +135,19 @@ void DealLayer::onClickThingCallBack(cocos2d::CCObject* sender)
 	targetPos.x -= 9;
 	auto move = MoveTo::create(0.2, targetPos);
 	m_selector->runAction(move);
-	dynamic_cast<Thing*>(sender)->showDetail();
+	dynamic_cast<Thing*>(sender)->showDetail(this);
+}
+
+void DealLayer::checkBuy(Thing* thing)
+{
+	float haveglod = GetPlayerData().getglod();
+	float money = thing->getbuyglod();
+	if (haveglod < money)
+	{
+		MessageBox("");
+	}
+	else
+	{
+		return true;
+	}
 }
