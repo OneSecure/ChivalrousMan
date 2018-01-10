@@ -68,6 +68,12 @@
   <key>TrunOff</key>
   <string>trunOff.png</string>
   <!-- 文本素材 -->
+  <key>Cost</key>
+  <string>价值：</string>
+  <key>BuySuccess</key>
+  <string>购买成功!</string>
+  <key>LackGlod</key>
+  <string>金币不足!</string>
   <key>GlodText</key>
   <string>金币数:</string>
   <key>LoginTipText</key>
@@ -130,6 +136,8 @@
   <key>NpcVallige</key>
   <string>Npc/NpcVallige.png</string>
   <!-- 背景素材 -->
+  <key>TipBg</key>
+  <string>tipbg.png</string>
   <key>DetailBg</key>
   <string>DetailBg.png</string>
   <key>MenuBg</key>

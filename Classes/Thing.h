@@ -5,11 +5,6 @@
 #include<vector>
 #include<string>
 
-#define ADD_PROPERTY(NAME)  \
-fin >> tmp; \
-fin >> tmp; \
-m_##NAME = std::stof(tmp)
-
 /*
 *物品基类
 *class Thing

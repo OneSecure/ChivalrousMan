@@ -7,6 +7,8 @@
 #include"EquipMent.h"
 #include"PlayerData.h"
 #include"CameraPlayer.h"
+#include"TipLayer.h"
+#include"GameDynamicData.h"
 #include<fstream>
 
 #define BASENUM 8
@@ -99,7 +101,11 @@ bool  DealLayer::init(const int& type,const std::string& name)
 void DealLayer::onBuyBtnCallBack(cocos2d::CCObject* sender)
 {
 	ClickAction();
-	checkBuy(dynamic_cast<Thing*>(sender));
+	if (m_curSelect != nullptr) 
+	{
+		float money = dynamic_cast<Thing*>(m_curSelect)->getbuyglod();
+		checkBuy(money);
+	}
 }
 
 void DealLayer::onCloseBtnCallBack(cocos2d::CCObject* sender)
@@ -136,18 +142,23 @@ void DealLayer::onClickThingCallBack(cocos2d::CCObject* sender)
 	auto move = MoveTo::create(0.2, targetPos);
 	m_selector->runAction(move);
 	dynamic_cast<Thing*>(sender)->showDetail(this);
+	m_curSelect = sender;
 }
 
-void DealLayer::checkBuy(Thing* thing)
+void DealLayer::checkBuy(float money)
 {
 	float haveglod = GetPlayerData().getglod();
-	float money = thing->getbuyglod();
 	if (haveglod < money)
 	{
-		MessageBox("");
+		auto tiplayer = TipLayer::createTipLayer(StringValue("LackGlod"));
+		CurGameScene()->addChild(tiplayer);
+		return;
 	}
 	else
 	{
-		return true;
+		auto tiplayer = TipLayer::createTipLayer(StringValue("BuySuccess"));
+		CurGameScene()->addChild(tiplayer);
+		GetPlayerData().setglod(haveglod - money);
+		return;
 	}
 }

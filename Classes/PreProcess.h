@@ -47,13 +47,36 @@ public: \
 
 #define GettingAndSetting(varType,varName,funName) \
 protected: varType varName; \
-public: virtual varType& get##funName(void){return varName;} \
+public: virtual varType get##funName(void){return varName;} \
 public: virtual void set##funName(varType var) {varName=var;}
 
 #define PROPERTY__REF(varType, varName, funName)     \
 protected: varType varName;     \
 public: virtual const varType& get##funName(void){return varName;}    \
 public: virtual void set##funName(const varType& var){varName=var;} 
+
+
+#define CreateWithParam(__OBJTYPE__,__TYPE__,PARAM) \
+static __OBJTYPE__* create##__OBJTYPE__(__TYPE__ PARAM)  \
+{    \
+__OBJTYPE__*  pRet = new __OBJTYPE__;     \
+if (pRet&&pRet->init(PARAM))      \
+{      \
+	pRet->autorelease();    \
+	return pRet;     \
+}     \
+else    \
+{       \
+	delete pRet;     \
+	pRet = nullptr;      \
+	return nullptr;      \
+}      \
+}  
+
+#define ADD_PROPERTY(NAME)  \
+fin >> tmp; \
+fin >> tmp; \
+m_##NAME = std::stof(tmp)
 
 enum class Dir
 {

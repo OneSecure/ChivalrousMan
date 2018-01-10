@@ -39,7 +39,7 @@ public:
 
 	/*
 	*trunDir(float& angle)
-	*改变玩家移动方向
+	*改变移动方向
 	*新的转向角
 	*@param angle:转向角度
 	*@return bool：返回与上一次相比是否改变方向
@@ -55,12 +55,11 @@ public:
 
 	/*
 	*getDir();
-	*获取玩家方向
+	*获取方向
 	*/
 	virtual const Dir& getDir();
 protected:
 	cocos2d::Vec2 m_pos;
-	float m_life;
 	Dir m_dir;
 	float m_vx;
 	float m_vy;

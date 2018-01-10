@@ -22,7 +22,7 @@ public:
 
 	bool init(const int& type, const std::string& name);
 private:
-	void checkBuy(Thing* thing);
+	void checkBuy(float money);
 
 	/*
 	*购买按钮回调函数
@@ -48,6 +48,7 @@ private:
 	cocos2d::Vec2 m_basePoint;
 	cocos2d::Sprite* m_selector;
 	cocos2d::Menu* menu;
+	cocos2d::CCObject* m_curSelect = nullptr;
 };
 
 #endif // !__DEAL_LAYER_H__

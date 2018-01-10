@@ -168,4 +168,5 @@ fin.close()
 	auto move1 = ScaleTo::create(0.1, 1.0);   \
 	((MenuItemImage*)sender)->runAction(Sequence::createWithTwoActions(move, move1))
 
+
 #endif  // !__COMMEN_H__

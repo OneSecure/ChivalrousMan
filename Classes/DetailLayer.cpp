@@ -27,12 +27,20 @@ bool DetailLayer::init(Thing* th)
 		back->setPosition(back->getContentSize().width*0.5+10, size.height*0.5);
 		this->addChild(back);
 		int n = th->getDetails().size();
+		Vec2 lastPos;
 		for (int i=0;i<n;++i)
 		{
 			auto detail = LabelTTF::create(th->getDetails()[i], "¿¬Ìå", 20);
 			detail->setPosition(back->getPositionX(), back->getPositionY() + back->getContentSize().height*0.5 - 60 - detail->getContentSize().height*i);
 			this->addChild(detail);
+			lastPos = detail->getPosition();
 		}
+
+		std::string cost = StringValue("Cost") + NumberToString(th->getsellglod());
+		auto sellmoney = LabelTTF::create(cost, "¿¬Ìå", 20);
+		sellmoney->setColor(ccc3(255, 242, 0));
+		sellmoney->setPosition(lastPos.x, lastPos.y - 50);
+		this->addChild(sellmoney);
 
 		auto menu = Menu::create();
 		menu->setPosition(0, 0);
