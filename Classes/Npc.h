@@ -8,12 +8,15 @@
 #include<vector>
 #include<string>
 
+/*
+*class Npc
+*Npc的基类
+*/
 class Npc
 {
 public:
 	Npc();
 	~Npc();
-	static Npc* CreateClassNpc() { return (new Npc); }
 
 	//世界地图x坐标
 	GettingAndSetting(float, m_x, X);

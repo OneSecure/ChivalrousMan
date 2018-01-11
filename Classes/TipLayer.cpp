@@ -16,7 +16,7 @@ bool TipLayer::init(const std::string& tiptext)
 		tipLabel->setPosition(size.width*0.5, back->getPositionY());
 		this->addChild(tipLabel);
 
-		scheduleOnce(schedule_selector(TipLayer::killSelf), 1.5);
+		scheduleOnce(schedule_selector(TipLayer::killSelf), 0.8);
 		return true;
 	}
 	return false;

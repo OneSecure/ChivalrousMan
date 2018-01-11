@@ -12,9 +12,10 @@ public:
 
 	Skill(const std::string& name);
 	virtual ~Skill();
-private:
+private: 
 	void initProperty(const std::string& name);
-
+	
+	PROPERTY__REF(std::string, m_name, name)
 };
 
 #endif // ! __SKILL_H__

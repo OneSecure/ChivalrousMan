@@ -15,6 +15,8 @@ public:
 	~NpcSkill();
 
 	virtual void collisionEvent() override;
+
+	virtual void talkEndEvent() override;
 private:
 
 };

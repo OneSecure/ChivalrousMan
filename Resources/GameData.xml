@@ -21,6 +21,10 @@
   <key>XBArrow</key>
   <string>Skill/XBArrow/</string>
   <!-- 按钮 -->
+  <key>BtnUp</key>
+  <string>button/btnUp.png</string>
+  <key>BtnAllUp</key>
+  <string>button/btnAllUp.png</string>
   <key>CloseBtn</key>
   <string>button/closeBtn.png</string>
   <key>BuyBtn</key>
@@ -68,6 +72,8 @@
   <key>TrunOff</key>
   <string>trunOff.png</string>
   <!-- 文本素材 -->
+  <key>SkillText</key>
+  <string>技能</string>
   <key>Cost</key>
   <string>价值：</string>
   <key>BuySuccess</key>
@@ -136,6 +142,8 @@
   <key>NpcVallige</key>
   <string>Npc/NpcVallige.png</string>
   <!-- 背景素材 -->
+  <key>SkillBg</key>
+  <string>SkillBg.png</string>
   <key>TipBg</key>
   <string>tipbg.png</string>
   <key>DetailBg</key>
@@ -232,6 +240,8 @@
   <key>Player1</key>
   <string>player1.png</string>
   <!-- 文件素材 -->
+  <key>DealSkill</key>
+  <string>DealThing/Skill.dt</string>
   <key>DealMedication</key>
   <string>DealThing/Medication.dt</string>
   <key>DealEquipMent</key>
@@ -266,6 +276,8 @@
   <key>PlayerFps</key>
   <string>0.06</string>
   <!-- 其它素材 -->
+  <key>SkillGrid</key>
+  <string>SkillGrid.png</string>
   <key>LeftBracket</key>
   <string>leftbracket.png</string>
   <key>RightBracket</key>

@@ -15,7 +15,15 @@ public:
  	virtual bool init() override;
 
 private:
+	/*
+	*升级技能按钮点击回调函数
+	*/
+	void onBtnUpClickCallback(cocos2d::CCObject* sender);
 
+	/*
+	*一键升级按钮点击回调函数
+	*/
+	void onBtnAllUpClickCallBack(cocos2d::CCObject* sender);
 };
 
 #endif // !__SKILL_LAYER_H__

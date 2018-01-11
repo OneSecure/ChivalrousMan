@@ -9,37 +9,44 @@
 #include"CameraPlayer.h"
 #include"TipLayer.h"
 #include"GameDynamicData.h"
+#include"Skill.h"
 #include<fstream>
 
 #define BASENUM 8
 
 /*
-*添加物品
+*添加交易层的物品
 */
-#define ADD_THING(__NAME__)   \
-std::ifstream fin;      \
-fin.open(name, std::ios::in);     \
-if (fin.fail())     \
-{      \
-	return;     \
-}      \
-std::string obname;    \
-fin >> obname;    \
-int index=0;    \
-do   \
-{      \
-	fin >> obname;    \
-	char filename[40] = { 0 };     \
-	sprintf_s(filename, "Thing/%s.png", obname);    \
-	auto ob = __NAME__::createWithImage(filename);    \
-	float x = index%BASENUM;  \
-	float y = index / BASENUM;  \
-	x = m_basePoint.x + x*(45 + 10) + 10;  \
-	y = m_basePoint.y - y*(45 + 10)+ 5;  \
-	ob->setPosition(x, y);   \
-	ob->setTarget(this, menu_selector(DealLayer::onClickThingCallBack));   \
-    menu->addChild(ob);    \
-    ++index;       \
+#define ADD_THING(__NAME__,FLAG)    \
+std::ifstream fin;     \
+fin.open(name, std::ios::in);      \
+if (fin.fail())      \
+{         \
+	return;  }       \
+std::string obname;     \
+fin >> obname;     \
+int index=0;      \
+char filename[100] = { 0 };     \
+do      \
+{         \
+	fin >> obname;     \
+	if(FLAG)    \
+	{    \
+		sprintf_s(filename, "Thing/%s.png",obname.c_str());   \
+	}    \
+	else    \
+	{     \
+		sprintf_s(filename, "Skill/%s/%s.png", obname.c_str(),obname.c_str());   \
+	}     \
+	auto ob = __NAME__::createWithImage(filename);     \
+	float x = index%BASENUM;     \
+	float y = index / BASENUM;     \
+	x = m_basePoint.x + x*(45 + 10) + 15;     \
+	y = m_basePoint.y - y*(45 + 10)+8;     \
+	ob->setPosition(x, y);      \
+	ob->setTarget(this, menu_selector(DealLayer::onClickThingCallBack));     \
+    menu->addChild(ob);      \
+    ++index;         \
 } while (!fin.eof());  fin.close();
  
 DealLayer* DealLayer::createWithType(const int& type,const std::string& name)
@@ -121,12 +128,17 @@ void  DealLayer::initThingByName(const int& type, const std::string& name)
 	{
 	case MEDICATION:
 	{
-		ADD_THING(Medication);
+		ADD_THING(Medication, 1);
 	}
 		break;
 	case EQUIPMENT:
 	{
-		ADD_THING(EquipMent);
+		ADD_THING(EquipMent, 1);
+	}
+		break;
+	case SKILL:
+	{
+		ADD_THING(Skill, 0);
 	}
 		break;
 	default:

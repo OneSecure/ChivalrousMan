@@ -22,6 +22,11 @@ public:
 
 	bool init(const int& type, const std::string& name);
 private:
+	/*
+	*checkBuy(float money);
+	*检查是否可以购买
+	*@param money：物品价格
+	*/
 	void checkBuy(float money);
 
 	/*

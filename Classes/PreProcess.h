@@ -99,6 +99,7 @@ enum class Player_Type
 
 #define MEDICATION 1001
 #define EQUIPMENT 1002
+#define SKILL 1003 
 
 #endif // !__PRE_PRECESS_H__
 

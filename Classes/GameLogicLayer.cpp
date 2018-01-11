@@ -118,3 +118,11 @@ void GameLogicLayer::checkCollisionNpc()
 		}
 	}
 }
+
+void GameLogicLayer::randomMeetMonster()
+{
+	if (GetStringData("CurMap") == "map3")
+	{
+		
+	}
+}

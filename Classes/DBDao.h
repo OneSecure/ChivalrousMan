@@ -15,6 +15,10 @@
 #define DELETE 3
 #define UPDATE 4
 
+/*
+*class DBDao
+*数据库操作类
+*/
 template<typename Model>
 class DBDao
 {
@@ -24,18 +28,54 @@ public:
 	DBDao(const std::string& host, const std::string& username, const std::string& passwd, const std::string& dbname);
 	~DBDao();
 
+	/*
+	*setModel(Model md);
+	*设置要操作的实体类
+	*@param md：实体类对象
+	*/
 	void setModel(Model md);
 
+	/*
+	*queryModel();
+	*查询实体数据
+	*@return vector<Model>：返回实体类数据集，失败则返回空vector
+	*/
 	std::vector<Model> queryModel();
 
+	/*
+	*insertModel();
+	*将某一实体类对象插入到数据库
+	*@return bool：返回true表示插入成功，否则失败
+	*/
 	bool insertModel();
 
+	/*
+	*deleteModel();
+	*删除某一实体类
+	*@return bool：返回true表示插入成功，否则插入失败
+	*/
 	bool deleteModel();
 
+	/*
+	*updateModel(const std::string& fieldName, const std::string& value);
+	*根据某一键值更新实体类
+	*@param fieldName：依赖的键值名
+	*@param value:依赖的键值
+	*@return bool：插入成功返回true，否则返回false
+	*/
 	bool updateModel(const std::string& fieldName, const std::string& value);
 private:
+	/*
+	*initConnect();
+	*初始化连接
+	*/
 	void initConnect();
 
+	/*
+	*generateSql(int flag);
+	*根据不同情况生成Sql语句
+	*@param  flag：用于标记不同情况
+	*/
 	void generateSql(int flag);
 
 	std::string generateWhere();
@@ -44,12 +84,12 @@ private:
 
 	std::string generateUpdate();
 
-	MYSQL* m_sqlCon;
-	std::string m_host;
-	std::string m_username;
-	std::string m_passwd;
-	std::string m_dbname;
-	unsigned int m_port = 3306;
+	MYSQL* m_sqlCon;   //数据库连接句柄
+	std::string m_host;    //主机名
+	std::string m_username;      //用户名
+	std::string m_passwd;       //密码
+	std::string m_dbname;      //数据库名
+	unsigned int m_port = 3306;     //数据库服务器端口
 	std::string m_sql;
 	Model m_md;
 };

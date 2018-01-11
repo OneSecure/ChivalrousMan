@@ -37,6 +37,12 @@ private:
 	*@param dest：目标名
 	*/
 	void gotoDestMap(const std::string& dest);
+
+	/*
+	*randomMeetMonster();
+	*在野怪区随机遇见怪物
+	*/
+	void randomMeetMonster();
 };
 
 #endif // !__GAME_LOGIC_LAYER_H__

@@ -36,7 +36,7 @@ bool DetailLayer::init(Thing* th)
 			lastPos = detail->getPosition();
 		}
 
-		std::string cost = StringValue("Cost") + NumberToString(th->getsellglod());
+		std::string cost = StringValue("Cost") + NumberToString(th->getbuyglod());
 		auto sellmoney = LabelTTF::create(cost, "¿¬Ìå", 20);
 		sellmoney->setColor(ccc3(255, 242, 0));
 		sellmoney->setPosition(lastPos.x, lastPos.y - 50);
