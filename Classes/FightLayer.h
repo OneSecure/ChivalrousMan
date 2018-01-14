@@ -17,14 +17,45 @@ public:
 	FightLayer();
 	~FightLayer();
 	/*
-	*根据怪物类型创建战斗场景
-	*@param monster：怪物
+	*根据怪物名称创建战斗场景
+	*@param name：怪物
 	*/
 	static cocos2d::Scene* createFightScene(const std::string& name);
 
 	bool init(const std::string& name);
 private:
+	/*
+	*calcActionOrder();
+	*计算行动顺序
+	*/
+	void calcActionOrder();
+
 	void update(float dt);
+
+	/*
+	*选择自动还是手动
+	*/
+	void onToggleAutoAndHand(cocos2d::CCObject* sender);
+
+	/*
+	*药品按钮点击回调函数
+	*/
+	void onMedicationClickCallBack(cocos2d::CCObject* sender);
+
+	/*
+	*技能按钮点击回调函数
+	*/
+	void onSkillClickCallBack(cocos2d::CCObject* sender);
+
+	/*
+	*逃跑按钮点击回调函数
+	*/
+	void onRunClickCallBack(cocos2d::CCObject* sender);
+
+	/*
+	*普通攻击按钮点击回调函数
+	*/
+	void onAttackClickCallBack(cocos2d::CCObject* sender);
 		
 	/*
 	*randomNumMonster();

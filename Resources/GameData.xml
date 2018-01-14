@@ -42,6 +42,26 @@
   <key>XBArrow</key>
   <string>Skill/XBArrow/</string>
   <!-- 按钮 -->
+  <key>RunNormalBtn</key>
+  <string>button/RunNormalBtn.png</string>
+  <key>RunPressedBtn</key>
+  <string>button/RunPressedBtn.png</string>
+  <key>AttackNormalBtn</key>
+  <string>button/AttackNormalBtn.png</string>
+  <key>AttackPressedBtn</key>
+  <string>button/AttackPressedBtn.png</string>
+  <key>SkillNormalBtn</key>
+  <string>button/SkillNormalBtn.png</string>
+  <key>SkillPressedBtn</key>
+  <string>button/SkillPressedBtn.png</string>
+  <key>MeNormalBtn</key>
+  <string>button/NormalMeBtn.png</string>
+  <key>MePressedBtn</key>
+  <string>button/PressedMeBtn.png</string>
+  <key>AutoBtn</key>
+  <string>button/AutoBtn.png</string>
+  <key>UseHandBtn</key>
+  <string>button/UseHandBtn.png</string>
   <key>BtnUp</key>
   <string>button/btnUp.png</string>
   <key>BtnAllUp</key>
@@ -93,6 +113,8 @@
   <key>TrunOff</key>
   <string>trunOff.png</string>
   <!-- 文本素材 -->
+  <key>NoSelect</key>
+  <string>请选择要购买的物品</string>
   <key>SkillText</key>
   <string>技能</string>
   <key>Cost</key>

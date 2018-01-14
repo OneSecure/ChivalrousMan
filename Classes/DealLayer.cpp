@@ -10,6 +10,7 @@
 #include"TipLayer.h"
 #include"GameDynamicData.h"
 #include"Skill.h"
+#include"BackPackManager.h"
 #include<fstream>
 
 #define BASENUM 8
@@ -69,6 +70,7 @@ bool  DealLayer::init(const int& type,const std::string& name)
 {
 	if (Layer::init())
 	{
+		m_type = type;
 		auto size = SCREEN;
 		auto backpack = Sprite::create(StringValue("DealPack"));
 		backpack->setPosition(size.width*0.5, size.height*0.5);
@@ -112,6 +114,11 @@ void DealLayer::onBuyBtnCallBack(cocos2d::CCObject* sender)
 	{
 		float money = dynamic_cast<Thing*>(m_curSelect)->getbuyglod();
 		checkBuy(money);
+	}
+	else
+	{
+		auto tiplayer = TipLayer::createTipLayer(StringValue("NoSelect"));
+		this->addChild(tiplayer);
 	}
 }
 
@@ -163,14 +170,15 @@ void DealLayer::checkBuy(float money)
 	if (haveglod < money)
 	{
 		auto tiplayer = TipLayer::createTipLayer(StringValue("LackGlod"));
-		CurGameScene()->addChild(tiplayer);
+		this->addChild(tiplayer);
 		return;
 	}
 	else
 	{
 		auto tiplayer = TipLayer::createTipLayer(StringValue("BuySuccess"));
-		CurGameScene()->addChild(tiplayer);
+		this->addChild(tiplayer);
 		GetPlayerData().setglod(haveglod - money);
+		AddToBackPack(dynamic_cast<Thing*>(m_curSelect)->getname(), m_type);
 		return;
 	}
 }

@@ -49,7 +49,9 @@ private:
 	*点击物品的回调函数
 	*/
 	void onClickThingCallBack(cocos2d::CCObject* sender);
-
+	
+	//交易类型
+	int m_type;
 	cocos2d::Vec2 m_basePoint;
 	cocos2d::Sprite* m_selector;
 	cocos2d::Menu* menu;

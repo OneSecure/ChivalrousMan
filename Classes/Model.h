@@ -165,8 +165,27 @@ public:
 	SkillInfo();
 	~SkillInfo();
 
-private:
-	
+	GettingAndSetting(std::string, playername, playername);
+	GettingAndSetting(std::string, rolename, rolename);
+	GettingAndSetting(std::string, skillname, skillname);
+	GettingAndSetting(std::string, skillgrade, skillgrade);
+public:
+	std::string& operator[](const int& index)
+	{
+		switch (index)
+		{
+		case 1:
+			return playername;
+		case 2:
+			return rolename;
+		case 3:
+			return skillname;
+		case 4:
+			return skillgrade;
+		default:
+			return playername;
+		}
+	}
 };
 
 #endif // !__MODEL_H__

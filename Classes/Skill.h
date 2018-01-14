@@ -20,6 +20,7 @@ private:
 	void initProperty(const std::string& name);
 	
 	PROPERTY__REF(std::string, m_name, name)
+	PROPERTY__REF(int,m_grade,grade)
 };
 
 #endif // ! __SKILL_H__

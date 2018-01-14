@@ -19,12 +19,6 @@ public:
 	*点击出售按钮回调函数
 	*/
 	void sellBtnCallback(cocos2d::CCObject* sender);
-
-	/*
-	*sortOutCallback(cocos2d::CCObject* sender);
-	*点击整理按钮回调函数
-	*/
-	void sortOutCallback(cocos2d::CCObject* sender);
 	
 	/*
 	*useBtnCallBack(cocos2d::CCObject* sender);
@@ -45,13 +39,27 @@ public:
 	void bp2BtnCallBack(cocos2d::CCObject* sender);
 
 	/*
+	*onClickThingCallBack(cocos2d::CCObject* sender);
+	*点击背包按钮回调函数
+	*/
+	void onClickThingCallBack(cocos2d::CCObject* sender);
+
+	/*
 	*clickThingCallBack();
 	*点击物品回调函数
 	*/
 	void clickThingCallBack();
 private:
+	/*
+	*initBackPackThing()
+	*初始化背包物品
+	*/
+	void initBackPackThing();
+
 	cocos2d::Vec2 m_basePoint;
 	cocos2d::Sprite* m_selector;
+	cocos2d::CCObject* m_curSel;
+	cocos2d::Menu* m_menu;
 };
 
 #endif // !__BACK_PACK_LAYER

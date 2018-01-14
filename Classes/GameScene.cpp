@@ -32,7 +32,7 @@ bool GameScene::init(const int& level)
 		SetCurGameScene(this);
 		char mapname[40] = { 0 };
 		sprintf_s(mapname, "map%d", level);
-		SetStringData("CurMap", mapname);
+		SetIntData("CurMap", level);
 		m_mapLayer = GameMapLayer::create();
 		m_mapLayer->loadMapTexture(mapname);
 		m_mapLayer->drawMap(0, 0);

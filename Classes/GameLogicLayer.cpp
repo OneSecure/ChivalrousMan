@@ -13,7 +13,7 @@
 #include<stack>
 #include<functional>
 
-#define UpdateSpeed 60
+#define UpdateSpeed 240
 
 bool GameLogicLayer::init()
 {
@@ -58,6 +58,7 @@ void GameLogicLayer::update(float dt)
 		UpdateDoorScreenPos();
 		checkEntryDoor();
 		checkCollisionNpc();
+		time = 0;
 	}
 }
 
@@ -125,18 +126,25 @@ void GameLogicLayer::checkCollisionNpc()
 
 void GameLogicLayer::randomMeetMonster()
 {
+	//产生怪物间隔
+	static long interval = 0;
 	std::random_device rand;
-	if (GetStringData("CurMap") == "map3")
+	if (GetIntData("CurMap")==LEVEL_THREE)
 	{
-		int randnum = rand() % 100;
-		if (randnum <1)
+		if (interval > 10)
 		{
-			unscheduleUpdate();
-			SetFloatData("DestX", PlayerPos.x);
-			SetFloatData("DestY", PlayerPos.y);
-			auto fightScene = FightLayer::createFightScene("Dragon");
-			auto reScene = TransitionFadeUp::create(0.5, fightScene);
-			Director::getInstance()->replaceScene(reScene);
+			int randnum = rand() % 100;
+			if (randnum < 2)
+			{
+				unscheduleUpdate();
+				SetFloatData("DestX", PlayerPos.x);
+				SetFloatData("DestY", PlayerPos.y);
+				auto fightScene = FightLayer::createFightScene("Dragon");
+				auto reScene = TransitionFadeUp::create(0.5, fightScene);
+				Director::getInstance()->replaceScene(reScene);
+			}
+			interval = 0;
 		}
 	}
+	interval++;
 }
