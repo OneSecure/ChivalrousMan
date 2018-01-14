@@ -159,5 +159,15 @@ public:
 	}
 };
 
+class SkillInfo 
+{
+public:
+	SkillInfo();
+	~SkillInfo();
+
+private:
+	
+};
+
 #endif // !__MODEL_H__
 

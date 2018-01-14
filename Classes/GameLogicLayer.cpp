@@ -9,6 +9,7 @@
 #include"ExcessiveScene.h"
 #include"GameScene.h"
 #include"ObjectLayer.h"
+#include"FightLayer.h"
 #include<stack>
 #include<functional>
 
@@ -50,7 +51,10 @@ void GameLogicLayer::update(float dt)
 	if (time >= 1)
 	{
 		if (PlayerCanMove())
+		{
 			PlayerMove();
+			randomMeetMonster();
+		}
 		UpdateDoorScreenPos();
 		checkEntryDoor();
 		checkCollisionNpc();
@@ -121,8 +125,18 @@ void GameLogicLayer::checkCollisionNpc()
 
 void GameLogicLayer::randomMeetMonster()
 {
+	std::random_device rand;
 	if (GetStringData("CurMap") == "map3")
 	{
-		
+		int randnum = rand() % 100;
+		if (randnum <1)
+		{
+			unscheduleUpdate();
+			SetFloatData("DestX", PlayerPos.x);
+			SetFloatData("DestY", PlayerPos.y);
+			auto fightScene = FightLayer::createFightScene("Dragon");
+			auto reScene = TransitionFadeUp::create(0.5, fightScene);
+			Director::getInstance()->replaceScene(reScene);
+		}
 	}
 }

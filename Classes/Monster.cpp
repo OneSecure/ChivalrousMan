@@ -1,8 +1,9 @@
 #include"Monster.h"
 #include"Commen.h"
+#include"GameData.h"
 #include<fstream>
    
-Monster::Monster(const std::string name)
+Monster::Monster(const std::string& name)
 {
 	initProperty(name);
 }
@@ -12,10 +13,39 @@ Monster::~Monster()
 
 }
 
+ Monster* Monster::createWithName(const std::string& name)
+{
+	 Monster* pRet = new Monster(StringValue(name));
+	 if (pRet&&pRet->init(StringValue(name)))
+	 {
+		 pRet->autorelease();
+		 return pRet;
+	 }
+	 else
+	 {
+		 delete pRet;
+		 pRet = nullptr;
+		 return nullptr;
+	 }
+}
+
+bool Monster::init(const std::string& name)
+{
+	if (Sprite::init())
+	{
+		initMonsterAnimation(name, m_frames);
+		return true;
+	}
+	return false;
+}
+
+
 void Monster::initProperty(const std::string& name)
 {
+	std::string realname = name;
+	realname += ".att";
 	std::ifstream fin;
-	fin.open(name, std::ios::in);
+	fin.open(realname, std::ios::in);
 	if (fin.fail())
 	{
 		return;
@@ -28,18 +58,14 @@ void Monster::initProperty(const std::string& name)
 	ADD_PROPERTY(blood);
 	ADD_PROPERTY(defense);
 	ADD_PROPERTY(speed);
-	fin >> tmp;
-	fin >> tmp;
-	initFaceWithFrames(name, std::stoi(tmp));
+	ADD_PROPERTY(frames);
 	fin.close();
 }
 
-void Monster::initFaceWithFrames(const std::string& name, int num)
+void Monster::initMonsterAnimation(const std::string& name, int num)
 {
-	m_face = Sprite::create();
 	Animation* animation;
-	LoadAnimationFromMinFile(name, num, 0.35, animation);
+	LoadAnimationFromMinFile(name.c_str(), num, 0.15, animation);
 	auto animate = Animate::create(animation);
-	m_face->runAction(CCRepeatForever::create(animate));
-	CC_SAFE_RETAIN(m_face);
+	this->runAction(CCRepeatForever::create(animate));
 }

@@ -3,6 +3,7 @@
 #define __OBJECT_LAYER_H__
 #include"PreProcess.h"
 #include"Npc.h"
+#include"Monster.h"
 #include<vector>
 #include<string>
 
@@ -36,13 +37,19 @@ private:
 	void updateObjectScreenPos();
 
 	/*
+	*updateNpcScreenPos();
+	*更新Npc在屏幕上的位置
+	*/
+	void updateNpcScreenPos();
+
+	/*
 	*initLevelObject(const int& level)
 	*初始化对象层对象
 	*/
 	void initLevelObject(const int& level);
 
 	/*
-	*releaseNpc();
+	*clearObjectLayer();
 	*清理对象层
 	*/
 	void clearObjectLayer();

@@ -38,6 +38,8 @@ protected:
 	PROPERTY__REF(float, m_buyglod, buyglod)
 	//卖出价格
 	PROPERTY__REF(float, m_sellglod, sellglod)
+	//名称
+	PROPERTY__REF(std::string,m_name,name)
 };
 
 #endif // !__THING_H__

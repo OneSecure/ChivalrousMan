@@ -46,13 +46,7 @@ bool ObjectLayer::init(const int& level)
 
 void ObjectLayer::update(float dt)
 {
-	static float Time = 0;
-	Time += dt * 360;
-	if (Time >= 1)
-	{
-		updateObjectScreenPos();
-		Time = 0;
-	}
+	updateObjectScreenPos();
 }
 
 void ObjectLayer::initLevelObject(const int& level)
@@ -88,20 +82,25 @@ void ObjectLayer::initLevelObject(const int& level)
 
 void  ObjectLayer::updateObjectScreenPos()
 {
+	updateNpcScreenPos();
+}
+
+void ObjectLayer::updateNpcScreenPos()
+{
 	Vec2 pos;
-	for (int i = 0; i < m_npcList.size(); ++i)
+	for (auto it : m_npcList)
 	{
-		pos.x =PlayerFacePos().x+(m_npcList[i]->getX() - PlayerPos.x);
-		pos.y = PlayerFacePos().y + (m_npcList[i]->getY() - PlayerPos.y);
-		m_npcList[i]->getFace()->setPosition(pos);
+		pos.x = PlayerFacePos().x + (it->getX() - PlayerPos.x);
+		pos.y = PlayerFacePos().y + (it->getY() - PlayerPos.y);
+		it->getFace()->setPosition(pos);
 	}
 }
 
 void ObjectLayer::clearObjectLayer()
 {
-	for (int i = 0; i < m_npcList.size(); ++i)
+	for (auto it : m_npcList)
 	{
-		RELEASE_NULL(m_npcList[i]);
+		RELEASE_NULL(it);
 	}
 	m_npcList.clear();
 }

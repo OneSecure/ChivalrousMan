@@ -74,6 +74,7 @@ bool LoginLayer::onTextFieldDetachWithIME(TextFieldTTF * sender)
 void LoginLayer::LoginCallback(CCObject* obj)
 {
 	auto cushion = LoadingLayer::create(StringValue("LoginTipText"), StringValue("CushionProgress"));
+	cushion->setName("cushion");
 	this->addChild(cushion);
 	m_loginThread = new std::thread{ &LoginLayer::LoginEvent,this };
 	m_loginThread->detach();
@@ -134,11 +135,13 @@ void LoginLayer::LoginEvent()
 	if (playername == "")
 	{
 		MessageBox("用户名不能为空", "提示");
+		this->removeChildByName("cushion");
 		return;
 	}
 	if (playerpsw == "")
 	{
 		MessageBox("密码不能为空", "提示");
+		this->removeChildByName("cushion");
 		return;
 	}
 	DBDao<Player> dao;
@@ -149,8 +152,8 @@ void LoginLayer::LoginEvent()
 	std::vector<Player> list = dao.queryModel();
 	if (list.size() == 0)
 	{
-		MessageBox("用户名不存在", "提示");
-		m_goto = 1;
+		MessageBox("用户名或密码错误", "提示");
+		this->removeChildByName("cushion");
 		return;
 	}
 	SetStringData("playername", list[0].getplayerName());

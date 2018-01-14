@@ -5,7 +5,8 @@
 #include"GameDynamicData.h"
 #include<fstream>
 
-Thing::Thing(const std::string& name)
+Thing::Thing(const std::string& name):
+	m_name(name)
 {
 	initDetails(name);
 }

@@ -3,6 +3,10 @@
 #define  __SKILL_H__
 #include"Thing.h"
 
+/*
+*class Skill
+*¼¼ÄÜÍ¼±ê
+*/
 class Skill Inherit(Thing)
 {
 public:

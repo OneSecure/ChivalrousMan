@@ -3,6 +3,27 @@
 <plist version="1.0">
  <!-- 游戏静态数据 -->
 <dict>
+  <!--怪物资源-->
+  <key>Ghost</key>
+  <string>Monster/Ghost/Ghost</string>
+  <key>BlackDragon</key>
+  <string>Monster/BlackDragon/BlackDragon</string>
+  <key>Dragon</key>
+  <string>Monster/Dragon/Dragon</string>
+  <key>Kougamon</key>
+  <string>Monster/Kougamon/Kougamon</string>
+  <key>Lion</key>
+  <string>Monster/Lion/Lion</string>
+  <key>Minotaur</key>
+  <string>Monster/Minotaur/Minotaur</string>
+  <key>Octopus</key>
+  <string>Monster/Octopus/Octopus</string>
+  <key>Pterosaur</key>
+  <string>Monster/Pterosaur/Pterosaur</string>
+  <key>SkeletonMaster</key>
+  <string>Monster/SkeletonMaster/SkeletonMaster</string>
+  <key>TarrasqueMessenger</key>
+  <string>Monster/TarrasqueMessenger/TarrasqueMessenger</string>
   <!--技能-->
   <key>CrackIt</key>
   <string>Skill/CrackIt/</string>
@@ -142,6 +163,8 @@
   <key>NpcVallige</key>
   <string>Npc/NpcVallige.png</string>
   <!-- 背景素材 -->
+  <key>FightBg</key>
+  <string>FightBg.png</string>
   <key>SkillBg</key>
   <string>SkillBg.png</string>
   <key>TipBg</key>
