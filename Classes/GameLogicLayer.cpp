@@ -131,8 +131,8 @@ void GameLogicLayer::randomMeetMonster()
 	std::random_device rand;
 	if (GetIntData("CurMap")==LEVEL_THREE)
 	{
-		if (interval > 10)
-		{
+	/*	if (interval > 10)
+		{*/
 			int randnum = rand() % 100;
 			if (randnum < 2)
 			{
@@ -143,8 +143,8 @@ void GameLogicLayer::randomMeetMonster()
 				auto reScene = TransitionFadeUp::create(0.5, fightScene);
 				Director::getInstance()->replaceScene(reScene);
 			}
-			interval = 0;
-		}
+	/*		interval = 0;
+		}*/
 	}
-	interval++;
+	//interval++;
 }

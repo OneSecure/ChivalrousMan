@@ -7,6 +7,7 @@
 #include"Medication.h"
 #include"EquipMent.h"
 #include<string>
+#include<map>
 
 #define BASENUM 8
 
@@ -102,10 +103,10 @@ void BackPackLayer::initBackPackThing()
 	int index = 0;
 	for (const auto& it : BackPackMap())
 	{
-		std::string filename = it.first;
+		std::string filename = it.name;
 		filename += ".png";
 		Thing* ob = nullptr;
-		if (it.second == MEDICATION)
+		if (it.type == MEDICATION)
 		{
 			ob = Medication::createWithImage(filename);
 		}
@@ -119,7 +120,12 @@ void BackPackLayer::initBackPackThing()
 		y = m_basePoint.y - y*(45 + 10) + 8;     
 		ob->setPosition(x, y);
 		ob->setTarget(this, menu_selector(BackPackLayer::onClickThingCallBack));
+		auto numlabel = LabelTTF::create(NumberToString(it.nums), "¿¬Ìå",20);
+		numlabel->setPosition(ob->getPositionX() - 10, ob->getPositionY() - 10);
+		numlabel->setColor(ccc3(255, 242, 0));
+		numlabel->setName(it.name);
 		m_menu->addChild(ob);
+		this->addChild(numlabel);
 	}
 }
 

@@ -178,7 +178,10 @@ void DealLayer::checkBuy(float money)
 		auto tiplayer = TipLayer::createTipLayer(StringValue("BuySuccess"));
 		this->addChild(tiplayer);
 		GetPlayerData().setglod(haveglod - money);
-		AddToBackPack(dynamic_cast<Thing*>(m_curSelect)->getname(), m_type);
+		ThingInfo info;
+		info.name = dynamic_cast<Thing*>(m_curSelect)->getname();
+		info.type = m_type;
+		AddToBackPack(info);
 		return;
 	}
 }

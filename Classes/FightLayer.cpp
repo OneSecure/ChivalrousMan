@@ -5,6 +5,8 @@
 #include"GameScene.h"
 #include"GameDynamicData.h"
 #include"CameraPlayer.h"
+#include"Medication.h"
+#include"Skill.h"
 #include<random>
 #include<algorithm>
 
@@ -52,9 +54,9 @@ bool FightLayer::init(const std::string& name)
 		this->addChild(m_player);
 		randomNumMonster(name);
 
-		auto menu = Menu::create();
-		menu->setPosition(0, 0);
-		this->addChild(menu);
+		m_menu = Menu::create();
+		m_menu->setPosition(0, 0);
+		this->addChild(m_menu);
 
 		auto AutoBtn = MenuItemImage::create(StringValue("AutoBtn"),
 			StringValue("AutoBtn"));
@@ -62,31 +64,31 @@ bool FightLayer::init(const std::string& name)
 			StringValue("UseHandBtn"));
 		auto toggle = MenuItemToggle::createWithCallback(CC_CALLBACK_1(FightLayer::onToggleAutoAndHand, this),UseHandBtn, AutoBtn, NULL);
 		toggle->setPosition(size.width - 35, 35);
-		menu->addChild(toggle);
+		m_menu->addChild(toggle);
 		
 		auto MeBtn = MenuItemImage::create(StringValue("MeNormalBtn"),
 			StringValue("MePressedBtn"), this,
 			menu_selector(FightLayer::onMedicationClickCallBack));
 		MeBtn->setPosition(size.width - 35, 35 + 45);
-		menu->addChild(MeBtn);
+		m_menu->addChild(MeBtn);
 
 		auto SkillBtn = MenuItemImage::create(StringValue("SkillNormalBtn"),
 			StringValue("SkillPressedBtn"), this,
 			menu_selector(FightLayer::onSkillClickCallBack));
 		SkillBtn->setPosition(size.width - 35, 35 + 90);
-		menu->addChild(SkillBtn);
+		m_menu->addChild(SkillBtn);
 
 		auto RunBtn = MenuItemImage::create(StringValue("RunNormalBtn"),
 			StringValue("RunPressedBtn"), this,
 			menu_selector(FightLayer::onRunClickCallBack));
 		RunBtn->setPosition(size.width - 35, 35 + 135);
-		menu->addChild(RunBtn);
+		m_menu->addChild(RunBtn);
 
 		auto AttackBtn = MenuItemImage::create(StringValue("AttackNormalBtn"),
 			StringValue("AttackPressedBtn"), this,
 			menu_selector(FightLayer::onAttackClickCallBack));
 		AttackBtn->setPosition(size.width - 35, 35 + 180);
-		menu->addChild(AttackBtn);
+		m_menu->addChild(AttackBtn);
 
 		scheduleUpdate();
 		return true;
@@ -119,6 +121,7 @@ void FightLayer::update(float dt)
 
 void FightLayer::calcActionOrder()
 {
+	
 }
 
 void FightLayer::onToggleAutoAndHand(cocos2d::CCObject* sender)
@@ -128,12 +131,92 @@ void FightLayer::onToggleAutoAndHand(cocos2d::CCObject* sender)
 
 void FightLayer::onMedicationClickCallBack(cocos2d::CCObject* sender)
 {
-	
+	Vec2 basePos = dynamic_cast<MenuItemImage*>(sender)->getPosition();
+	if (!m_clickMedication)
+	{
+		if (m_medications.size() == 0)
+		{
+			std::string names[] = { "BlueMedication","RedMedication","DontMedication" };
+			for (int i = 0; i < 3; ++i)
+			{
+				auto medication = Medication::createWithImage(StringValue(names[i]));
+				medication->setPosition(basePos);
+				Vec2 Pos = ccp(basePos.x - 50 * (i + 1), basePos.y);
+				medication->setPosition(basePos);
+				medication->setTarget(this, menu_selector(FightLayer::onItemClickCallBack));
+				auto move = MoveTo::create(0.1*(i + 1), Pos);
+				m_menu->addChild(medication);
+				medication->runAction(move);
+				m_medications.push_back(medication);
+			}
+		}
+		else
+		{
+			for (int i = 0; i < m_medications.size(); ++i)
+			{
+				Vec2 Pos = ccp(basePos.x - 50 * (i + 1), basePos.y);
+				auto move = MoveTo::create(0.1*(i + 1), Pos);
+				m_medications[i]->setVisible(true);
+				m_medications[i]->runAction(move);
+			}
+		}
+		m_clickMedication = true;
+	}
+	else
+	{
+		for (auto it : m_medications)
+		{
+			it->setPosition(basePos);
+			it->setVisible(false);
+		}
+		m_clickMedication = false;
+	}
 }
 
 void FightLayer::onSkillClickCallBack(cocos2d::CCObject * sender)
 {
-	
+	Vec2 basePos = dynamic_cast<MenuItemImage*>(sender)->getPosition();
+	if (!m_clickskill)
+	{
+		if (m_skills.size() == 0)
+		{
+			std::string names[] = { "CrackIt","Dante","DragonRoar" };
+			for (int i = 0; i < 3; ++i)
+			{
+				std::string realname = StringValue(names[i]);
+				realname += names[i];
+				realname += ".png";
+				auto skill = Skill::createWithImage(realname);
+				skill->setPosition(basePos);
+				skill->setTarget(this, menu_selector(FightLayer::onItemClickCallBack));
+				m_menu->addChild(skill);
+				m_skills.push_back(skill);
+				Vec2 pos = ccp(basePos.x - 50 * (i + 1), basePos.y);
+				auto Move = MoveTo::create(0.1*(i + 1), pos);
+				skill->runAction(Move);
+			}
+		}
+		else
+		{
+			for (int i = 0; i < m_skills.size(); ++i)
+			{
+				m_skills[i]->setVisible(true);
+				Vec2 pos = ccp(basePos.x - 50 * (i + 1), basePos.y);
+				auto move = MoveTo::create(0.1*(i + 1), pos);
+				m_skills[i]->runAction(move);
+			}
+		}
+		m_clickskill = true;
+	}
+	else
+	{
+		for (int i = 0; i < m_skills.size(); ++i)
+		{
+			m_skills[i]->setPosition(basePos);
+			m_skills[i]->setVisible(false);
+		}
+		m_clickskill = false;
+	}
 }
 
 void FightLayer::onRunClickCallBack(cocos2d::CCObject * sender)
@@ -146,6 +229,9 @@ void FightLayer::onRunClickCallBack(cocos2d::CCObject * sender)
 
 void FightLayer::onAttackClickCallBack(cocos2d::CCObject * sender)
 {
-	
 }
 
+void FightLayer::onItemClickCallBack(cocos2d::CCObject* sender)
+{
+	ClickAction();
+}

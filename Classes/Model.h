@@ -186,6 +186,34 @@ public:
 			return playername;
 		}
 	}
+
+	std::string getAttributeName(const int& index)
+	{
+		switch (index)
+		{
+		case 1:
+			return "playername";
+		case 2:
+			return "rolename";
+		case 3:
+			return "skillname";
+			break;
+		case 4:
+			return "skillgrade";
+		default:
+			return "playername";
+		}
+	}
+
+	std::string getName()
+	{
+		return "skillinfo";
+	}
+
+	int getAttributeNums()
+	{
+		return 4;
+	}
 };
 
 #endif // !__MODEL_H__

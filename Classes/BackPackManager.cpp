@@ -17,17 +17,43 @@ void BackPackManager::release()
 	RELEASE_NULL(m_instance);
 }
 
-void BackPackManager::addBackPackThing(const std::string& name,const int& type)
+void BackPackManager::addBackPackThing(ThingInfo thinginfo)
 {
-	m_backpackMap[name] = type;
+	int flag = 0;
+	for (auto it = m_backpackList.begin(); it != m_backpackList.end(); ++it)
+	{
+		if (it->name == thinginfo.name)
+		{
+			flag = 1;
+			++it->nums;
+		}
+	}
+	if (!flag)
+	{
+		thinginfo.nums = 1;
+		m_backpackList.push_back(thinginfo);
+	}
 }
 
-void BackPackManager::removeBackPackThing(const std::string& name)
+int BackPackManager::removeBackPackThing(const std::string& name)
 {
-	m_backpackMap.erase(name);
+	for (auto it = m_backpackList.begin(); it != m_backpackList.end(); ++it)
+	{
+		if (it->name == name)
+		{
+			--(it->nums);
+			if (it->nums == 0)
+			{
+				m_backpackList.erase(it);
+				return -2;
+			}
+			return -1;
+		}
+	}
+	return 0;
 }
 
-const std::map<std::string, int>& BackPackManager::getBackPackMap()
+const std::list<ThingInfo>& BackPackManager::getBackPackMap()
 {
-	return m_backpackMap;
+	return m_backpackList;
 }

@@ -315,6 +315,13 @@
   <string>Talk/NpcSkill.tk</string>
   <key>NpcValligeTalk</key>
   <string>Talk/NpcVallige.tk</string>
+  <!--物品素材-->
+  <key>BlueMedication</key>
+  <string>Thing/BlueMedicine.png</string>
+  <key>RedMedication</key>
+  <string>Thing/RedPotion.png</string>
+  <key>DontMedication</key>
+  <string>Thing/DontKnown.png</string>
   <!-- 数字素材 -->
   <key>PlayerSpeed</key>
   <string>4</string>

@@ -6,6 +6,8 @@
 #include<vector>
 
 class Monster;
+class Medication;
+class Skill;
 
 /*
 *class FightLayer
@@ -56,6 +58,11 @@ private:
 	*普通攻击按钮点击回调函数
 	*/
 	void onAttackClickCallBack(cocos2d::CCObject* sender);
+
+	/*
+	*使用药品点击回调函数
+	*/
+	void onItemClickCallBack(cocos2d::CCObject* sender);
 		
 	/*
 	*randomNumMonster();
@@ -68,6 +75,12 @@ private:
 	
 	//绘制玩家形象
 	cocos2d::Sprite* m_player;
+	cocos2d::Menu* m_menu;
+	bool m_clickMedication = false;
+	std::vector<Medication*> m_medications;
+	bool m_clickskill = false;
+	std::vector<Skill*> m_skills;
+	bool m_clickAuto = false;
 };
 
 #endif // ! __FIGHT_LAYER_HH__
