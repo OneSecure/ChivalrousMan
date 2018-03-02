@@ -42,6 +42,8 @@
   <key>XBArrow</key>
   <string>Skill/XBArrow/</string>
   <!-- 按钮 -->
+  <key>Disassemble</key>
+  <string>button/DisassembleBtn.png</string>
   <key>RunNormalBtn</key>
   <string>button/RunNormalBtn.png</string>
   <key>RunPressedBtn</key>
@@ -113,6 +115,86 @@
   <key>TrunOff</key>
   <string>trunOff.png</string>
   <!-- 文本素材 -->
+  <key>PickTaskText</key>
+  <string>是否接取该任务？</string>
+  <key>Access</key>
+  <string>访问</string>
+  <key>Collect</key>
+  <string>收集</string>
+  <key>Kill</key>
+  <string>击杀</string>
+  <key>DestMen</key>
+  <string>提交人</string>
+  <key>BlackDragonCN</key>
+  <string>黑龙</string>
+  <key>DragonCN</key>
+  <string>小飞龙</string>
+  <key>GhostCN</key>
+  <string>亡灵</string>
+  <key>KougamonCN</key>
+  <string>甲兽</string>
+  <key>LionCN</key>
+  <string>小狂狮</string>
+  <key>MinotaurCN</key>
+  <string>牛头怪</string>
+  <key>OctopusCN</key>
+  <string>章鱼哥</string>
+  <key>PterosaurCN</key>
+  <string>肥龙</string>
+  <key>SkeletonMasterCN</key>
+  <string>骨法师</string>
+  <key>TarrasqueMessengerCN</key>
+  <string>魔龙使者</string>
+  <key>NpcBlueCN</key>
+  <string>小蓝</string>
+  <key>NpcEquipCN</key>
+  <string>铁匠老王</string>
+  <key>NpcMamomCN</key>
+  <string>铁财神</string>
+  <key>NpcMonkCN</key>
+  <string>执杖大师</string>
+  <key>NpcPinkCN</key>
+  <string>小仙女</string>
+  <key>NpcSkillCN</key>
+  <string>拿葫天王</string>
+  <key>NpcValligeCN</key>
+  <string>老村长</string>
+  <key>TaskTitle</key>
+  <string>任务面板</string>
+  <key>Process</key>
+  <string>进度</string>
+  <key>NextGrade</key>
+  <string>升下一级所需</string>
+  <key>WearSuccess</key>
+  <string>装备成功</string>
+  <key>Attack</key>
+  <string>攻击</string>
+  <key>Defense</key>
+  <string>防御</string>
+  <key>NoSelectSkill</key>
+  <string>未选中可升级的技能!</string>
+  <key>LackNums</key>
+  <string>数量不足</string>
+  <key>NoMana</key>
+  <string>魔法不足</string>
+  <key>NoTarget</key>
+  <string>无效的目标</string>
+  <key>Glod</key>
+  <string>金币</string>
+  <key>Exp</key>
+  <string>经验</string>
+  <key>Blood</key>
+  <string>血</string>
+  <key>Mana</key>
+  <string>魔</string>
+  <key>RunFailed</key>
+  <string>逃跑失败</string>
+  <key>NoAction</key>
+  <string>未到行动回合</string>
+  <key>FightSuccess</key>
+  <string>战斗成功</string>
+  <key>FightFailed</key>
+  <string>战斗失败</string>
   <key>NoSelect</key>
   <string>请选择要购买的物品</string>
   <key>SkillText</key>
@@ -185,6 +267,16 @@
   <key>NpcVallige</key>
   <string>Npc/NpcVallige.png</string>
   <!-- 背景素材 -->
+  <key>PickTaskBg</key>
+  <string>PickTaskBg.png</string>
+  <key>TaskItemBg</key>
+  <string>TaskItemBg.png</string>
+  <key>TaskBg</key>
+  <string>TaskBg.png</string>
+  <key>WorldMap</key>
+  <string>WorldMap.png</string>
+  <key>RoleBg</key>
+  <string>RoleBg.png</string>
   <key>FightBg</key>
   <string>FightBg.png</string>
   <key>SkillBg</key>
@@ -299,6 +391,10 @@
   <string>map2.mp</string>
   <key>map3</key>
   <string>map3.mp</string>
+  <key>map4</key>
+  <string>map4.mp</string>
+  <key>map5</key>
+  <string>map5.mp</string>
   <key>BgMusic</key>
   <string>Music/BgMusic.WAV</string>
   <key>NpcBlueTalk</key>
@@ -328,6 +424,22 @@
   <key>PlayerFps</key>
   <string>0.06</string>
   <!-- 其它素材 -->
+  <key>Taskh</key>
+  <string>taskh.png</string>
+  <key>Tasks</key>
+  <string>tasks.png</string>
+  <key>Taskw</key>
+  <string>taskw.png</string>
+  <key>TaskIcon</key>
+  <string>TaskIcon.png</string>
+  <key>RedSpot</key>
+  <string>RedSpot.png</string>
+  <key>EquipmentGrid</key>
+  <string>EquipMentGrid.png</string>
+  <key>Line</key>
+  <string>line.png</string>
+  <key>Arrow1</key>
+  <string>arrow1.png</string>
   <key>SkillGrid</key>
   <string>SkillGrid.png</string>
   <key>LeftBracket</key>
@@ -354,6 +466,8 @@
   <string>BloodBar.png</string>
   <key>ManaBar</key>
   <string>ManaBar.png</string>
+  <key>ExpBar</key>
+  <string>ExpBar.png</string>
   <key>HeadFrame</key>
   <string>head_frame.png</string>
   <key>DealPack</key>

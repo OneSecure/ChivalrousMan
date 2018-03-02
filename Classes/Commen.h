@@ -123,7 +123,7 @@ Director::getInstance()->replaceScene(reScene)
 #define LoadAnimationFromMinFile(name,num,delay,animation) \
 { \
   animation = Animation::create(); \
-  char filename[40] = { 0 }; \
+  char filename[80] = { 0 }; \
   animation->setDelayPerUnit(delay); \
   for (int i = 1; i <=num; ++i) \
   { \

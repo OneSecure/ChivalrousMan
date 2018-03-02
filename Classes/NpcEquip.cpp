@@ -11,6 +11,7 @@ DEF_REFLECT_FUNC(NpcEquip)
 NpcEquip::NpcEquip()
 {
 	INIT_TALK_IN_NPC(NpcEquip);
+	m_name = "NpcEquip";
 }
   
 NpcEquip::~NpcEquip()

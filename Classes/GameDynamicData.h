@@ -16,7 +16,6 @@ class GameScene;
 #define SetStringData GameDynamicData::getInstance()->setStringByKey
 #define GetFloatData GameDynamicData::getInstance()->getFloatByKey
 #define GetIntData GameDynamicData::getInstance()->getIntByKey
-#define GetBoolData GameDynamicData::getInstance()->getBoolByKey
 #define GetStringData GameDynamicData::getInstance()->getStringByKey
 #define CurGameScene GameDynamicData::getInstance()->getCurGameScene 
 #define SetCurGameScene GameDynamicData::getInstance()->setCurGameScene

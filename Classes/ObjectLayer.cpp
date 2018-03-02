@@ -5,6 +5,7 @@
 #include"CameraPlayer.h"
 #include"ReflectNpc.h"
 #include"MapInfo.h"
+#include"TaskSystem.h"
 #include<fstream>
 
 ObjectLayer::ObjectLayer()
@@ -46,6 +47,8 @@ bool ObjectLayer::init(const int& level)
 
 void ObjectLayer::update(float dt)
 {
+	checkmissedTask();
+	checkpickedupTask();
 	updateObjectScreenPos();
 }
 
@@ -72,12 +75,36 @@ void ObjectLayer::initLevelObject(const int& level)
 		Npc* npc = GET_REFLECT_OBJECT(objname);
 		npc->setX(std::stof(x)*MapGridW);
 		npc->setY(std::stof(y)*MapGridH);
-		Sprite* face = Sprite::create(StringValue(objname));
+		Sprite* face = Sprite::create(StringValue(objname));		
 		npc->setFace(face);
 		m_npcList.push_back(npc);
 		this->addChild(face);
 	} while (!fin.eof());
 	fin.close();
+}
+
+void  ObjectLayer::checkmissedTask()
+{
+	for (auto var : m_npcList)
+	{
+		int index = TaskSystem::getInstance()->haveMissedTask(var->getName());
+		if (index)
+		{
+			var->changeState(NS_HTASK, index);
+		}
+	}
+}
+
+void ObjectLayer::checkpickedupTask()
+{
+	for (auto var : m_npcList)
+	{
+		int index = TaskSystem::getInstance()->havePickedupTask(var->getName());
+		if (index)
+		{
+			var->changeState(index > 0 ? NS_STASK : NS_WSTASK, abs(index));
+		}
+	}
 }
 
 void  ObjectLayer::updateObjectScreenPos()

@@ -64,6 +64,14 @@ public:
 	*@return bool：插入成功返回true，否则返回false
 	*/
 	bool updateModel(const std::string& fieldName, const std::string& value);
+
+	/*
+	*updateModel(const std::map<std::string, std::string>& keyvls);
+	*根据多个键值对更新表格数据
+	*@param keyvls：存储多个键值对
+	*@return bool：插入成功返回true，否则返回false
+	*/
+	bool updateModel(const std::map<std::string, std::string>& keyvls);
 private:
 	/*
 	*initConnect();
@@ -181,6 +189,24 @@ bool DBDao<Model>::updateModel(const std::string& fieldName,const std::string& v
 	m_sql.append(value);
 	m_sql.append("'");
 	int res=mysql_real_query(m_sqlCon, m_sql.c_str(), m_sql.length());
+	return !res;
+}
+
+template<typename Model>
+bool DBDao<Model>::updateModel(const std::map<std::string, std::string>& keyvls)
+{
+	generateSql(UPDATE);
+	m_sql.append(" where ");
+	int count = 0;
+	int size = keyvls.size();
+	for (auto var : keyvls)
+	{
+		m_sql += var.first + "='" + var.second + "'";
+		count++;
+		if (count < size)
+			m_sql += " and ";
+	}
+	int res = mysql_real_query(m_sqlCon, m_sql.c_str(), m_sql.length());
 	return !res;
 }
 

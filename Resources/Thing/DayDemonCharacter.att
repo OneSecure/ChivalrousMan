@@ -4,4 +4,6 @@ sellglod 500
 blood 500
 mana 300
 attack 50
-defense s25
+defense 25
+speed 0
+type 1007

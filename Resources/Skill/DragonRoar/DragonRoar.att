@@ -1,3 +1,7 @@
 蓝龙诀
+name DragonRoar
 buyglod 1000
 sellglod 500
+baseattack 250
+basemana 50
+baseupglod 550

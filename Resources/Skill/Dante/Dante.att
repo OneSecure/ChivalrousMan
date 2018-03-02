@@ -1,3 +1,7 @@
 裂地
+name Dante
 buyglod 1200
 sellglod 600
+baseattack 100
+basemana 50
+baseupglod 550

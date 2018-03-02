@@ -1,3 +1,7 @@
 烈焰神龙
+name RecallCountermand
 buyglod 1600
 sellglod 800
+baseattack 350
+basemana 50
+baseupglod 650

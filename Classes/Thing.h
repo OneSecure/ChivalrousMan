@@ -12,6 +12,7 @@
 class Thing Inherit(cocos2d::MenuItemImage)
 {
 public:
+	Thing();
 	Thing(const std::string &name);
 	virtual ~Thing();
 
@@ -23,7 +24,12 @@ public:
 
 	virtual std::vector<std::string>& getDetails();
 
-	static std::string getName(const std::string& name);
+	/*
+	*物品被使用时调用
+	*/
+	virtual float beUse(cocos2d::CCObject* obj);
+
+	static std::string getfileName(const std::string& name);
 protected:
 	/*
 	*initDetails(const std::string& name)
@@ -40,6 +46,8 @@ protected:
 	PROPERTY__REF(float, m_sellglod, sellglod)
 	//名称
 	PROPERTY__REF(std::string,m_name,name)
+	//详情第一句
+	PROPERTY__REF(std::string,m_firsttext,firsttext)
 };
 
 #endif // !__THING_H__

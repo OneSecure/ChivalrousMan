@@ -2,6 +2,7 @@
 #ifndef __BACK_PACK_LAYER_H__
 #define  __BACK_PACK_LAYER_H__
 #include"PreProcess.h"
+#include<vector>
 
 /*
 *class BackPackLayer
@@ -59,6 +60,7 @@ private:
 	cocos2d::Vec2 m_basePoint;
 	cocos2d::Sprite* m_selector;
 	cocos2d::CCObject* m_curSel;
+	std::vector<cocos2d::LabelTTF*> m_numlabels;   
 	cocos2d::Menu* m_menu;
 };
 

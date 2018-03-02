@@ -54,6 +54,7 @@ bool GameScene::init(const int& level)
 
 		auto UILayer = GameUILayer::create();
 		this->addChild(UILayer);
+		SetIntData("Save", 1);
 		return true;
 	}
 	return false;

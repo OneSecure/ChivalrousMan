@@ -5,6 +5,11 @@
 #include"GameDynamicData.h"
 #include<fstream>
 
+Thing::Thing()
+{
+
+}
+
 Thing::Thing(const std::string& name):
 	m_name(name)
 {
@@ -24,7 +29,7 @@ void  Thing::showDetail(cocos2d::Node* node)
 	node->addChild(detailLayer);
 }
 
-std::string Thing::getName(const std::string& name)
+std::string Thing::getfileName(const std::string& name)
 {
 	std::string targetname;
 	std::string tmp = "";
@@ -54,6 +59,8 @@ void  Thing::initDetails(const std::string& name)
 		return;
 	}
 	std::string tmp;
+	fin >> m_firsttext;
+	m_details.push_back(m_firsttext);
 	do
 	{
 		fin >> tmp;
@@ -65,4 +72,9 @@ void  Thing::initDetails(const std::string& name)
 std::vector<std::string>& Thing::getDetails()
 {
 	return m_details;
+}
+
+float Thing::beUse(cocos2d::CCObject* obj)
+{
+	return 0.0f;
 }

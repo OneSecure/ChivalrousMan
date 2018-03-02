@@ -25,6 +25,7 @@ AudioSystem::~AudioSystem()
 
 void AudioSystem::WorkThread()
 {
+	long count = 0;
 	while (true)
 	{
 		if (m_exitThread)
@@ -34,6 +35,12 @@ void AudioSystem::WorkThread()
 		
 		CheckBgMusic();
 		Sleep(50);
+	/*	count++;
+		if (count > 60&&GetIntData("Save")==1)
+		{
+			SaveGameData();
+			count = 0;
+		}*/
 	}
 }
 

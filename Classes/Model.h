@@ -79,6 +79,9 @@ public:
 	GettingAndSetting(std::string, speed, speed);
 	GettingAndSetting(std::string, exp, exp);
 	GettingAndSetting(std::string, maxExp, maxExp);
+	GettingAndSetting(std::string, destx, destx);
+	GettingAndSetting(std::string, desty, desty);
+	GettingAndSetting(std::string, level, level);
 public:
 	std::string& operator[](const int& index)
 	{
@@ -108,6 +111,12 @@ public:
 			return exp;
 		case 12:
 			return maxExp;
+		case 13:
+			return destx;
+		case 14:
+			return desty;
+		case 15:
+			return level;
 		default:
 			return playerName;
 			break;
@@ -142,6 +151,12 @@ public:
 			return "exp";
 		case 12:
 			return "maxexp";
+		case 13:
+			return "destx";
+		case 14:
+			return "desty";
+		case 15:
+			return "level";
 		default:
 			break;
 		}
@@ -155,15 +170,15 @@ public:
 	
 	int getAttributeNums()
 	{
-		return 12;
+		return 15;
 	}
 };
 
 class SkillInfo 
 {
 public:
-	SkillInfo();
-	~SkillInfo();
+	SkillInfo() {}
+	~SkillInfo() {}
 
 	GettingAndSetting(std::string, playername, playername);
 	GettingAndSetting(std::string, rolename, rolename);
@@ -216,5 +231,131 @@ public:
 	}
 };
 
-#endif // !__MODEL_H__
+class EquipmentInfo
+{
+public:
+	EquipmentInfo() {}
+	~EquipmentInfo() {}
+	GettingAndSetting(std::string, playername, playername);
+	GettingAndSetting(std::string, rolename, rolename);
+	GettingAndSetting(std::string, equipmentname, equipmentname);
+	GettingAndSetting(std::string, grade, grade);
+	GettingAndSetting(std::string, type, type);
+public:
+	std::string& operator[](const int& index)
+	{
+		switch (index)
+		{
+		case 1:
+			return playername;
+		case 2:
+			return rolename;
+		case 3:
+			return equipmentname;
+		case 4:
+			return grade;
+		case 5:
+			return type;
+		default:
+			return playername;
+		}
+	}
 
+	std::string getAttributeName(const int& index)
+	{
+		switch (index)
+		{
+		case 1:
+			return "playername";
+		case 2:
+			return "rolename";
+		case 3:
+			return "equipmentname";
+			break;
+		case 4:
+			return "grade";
+		case 5:
+			return "type";
+		default:
+			return "playername";
+		}
+	}
+
+	std::string getName()
+	{
+		return "equipmentinfo";
+	}
+
+	int getAttributeNums()
+	{
+		return 5;
+	}
+};
+
+class BackPack
+{
+public:
+	BackPack() {}
+	~BackPack() {}
+	GettingAndSetting(std::string, playername, playername);
+	GettingAndSetting(std::string, rolename, rolename);
+	GettingAndSetting(std::string, thingname, thingname);
+	GettingAndSetting(std::string, thingtype, thingtype);
+	GettingAndSetting(std::string, thingnums, thingnums);
+	GettingAndSetting(std::string, thinggrade, thinggrade);
+public:
+	std::string& operator[](const int& index)
+	{
+		switch (index)
+		{
+		case 1:
+			return playername;
+		case 2:
+			return rolename;
+		case 3:
+			return thingname;
+		case 4:
+			return thingtype;
+		case 5:
+			return thingnums;
+		case 6:
+			return thinggrade;
+		default:
+			return playername;
+		}
+	}
+
+	std::string getAttributeName(const int& index)
+	{
+		switch (index)
+		{
+		case 1:
+			return "playername";
+		case 2:
+			return "rolename";
+		case 3:
+			return "thingname";
+			break;
+		case 4:
+			return "thingtype";
+		case 5:
+			return "thingnums";
+		case 6:
+			return "thinggrade";
+		default:
+			return "playername";
+		}
+	}
+
+	std::string getName()
+	{
+		return "backpack";
+	}
+
+	int getAttributeNums()
+	{
+		return 6;
+	}
+};
+
+#endif // !__MODEL_H__

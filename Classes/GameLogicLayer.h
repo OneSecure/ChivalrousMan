@@ -11,8 +11,8 @@
 class GameLogicLayer Inherit(cocos2d::Layer)
 {
 	CLASS_ESSENTAIL(GameLogicLayer)
-	CREATE_FUNC(GameLogicLayer)
 public:
+	CREATE_FUNC(GameLogicLayer)
 	virtual bool init();
 
 	void update(float dt);
@@ -43,7 +43,12 @@ private:
 	*在野怪区随机遇见怪物
 	*/
 	void randomMeetMonster();
+
+	/*
+	*monsterName();
+	*生成遇到怪物的名字
+	*/
+	std::string monsterName();
 };
 
 #endif // !__GAME_LOGIC_LAYER_H__
-

@@ -54,11 +54,44 @@ public:
 	*重设index
 	*/
 	virtual void resetIndex();
+
+	/*
+	*changeState(int state);
+	*改变Npc的状态
+	*@param state：将要改到的状态
+	*@param index：任务索引
+	*/
+	void changeState(int state, int index);
+
+	/*
+	*initMissTaskTalk();
+	*初始化未接任务对话
+	*/
+	void initMissTaskTalk();
+
+	/*
+	*initEndTaskTalk();
+	*初始化已完成任务的对话
+	*/
+	void initEndTaskTalk();
+
+	/*
+	*initNoEndTaskTalk();
+	*初始化未完成任务的对话
+	*/
+	void initNoEndTaskTalk();
+	
+	void initTaskTalk(const std::string& filename);
 protected:
 	std::vector<std::string> m_talkmsg;
+	std::vector<std::string> m_tmptalk;
 	
 	int index = 0;
-
+	bool pickup = true;
+	
+	PROPERTY__REF(int, m_taskindex, TaskIndex)
+	PROPERTY__REF(int,m_state,State)
+	PROPERTY__REF(std::string,m_name,Name)
 	PROPERTY__REF(bool,m_isCollision,IsCollision)
 };
 

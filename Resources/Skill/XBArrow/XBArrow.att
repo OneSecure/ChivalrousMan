@@ -1,3 +1,7 @@
 冰毒箭
+name XBArrow
 buyglod 1300
 sellglod 650
+baseattack 320
+basemana 50
+baseupglod 720

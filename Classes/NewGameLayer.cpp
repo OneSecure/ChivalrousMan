@@ -221,4 +221,7 @@ void NewGameLayer::constructPlayerInfo(PlayerInfo& playerinfo,const std::string&
 	SetInfo(speed, 4);
 	SetInfo(exp, 0);
 	SetInfo(maxExp, 100);
+	playerinfo.setdestx("100");
+	playerinfo.setdesty("100");
+	playerinfo.setlevel(NTS(LEVEL_ONE));
 }

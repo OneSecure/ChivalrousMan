@@ -1,3 +1,7 @@
 火龙诀
+name Long
 buyglod 1200
 sellglod 600
+baseattack 340
+basemana 50
+baseupglod 620

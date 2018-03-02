@@ -14,6 +14,7 @@ class TaskLayer Inherit(cocos2d::Layer)
 public:
 	bool init() override;
 private:
+	void initTaskItem(cocos2d::Vec2 basePos);
 };
 
 #endif // !__TASK_LAYER_H__

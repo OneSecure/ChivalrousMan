@@ -11,6 +11,7 @@
 #include"GameDynamicData.h"
 #include"Skill.h"
 #include"BackPackManager.h"
+#include"SkillManager.h"
 #include<fstream>
 
 #define BASENUM 8
@@ -175,13 +176,29 @@ void DealLayer::checkBuy(float money)
 	}
 	else
 	{
+		std::string name = dynamic_cast<Thing*>(m_curSelect)->getname();
+		if (m_type == SKILL)
+		{
+			if (SkillManager::getInstance()->haveSkill(name))
+			{
+				TipLayer* tiplayer = TipLayer::createTipLayer("");
+				this->addChild(tiplayer);
+				return;
+			}
+			else
+			{
+				SkillManager::getInstance()->addSkill(name);
+			}
+		}
+		else
+		{
+			ThingInfo info;
+			info.name = name;
+			info.type = m_type;
+			AddToBackPack(info);
+		}
 		auto tiplayer = TipLayer::createTipLayer(StringValue("BuySuccess"));
 		this->addChild(tiplayer);
 		GetPlayerData().setglod(haveglod - money);
-		ThingInfo info;
-		info.name = dynamic_cast<Thing*>(m_curSelect)->getname();
-		info.type = m_type;
-		AddToBackPack(info);
-		return;
 	}
 }

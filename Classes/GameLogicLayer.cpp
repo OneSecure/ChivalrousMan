@@ -97,6 +97,14 @@ void GameLogicLayer::gotoDestMap(const std::string& dest)
 	{
 		ex = ExcessiveScene::createExcessice(LEVEL_THREE, func, 1);
 	}
+	else if (dest == "map4")
+	{
+		ex = ExcessiveScene::createExcessice(LEVEL_FOUR, func, 1);
+	}
+	else if (dest == "map5")
+	{
+		ex = ExcessiveScene::createExcessice(LEVEL_FIVE, func, 1);
+	}
 	Director::getInstance()->replaceScene(ex);
 }
 
@@ -127,24 +135,52 @@ void GameLogicLayer::checkCollisionNpc()
 void GameLogicLayer::randomMeetMonster()
 {
 	//产生怪物间隔
-	static long interval = 0;
+	static int interval = 0;
 	std::random_device rand;
-	if (GetIntData("CurMap")==LEVEL_THREE)
+	if (GetIntData("CurMap")>=LEVEL_THREE)
 	{
-	/*	if (interval > 10)
-		{*/
+		if (interval > 5)
+		{
 			int randnum = rand() % 100;
 			if (randnum < 2)
 			{
 				unscheduleUpdate();
 				SetFloatData("DestX", PlayerPos.x);
 				SetFloatData("DestY", PlayerPos.y);
-				auto fightScene = FightLayer::createFightScene("Dragon");
+				auto fightScene = FightLayer::createFightScene(monsterName());
 				auto reScene = TransitionFadeUp::create(0.5, fightScene);
 				Director::getInstance()->replaceScene(reScene);
 			}
-	/*		interval = 0;
-		}*/
+			interval = 0;
+		}
 	}
-	//interval++;
+	interval++;
+}
+
+std::string  GameLogicLayer::monsterName()
+{
+	std::random_device rand;
+	switch (GetIntData("CurMap"))
+	{
+	case LEVEL_THREE:
+	{
+		std::string name[] = { "Ghost","BlackDragon","Dragon" };
+		int index = rand() % 3;
+		return name[index];
+	}
+	case LEVEL_FOUR:
+	{
+		std::string name[] = { "Kougamon","Lion","Minotaur" };
+		int index = rand() % 3;
+		return name[index];
+	}
+	case LEVEL_FIVE:
+	{
+		std::string name[] = { "Octopus","Pterosaur","SkeletonMaster","TarrasqueMessenger" };
+		int index = rand()%4;
+		return name[index];
+	}
+	default:
+		return "";
+	}
 }

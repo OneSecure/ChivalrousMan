@@ -19,6 +19,7 @@
 #define PlayerFacePos CameraPlayer::getPlayerInstance()->getFacePos
 #define InitPlayerState CameraPlayer::getPlayerInstance()->initStateInfo
 #define GetPlayerData CameraPlayer::getPlayerInstance()->getPlayerData
+#define AttackPlayer CameraPlayer::getPlayerInstance()->beAttack
 
 class PlayerState;
 
@@ -108,6 +109,19 @@ public:
 	*获取玩家数据
 	*/
 	PlayerData& getPlayerData() { return m_playerData; }
+	
+	/*
+	*beAttack(float attack);
+	*玩家被攻击
+	*@param attack：攻击伤害
+	*/
+	void beAttack(float attack);
+
+	/*
+	*SaveGameData();
+	*持久化保存游戏角色数据
+	*/
+	void SaveGameData();
 private:
 	/*
 	*AdjustPlayerAndMapPos()

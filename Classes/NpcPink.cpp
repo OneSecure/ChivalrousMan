@@ -11,6 +11,7 @@ DEF_REFLECT_FUNC(NpcPink)
 NpcPink::NpcPink()
 {
 	INIT_TALK_IN_NPC(NpcPink);
+	m_name = "NpcPink";
 }
 
 NpcPink::~NpcPink()

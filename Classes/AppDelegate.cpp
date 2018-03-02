@@ -14,6 +14,10 @@
 #include"NpcSkill.h"
 #include"NpcVallige.h"
 #include"CMClient.h"
+#include"EquipmentManager.h"
+#include"SkillManager.h"
+#include"BackPackManager.h"
+#include"TaskLayer.h"
 
 #define LoadPlayerAnimation(player)    \
 {      \
@@ -43,13 +47,16 @@ AppDelegate::AppDelegate()
 
 AppDelegate::~AppDelegate() 
 {
-	GameData::release();
-	GameDynamicData::release();
-	MapInfo::release();
 	CameraPlayer::release();
 	AudioSystem::releaseAudioSystem();
+	MapInfo::release();
 	ReflectNpc::release();
 	CMClient::release();
+	EquipmentManager::realse();
+	SkillManager::release();
+	BackPackManager::release();
+	GameData::release();
+	GameDynamicData::release();
 }
 
 //if you want a different context,just modify the value of glContextAttrs

@@ -93,13 +93,35 @@ enum class Player_Type
 	Player3_Type,
 };
 
+//地图类型
 #define LEVEL_ONE 1
 #define LEVEL_TWO 2
 #define LEVEL_THREE 3
+#define LEVEL_FOUR 4
+#define LEVEL_FIVE 5
 
+//物品类型
 #define MEDICATION 1001
 #define EQUIPMENT 1002
 #define SKILL 1003 
+
+//装备类型
+#define EM_HEAD 1005
+#define EM_WEPON 1006
+#define EM_JEWELRY 1007
+#define EM_CLOTH 1008
+#define EM_FOOT 1009
+
+//任务类型
+#define T_KILL 2001              //击杀怪物
+#define T_COLLECT  2002     //收集物品
+#define T_ACCESS 2003        //访问别人
+
+//NPC状态
+#define NS_FREE 3001       //空闲状态
+#define NS_HTASK 3002    //有未接任务
+#define NS_WSTASK 3003   //有等待提交的任务
+#define NS_STASK  3004    //有待提交任务
 
 #endif // !__PRE_PRECESS_H__
 

@@ -6,6 +6,15 @@
 #include"PlayerWait.h"
 #include"PlayerRun.h"
 #include"GameDynamicData.h"
+#include"HurtValueLayer.h"
+#include"GameData.h"
+#include"Model.h"
+#include"DBDao.h"
+#include"CameraPlayer.h"
+#include"BackPackManager.h"
+#include"SkillManager.h"
+#include"EquipmentManager.h"
+#include<map>
 
 CameraPlayer* CameraPlayer::m_instance = nullptr;
 
@@ -15,7 +24,7 @@ CameraPlayer::CameraPlayer()
 
 CameraPlayer::~CameraPlayer()
 {
-
+	SaveGameData();
 }
 
 CameraPlayer* CameraPlayer::getPlayerInstance()
@@ -197,4 +206,46 @@ void CameraPlayer::AdjustPlayerAndMapPos()
 	std::pair<Vec2, Vec2> pos = changeMapPosToUI();
 	m_face->setPosition(pos.first);
 	MapLayer->drawMap(pos.second.x, pos.second.y);
+}
+
+void CameraPlayer::beAttack(float attack)
+{
+	auto move1 = MoveBy::create(0.2, ccp(35, 0));
+	auto move2 = MoveBy::create(0.2, ccp(-35, 0));
+	m_face->runAction(Sequence::createWithTwoActions(move1, move2));
+	float hurtvalue = attack <= m_playerData.getdefense() ? 1 : attack - m_playerData.getdefense();
+	Vec2 pos = m_face->getPosition();
+	pos.y += 90;
+	auto hurtlayer = HurtsValueLayer::createWithInfo(pos, hurtvalue);
+	m_face->getParent()->addChild(hurtlayer);
+	m_playerData.setcurblood(m_playerData.getcurblood() - hurtvalue);
+	if (m_playerData.getcurblood() <= 0)
+	{
+		m_face->getParent()->removeChild(m_face);
+	}
+}
+
+void CameraPlayer::SaveGameData()
+{
+	PlayerInfo playerinfo;
+	DBDao<PlayerInfo> dbdao;
+	playerinfo.setattack(NumberToString(m_playerData.getattack()));
+	playerinfo.setblood(NumberToString(m_playerData.getblood()));
+	playerinfo.setdefense(NumberToString(m_playerData.getdefense()));
+	playerinfo.setdestx(NumberToString(m_pos.x));
+	playerinfo.setdesty(NumberToString(m_pos.y));
+	playerinfo.setexp(NumberToString(m_playerData.getexp()));
+	playerinfo.setglod(NumberToString(m_playerData.getglod()));
+	playerinfo.setgrade(NumberToString(m_playerData.getgrade()));
+	playerinfo.setmana(NumberToString(m_playerData.getmana()));
+	playerinfo.setmaxExp(NumberToString(m_playerData.getmaxExp()));
+	playerinfo.setlevel(NTS(GetIntData("CurMap")));
+	dbdao.setModel(playerinfo);
+	std::map<std::string, std::string> keyvls;
+	keyvls["playername"] = GetStringData("playername");
+	keyvls["rolename"] = GetStringData("rolename");
+	dbdao.updateModel(keyvls);
+	BackPackManager::getInstance()->saveBackpackInfo();
+	EquipmentManager::getInstance()->saveEquipmentInfo();
+	SkillManager::getInstance()->saveSkillInfo();
 }

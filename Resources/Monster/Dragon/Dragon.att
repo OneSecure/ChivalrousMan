@@ -2,6 +2,8 @@
 小飞龙
 attack 25
 blood 300
-defense 20
+defense 5
 speed 5
+exp 150
+glod 40
 frames 12

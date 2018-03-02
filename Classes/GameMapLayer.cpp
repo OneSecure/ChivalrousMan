@@ -14,9 +14,9 @@ bool GameMapLayer::init()
 {
 	if (Layer::init())
 	{
-		auto back = Sprite::create(StringValue("GameBg"), Rect{ 0,0,SCREEN.width,SCREEN.height });
+	/*	auto back = Sprite::create(StringValue("GameBg"), Rect{ 0,0,SCREEN.width,SCREEN.height });
 		back->setPosition(SCREEN.width*0.5, SCREEN.height*0.5);
-		this->addChild(back);
+		this->addChild(back);*/
 
 		m_curMaps = Node::create();
 		this->addChild(m_curMaps);

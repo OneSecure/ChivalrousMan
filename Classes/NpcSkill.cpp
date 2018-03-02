@@ -11,6 +11,7 @@ DEF_REFLECT_FUNC(NpcSkill)
 NpcSkill::NpcSkill()
 {
 	INIT_TALK_IN_NPC(NpcSkill);
+	m_name = "NpcSkill";
 } 
 
 NpcSkill::~NpcSkill()

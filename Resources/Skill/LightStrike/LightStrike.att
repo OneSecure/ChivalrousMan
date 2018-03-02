@@ -1,3 +1,7 @@
 狂雷诀
+name LightStrike
 buyglod 1500
 sellglod 750
+baseattack 230
+basemana 50
+baseupglod 600

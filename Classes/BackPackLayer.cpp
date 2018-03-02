@@ -6,6 +6,7 @@
 #include"Thing.h"
 #include"Medication.h"
 #include"EquipMent.h"
+#include"TipLayer.h"
 #include<string>
 #include<map>
 
@@ -59,18 +60,6 @@ bool BackPackLayer::init()
 		m_selector->setPosition(m_basePoint);
 		this->addChild(m_selector);
 
-		auto glodText = LabelTTF::create(StringValue("GlodText"), "楷体", 20);
-		glodText->setColor(ccc3(209, 128, 5));
-		float tgx = m_basePoint.x + backpackGrid->getContentSize().width*0.6;
-		float tgy = m_basePoint.y + 63;
-		glodText->setPosition(tgx, tgy);
-		auto glodNums = LabelTTF::create(NumberToString(GetPlayerData().getglod()), "楷体", 20);
-		glodNums->setPosition(tgx + glodText->getContentSize().width*0.5, tgy);
-		glodNums->setAnchorPoint(ccp(0, 0.5));
-		glodNums->setColor(ccc3(255, 255, 0));
-		this->addChild(glodText);
-		this->addChild(glodNums);
-
 		initBackPackThing();
 
 		return true;
@@ -81,11 +70,39 @@ bool BackPackLayer::init()
 void BackPackLayer::sellBtnCallback(cocos2d::CCObject* sender)
 {
 	ClickAction();
+	Thing* pth = dynamic_cast<Thing*>(m_curSel);
+	int index = pth->getTag();
+	int nums = std::stoi(m_numlabels[index]->getString());
+	if (nums > 0)
+	{
+		m_numlabels[index]->setString(NumberToString(nums - 1));
+		BackPackManager::getInstance()->removeBackPackThing(pth->getname());
+		GetPlayerData().addGlod(pth->getsellglod());
+	}
+	else
+	{
+		TipLayer* tiplayer = TipLayer::createTipLayer(StringValue("LackNums"));
+		this->addChild(tiplayer);
+	}
 }
 
 void BackPackLayer::useBtnCallBack(cocos2d::CCObject* sender)
 {
 	ClickAction();
+	Thing* pth = dynamic_cast<Thing*>(m_curSel);
+	int index = pth->getTag();
+	int nums = std::stoi(m_numlabels[index]->getString());
+	if (nums > 0)
+	{
+		pth->beUse(this);
+		m_numlabels[index]->setString(NumberToString(nums - 1));
+		BackPackManager::getInstance()->removeBackPackThing(pth->getname());
+	}
+	else
+	{
+		TipLayer* tiplayer = TipLayer::createTipLayer(StringValue("LackNums"));
+		this->addChild(tiplayer);
+	}
 }
 
 void BackPackLayer::bp1BtnCallBack(cocos2d::CCObject* sender)
@@ -113,6 +130,7 @@ void BackPackLayer::initBackPackThing()
 		else
 		{
 			ob = EquipMent::createWithImage(filename);
+			dynamic_cast<EquipMent*>(ob)->setgrade(it.grade);
 		}
 		float x = index%BASENUM;
 		float y = index / BASENUM;     
@@ -121,11 +139,15 @@ void BackPackLayer::initBackPackThing()
 		ob->setPosition(x, y);
 		ob->setTarget(this, menu_selector(BackPackLayer::onClickThingCallBack));
 		auto numlabel = LabelTTF::create(NumberToString(it.nums), "楷体",20);
-		numlabel->setPosition(ob->getPositionX() - 10, ob->getPositionY() - 10);
+		numlabel->setPosition(ob->getPositionX() - 18, ob->getPositionY() - 14);
 		numlabel->setColor(ccc3(255, 242, 0));
-		numlabel->setName(it.name);
+		ob->setTag(index);      //使用tag存储索引
+		m_numlabels.push_back(numlabel);
 		m_menu->addChild(ob);
 		this->addChild(numlabel);
+		if (!index)
+			m_curSel = ob;
+		++index;
 	}
 }
 

@@ -14,13 +14,22 @@ public:
 	
 	bool init(const std::string& filename);
 
+	virtual float beUse(cocos2d::CCObject* obj) override;
 	Skill(const std::string& name);
 	virtual ~Skill();
+
+	/*
+	*ÌáÉýµÈ¼¶
+	*/
+	void incGrade();
 private: 
 	void initProperty(const std::string& name);
 	
 	PROPERTY__REF(std::string, m_name, name)
-	PROPERTY__REF(int,m_grade,grade)
+	PROPERTY__REF(float, m_baseAttack, baseAttack)
+	PROPERTY__REF(float,m_baseMana,baseMana)
+	PROPERTY__REF(int, m_baseupGlod, baseupGlod)
+	PROPERTY__REF(int, m_grade, grade)
 };
 
 #endif // ! __SKILL_H__

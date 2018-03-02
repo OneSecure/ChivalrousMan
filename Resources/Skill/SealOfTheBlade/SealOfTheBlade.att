@@ -1,3 +1,7 @@
 天魔-封
+name SealOfTheBlade
 buyglod 1700
 sellglod 850
+baseattack 250
+basemana 50
+baseupglod 690

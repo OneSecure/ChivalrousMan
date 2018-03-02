@@ -5,6 +5,7 @@
 #include"GameScene.h"
 #include"GameUILayer.h"
 #include"StartMenu.h"
+#include"CameraPlayer.h"
 
 bool GameMenuLayer::init()
 {
@@ -41,11 +42,7 @@ bool GameMenuLayer::init()
 		backGame->setPosition(size.width*0.5, size.height*0.6);
 		menu->addChild(backGame);
 
-		auto func = [this](cocos2d::CCObject*) 
-		{
-			GO_BACK_START_MENU();
-		};
-		auto backMainMenu = MenuItemLabel::create(Label::create(StringValue("BackMainMenu"), "¿¬Ìå", 40), func);
+		auto backMainMenu = MenuItemLabel::create(Label::create(StringValue("BackMainMenu"), "¿¬Ìå", 40), this, menu_selector(GameMenuLayer::onBackMainMenu));
 		backMainMenu->setPosition(size.width*0.5, size.height*0.5);
 		backMainMenu->setColor(ccc3(0, 0, 0));
 		menu->addChild(backMainMenu);
@@ -70,4 +67,10 @@ void GameMenuLayer::onBackGameCallBack(cocos2d::CCObject* sender)
 	((GameScene*)(getParent()->getParent()))->resumeAllActions(getParent()->getParent());
 	((GameUILayer*)getParent())->resetMenulayer();
 	getParent()->removeChild(this);
+}
+
+void GameMenuLayer::onBackMainMenu(cocos2d::CCObject* sender)
+{
+	CameraPlayer::getPlayerInstance()->SaveGameData();
+	GO_BACK_START_MENU();
 }

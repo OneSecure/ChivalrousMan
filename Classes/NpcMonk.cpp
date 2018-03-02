@@ -7,6 +7,7 @@ DEF_REFLECT_FUNC(NpcMonk)
 NpcMonk::NpcMonk()
 {
 	INIT_TALK_IN_NPC(NpcMonk);
+	m_name = "NpcMonk";
 }
 
 NpcMonk::~NpcMonk()

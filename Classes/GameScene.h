@@ -44,6 +44,7 @@ public:
 	*/
 	inline GameLogicLayer* getLogicLayer() { return m_logicLayer; }
 private:
+
 	GameLogicLayer* m_logicLayer;
 	GameMapLayer* m_mapLayer;
 	ObjectLayer* m_objectLayer;

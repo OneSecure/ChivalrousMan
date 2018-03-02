@@ -7,8 +7,12 @@
 #include"DBDao.h"
 #include"GameScene.h"
 #include"CameraPlayer.h"
-#include<functional>
 #include"ExcessiveScene.h"
+#include"BackPackManager.h"
+#include"SkillManager.h"
+#include"EquipmentManager.h"
+#include"TaskSystem.h"
+#include<functional>
 
 #define ARROW_H 0.28
 
@@ -69,8 +73,11 @@ void SelectLayer::onConfirmCallBack(cocos2d::CCObject* sender)
 	}
 	SetStringData("rolename", m_roleList[m_flag].getroleName());
 	SetStringData("PlayerType", m_roleList[m_flag].getroleType());
+	SetFloatData("DestX", std::stof(m_roleList[m_flag].getdestx()));;
+	SetFloatData("DestY", std::stof(m_roleList[m_flag].getdesty()));
+	SetIntData("CurMap", std::stoi(m_roleList[m_flag].getlevel()));
 	initPlayerData(m_roleList[m_flag]);
-	auto startmap = GameScene::createWithLevel(LEVEL_ONE);
+	auto startmap = GameScene::createWithLevel(GetIntData("CurMap"));
 	CC_SAFE_RETAIN(startmap);
 	std::function<bool(void)> func = [] {  return true; };
 	auto excessive = ExcessiveScene::createExcessice(startmap, func, 1);
@@ -114,4 +121,7 @@ void  SelectLayer::initPlayerData(PlayerInfo& info)
 	GetPlayerData().setmana(std::stof(info.getmana()));
 	GetPlayerData().setmaxExp(std::stof(info.getmaxExp()));
 	GetPlayerData().setspeed(std::stof(info.getspeed()));
+	BackPackManager::getInstance()->readBackpackInfo();
+	EquipmentManager::getInstance()->readEquipmentInfo();
+	SkillManager::getInstance()->readSkillInfo();
 }

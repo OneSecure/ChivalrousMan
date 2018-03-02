@@ -22,12 +22,24 @@ public:
 
 	bool init(const std::string& name);
 
+	/*
+	*void beAttack(float attack)
+	*被攻击
+	*@param attack：攻击的伤害
+	*@return int:返回-1表示死亡，返回0表示还没死
+	*/
+	int beAttack(float attack);
+
 	PROPERTY__REF(float, m_attack, attack)
 	PROPERTY__REF(float, m_blood, blood)
 	PROPERTY__REF(float, m_defense, defense)
 	PROPERTY__REF(float, m_speed, speed)
 	PROPERTY__REF(std::string, m_name, name)
+	PROPERTY__REF(float, m_exp, exp)    //杀死它获得经验值
+	PROPERTY__REF(float, m_glod, glod)     //杀死它获得金币数
 	PROPERTY__REF(float, m_frames, frames)
+
+	bool isDie();
 private:
 	/*
 	*initProperty(const std::string name)
@@ -43,6 +55,8 @@ private:
 	*@param num：帧数
 	*/
 	void initMonsterAnimation(const std::string& name, int num);
+
+	bool m_isdie = false;
 };
 
 #endif // !__MONSTER_H__

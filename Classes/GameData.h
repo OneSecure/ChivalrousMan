@@ -11,6 +11,7 @@
 #define BoolValue GameData::getInstance()->getBoolByKey
 #define FloatValue GameData::getInstance()->getFloatByKey
 #define NumberToString GameData::getInstance()->numberToString
+#define NTS NumberToString
 
 class GameData:public cocos2d::CCObject
 {

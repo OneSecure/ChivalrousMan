@@ -25,6 +25,7 @@ private:
 	*/
 	void onBackGameCallBack(cocos2d::CCObject* sender);
 
+	void onBackMainMenu(cocos2d::CCObject* sender);
 };
 
 

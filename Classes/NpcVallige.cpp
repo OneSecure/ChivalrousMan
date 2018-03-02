@@ -10,6 +10,7 @@ DEF_REFLECT_FUNC(NpcVallige)
 NpcVallige::NpcVallige()
 {
 	INIT_TALK_IN_NPC(NpcVallige);
+	m_name = "NpcVallige";
 }
 
 NpcVallige::~NpcVallige()

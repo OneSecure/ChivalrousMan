@@ -31,6 +31,18 @@ public:
 	inline std::vector<Npc*>& getNpcList() { return m_npcList; }
 private:
 	/*
+	*checkmissedTask();
+	*检查Npc是否有未接任务
+	*/
+	void checkmissedTask();
+
+	/*
+	*checkpickedupTask();
+	*检查Npc是否有已接任务
+	*/
+	void checkpickedupTask();
+
+	/*
 	*updateNpcPos();
 	*以玩家为基准更新其它对象的位置信息
 	*/
