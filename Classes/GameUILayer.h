@@ -22,6 +22,12 @@ public:
 	void resetMenulayer();
 private:
 	/*
+	*doWorldTalkMsg();
+	*处理世界聊天发来的消息
+	*/
+	void doWorldTalkMsg();
+
+	/*
 	*generateUserInterface();
 	*生成用户界面
 	*/
