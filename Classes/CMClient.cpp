@@ -1,6 +1,8 @@
 #include"CMClient.h"
 #include"GameData.h"
 #include"Commen.h"
+#include"GameDynamicData.h"
+#include"CameraPlayer.h"
 #include<fstream>
 #include<string>
 
@@ -26,7 +28,18 @@ void CMClient::release()
 
 void  CMClient::OnRecv(char* buff)
 {
-
+	M_Type type = *((M_Type*)buff);
+	switch (type)
+	{
+	case M_WorldTalk:
+		
+		break;
+	case M_PrivateTalk:
+		
+		break;
+	default:
+		break;
+	}
 }
 
 void CMClient::readConfConnectServer()
@@ -37,16 +50,39 @@ void CMClient::readConfConnectServer()
 	{
 		return;
 	}
-	std::string serverip;
 	std::string tmp;
-	unsigned long port;
 	
-	fin >> serverip;
+	fin >> m_serverip;
 
-	fin >> serverip;
-	fin >> serverip;
+	fin >> m_serverip;
+	fin >> m_serverip;
 	fin >> tmp;
-	fin >> port;
+	fin >> m_port;
 
 	fin.close();
+}
+
+int CMClient::Connect()
+{
+	return CTCPClient::ConnectSever(m_serverip, m_port);
+}
+
+void CMClient::SendEntryMsg()
+{
+	EntryGame_Msg msg;
+	msg.type = M_EntryGame;
+	strcpy_s(msg.playername, GetStringData("playername").c_str());
+	strcpy_s(msg.rolename, GetStringData("rolename").c_str());
+	SendMsg((char*)(&msg), sizeof(msg));
+}
+
+void CMClient::SendPlayerData()
+{
+	InitData_Msg msg;
+	msg.type = M_InitData;
+	msg.attack = GetPlayerData().getattack();
+	msg.blood = GetPlayerData().getblood();
+	msg.defense = GetPlayerData().getdefense();
+	msg.mana = GetPlayerData().getmana();
+	SendMsg((char*)&msg, sizeof(msg));
 }

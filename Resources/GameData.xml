@@ -115,6 +115,8 @@
   <key>TrunOff</key>
   <string>trunOff.png</string>
   <!-- 文本素材 -->
+  <key>NetConnectText</key>
+  <string>连接网络中......</string>
   <key>PickTaskText</key>
   <string>是否接取该任务？</string>
   <key>Access</key>

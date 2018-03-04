@@ -8,6 +8,7 @@
 #include"GameUILayer.h"
 #include"ObjectLayer.h"
 #include"Commen.h"
+#include"CMClient.h"
 
 GameScene*  GameScene::createWithLevel(const int& level)
 {
@@ -55,6 +56,8 @@ bool GameScene::init(const int& level)
 		auto UILayer = GameUILayer::create();
 		this->addChild(UILayer);
 		SetIntData("Save", 1);
+		CMClient::getInstance()->SendPlayerData();
+		SetIntData("IsHaveGameScene", 1);
 		return true;
 	}
 	return false;

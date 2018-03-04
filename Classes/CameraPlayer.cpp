@@ -183,8 +183,17 @@ void CameraPlayer::initStateInfo(const int& level)
 	}
 	else
 	{
-		m_pos.x = x - 40;
-		m_pos.y = y - 40;
+		if (GetIntData("IsDoor") == 1)
+		{
+			m_pos.x = x - 40;
+			m_pos.y = y - 40;
+			SetIntData("IsDoor", 0);
+		}
+		else
+		{
+			m_pos.x = x;
+			m_pos.y = y;
+		}
 	}
 	clearRoadList();
 	m_flag = 0;

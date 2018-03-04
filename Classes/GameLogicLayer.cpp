@@ -74,6 +74,7 @@ void GameLogicLayer::checkEntryDoor()
 		{
 			SetFloatData("DestX", doors[i].destPos.x);
 			SetFloatData("DestY", doors[i].destPos.y);
+			SetIntData("IsDoor", 1);
 			unscheduleUpdate();
 			gotoDestMap(doors[i].dest);
 			break;
@@ -83,6 +84,7 @@ void GameLogicLayer::checkEntryDoor()
 
 void GameLogicLayer::gotoDestMap(const std::string& dest)
 {
+	SetIntData("IsHaveGameScene", 0);
 	std::function<bool(void)> func = [] {return true; };
 	ExcessiveScene* ex = nullptr;
 	if (dest == "map1")
@@ -147,6 +149,7 @@ void GameLogicLayer::randomMeetMonster()
 				unscheduleUpdate();
 				SetFloatData("DestX", PlayerPos.x);
 				SetFloatData("DestY", PlayerPos.y);
+				SetIntData("IsHaveGameScene", 0);
 				auto fightScene = FightLayer::createFightScene(monsterName());
 				auto reScene = TransitionFadeUp::create(0.5, fightScene);
 				Director::getInstance()->replaceScene(reScene);

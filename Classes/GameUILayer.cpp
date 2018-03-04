@@ -12,6 +12,7 @@
 #include"RoleInfoLayer.h"
 #include"CameraPlayer.h"
 #include"TaskLayer.h"
+#include"CMClient.h"
 #include<string>
 
 #define SHOW_AND_DELETE_LAYER(__LAYER__)  \
@@ -192,6 +193,10 @@ void GameUILayer::onHeadClickCallBack(cocos2d::CCObject* sender)
 void GameUILayer::onSendClickCallBack(cocos2d::CCObject* sender)
 {
 	ClickAction();
+	WorldTalk_Msg msg;
+	msg.type = M_WorldTalk;
+	strcpy_s(msg.msg, m_editFrame->getString().c_str());
+	CMClient::getInstance()->SendMsg((char*)&msg, sizeof(msg));
 }
 
 void GameUILayer::onMenuClickCallBack(cocos2d::CCObject* sender)
@@ -216,6 +221,7 @@ bool GameUILayer::onTextFieldAttachWithIME(TextFieldTTF * sender)
 {
 	sender->setScale(1.1);
 	sender->setColor(ccc3(255, 255, 255));
+	CurGameScene()->pauseAllActions(CurGameScene(), this);
 	return TextFieldDelegate::onTextFieldAttachWithIME(sender);
 }
 
@@ -223,6 +229,7 @@ bool  GameUILayer::onTextFieldDetachWithIME(TextFieldTTF * sender)
 {
 	sender->setScale(1.0);
 	sender->setColor(ccc3(195, 195, 195));
+	CurGameScene()->resumeAllActions(CurGameScene());
 	return TextFieldDelegate::onTextFieldDetachWithIME(sender);
 }
 void GameUILayer::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *unused_event)

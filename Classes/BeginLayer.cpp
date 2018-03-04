@@ -14,14 +14,16 @@ bool BeginLayer::init()
 		back->setPosition(size.width*0.5, size.height*0.5);
 		this->addChild(back);
 
-		auto loginBtn = MenuItemLabel::create(Label::create(StringValue("LoginGame"), "楷体", 45)
+		loginBtn = MenuItemLabel::create(Label::create(StringValue("LoginGame"), "楷体", 45)
 			, this, menu_selector(BeginLayer::onLoginCallBack));
 		loginBtn->setPosition(size.width*0.5, size.height*0.55);
-		auto sigonBtn = MenuItemLabel::create(Label::create(StringValue("SigOn"), "楷体", 45)
+		sigonBtn = MenuItemLabel::create(Label::create(StringValue("SigOn"), "楷体", 45)
 			, this, menu_selector(BeginLayer::onSigonCallBack));
 		sigonBtn->setPosition(size.width*0.5, size.height*0.45);
 		loginBtn->setColor(Color3B::BLACK);
 		sigonBtn->setColor(Color3B::BLACK);
+		loginBtn->setVisible(false);
+		sigonBtn->setVisible(false);
 
 		auto menuTrunOn = MenuItemImage::create(StringValue("TrunOn"), StringValue("TrunOn"));
 		auto menuTrunOff = MenuItemImage::create(StringValue("TrunOff"), StringValue("TrunOff"));
@@ -64,4 +66,10 @@ void BeginLayer::onSigonCallBack(cocos2d::CCObject* sender)
 void  BeginLayer::onMusicOnOrOffCallBack(cocos2d::CCObject* sender)
 {
 	ToggleMusic();
+}
+
+void BeginLayer::showBtn()
+{
+	loginBtn->setVisible(true);
+	sigonBtn->setVisible(true);
 }

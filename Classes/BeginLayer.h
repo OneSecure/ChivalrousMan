@@ -28,6 +28,11 @@ public:
 	*背景音乐开关回调函数
 	*/
 	void onMusicOnOrOffCallBack(cocos2d::CCObject* sender);
+
+	void showBtn();
+
+	cocos2d::MenuItemLabel* loginBtn;
+    cocos2d::MenuItemLabel* sigonBtn;
 };
 
 #endif // !__BEGIN_LAYER_H__
