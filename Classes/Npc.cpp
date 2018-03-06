@@ -48,6 +48,7 @@ void Npc::endCollisionEvent()
 	m_isCollision = false;
 	auto gs = CurGameScene();
 	gs->removeChildByName("talkLayer");
+	gs->removeChildByName("pklayer");
 }
 
 std::string Npc::getNextTalkMsg()
@@ -117,6 +118,7 @@ void  Npc::talkEndEvent()
 	case NS_HTASK:
 	{
 		PickupTaskLayer* pklayer = PickupTaskLayer::create(this);
+		pklayer->setName("pklayer");
 		CurGameScene()->addChild(pklayer);
 		m_talkmsg.clear();
 		m_talkmsg = m_tmptalk;

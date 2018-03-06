@@ -125,5 +125,5 @@ void  SelectLayer::initPlayerData(PlayerInfo& info)
 	BackPackManager::getInstance()->readBackpackInfo();
 	EquipmentManager::getInstance()->readEquipmentInfo();
 	SkillManager::getInstance()->readSkillInfo();
-	CMClient::getInstance()->SendEntryMsg();
+	CMClient::getInstance()->SendInitPlayerData();
 }

@@ -68,6 +68,12 @@ private:
 	*/
 	void onTaskIconClickCallback(cocos2d::CCObject* sender);
 
+	/*
+	*onNearPlayerBtnClickc(cocos2d::CCObject* sender);
+	*周围玩家列表按钮点击回调函数
+	*/
+	void onNearPlayerBtnClick(cocos2d::CCObject* sender);
+
 	void update(float dt) override;
 	
 	virtual void onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *unused_event);
@@ -100,6 +106,7 @@ private:
 	bool m_isclickRoleInfoLayer = false;
 	bool m_isclickMapLayer = false;
 	bool m_isclickTaskLayer = false;
+	bool m_isclickPlayerListLayer = false;
 	bool m_isClickLayer = false;
 };
 

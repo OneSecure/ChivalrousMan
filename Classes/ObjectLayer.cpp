@@ -6,6 +6,9 @@
 #include"ReflectNpc.h"
 #include"MapInfo.h"
 #include"TaskSystem.h"
+#include"Player.h"
+#include"CMClient.h"
+#include"FindRoad.h"
 #include<fstream>
 
 ObjectLayer::ObjectLayer()
@@ -15,7 +18,7 @@ ObjectLayer::ObjectLayer()
   
 ObjectLayer::~ObjectLayer()
 {
-	clearObjectLayer();
+	clearNpcObjectLayer();
 }
 
 ObjectLayer* ObjectLayer::createWithLevel(const int& level)
@@ -38,7 +41,7 @@ bool ObjectLayer::init(const int& level)
 {
 	if (Layer::init())
 	{
-		initLevelObject(level);
+		initNpcObject(level);
 		this->scheduleUpdate();
 		return true;
 	}
@@ -52,9 +55,9 @@ void ObjectLayer::update(float dt)
 	updateObjectScreenPos();
 }
 
-void ObjectLayer::initLevelObject(const int& level)
+void ObjectLayer::initNpcObject(const int& level)
 {
-	clearObjectLayer();
+	clearNpcObjectLayer();
 	char filename[40] = { 0 };
 	sprintf_s(filename, "LevelObject/Level%d.lobject", level);
 	std::ifstream fin;
@@ -81,6 +84,16 @@ void ObjectLayer::initLevelObject(const int& level)
 		this->addChild(face);
 	} while (!fin.eof());
 	fin.close();
+}
+
+void ObjectLayer::initOtherPlayer()
+{
+	for (auto var : CMClient::getInstance()->getPlayerList())
+	{
+		auto player = GamePlayer::create(var);
+		m_playerlist.push_back(player);
+		this->addChild(player);
+	}
 }
 
 void  ObjectLayer::checkmissedTask()
@@ -110,6 +123,7 @@ void ObjectLayer::checkpickedupTask()
 void  ObjectLayer::updateObjectScreenPos()
 {
 	updateNpcScreenPos();
+	updateOtherPlayerScreenPos();
 }
 
 void ObjectLayer::updateNpcScreenPos()
@@ -123,11 +137,93 @@ void ObjectLayer::updateNpcScreenPos()
 	}
 }
 
-void ObjectLayer::clearObjectLayer()
+void ObjectLayer::updateOtherPlayerScreenPos()
+{
+	Vec2 pos;
+	for (auto var : m_playerlist)
+	{
+		pos.x = PlayerFacePos().x + (var->getWorldPos().x - PlayerPos.x);
+		pos.y = PlayerFacePos().y + (var->getWorldPos().y - PlayerPos.y) + 47;  //»æÖÆÎó²î
+		var->setPosition(pos);
+	}
+}
+
+void ObjectLayer::clearNpcObjectLayer()
 {
 	for (auto it : m_npcList)
 	{
 		RELEASE_NULL(it);
 	}
 	m_npcList.clear();
+}
+
+void ObjectLayer::addPlayer(const Player_Info& pinfo)
+{
+	if (GetIntData("CurMap") == pinfo.curmap)
+	{
+		auto it = existPlayer(pinfo.playername, pinfo.rolename);
+		if (it != m_playerlist.end())
+		{
+			(*it)->setWorldPos(Vec2{ pinfo.x,pinfo.y });
+		}
+		else
+		{
+			auto player = GamePlayer::create(pinfo);
+			m_playerlist.push_back(player);
+			this->addChild(player);
+		}
+	}
+}
+
+void ObjectLayer::removePlayer(const std::string& playername, const std::string& rolename)
+{
+	for (auto it = m_playerlist.begin(); it != m_playerlist.end(); ++it)
+	{
+		if ((*it)->getPlayerName() == playername && (*it)->getRoleName() == rolename)
+		{
+			this->removeChild(*it);
+			m_playerlist.erase(it);
+			return;
+		}
+	}
+}
+
+std::list<GamePlayer*>::iterator ObjectLayer::existPlayer(const std::string& playername, const std::string& rolename)
+{
+	for (auto it = m_playerlist.begin(); it != m_playerlist.end(); ++it)
+	{
+		if ((*it)->getPlayerName() == playername && (*it)->getRoleName() == rolename)
+		{
+			return it;
+		}
+	}
+	return m_playerlist.end();
+}
+
+void ObjectLayer::verifyPlayerPos(const std::string& playername, const std::string& rolename, const cocos2d::Vec2& pos)
+{
+	for (auto var : m_playerlist)
+	{
+		if (var->getPlayerName() == playername&&var->getRoleName() == rolename)
+		{
+			var->setWorldPos(pos);
+		}
+	}
+}
+
+void ObjectLayer::moveOtherPlayer(const std::string& playername, const std::string& rolename, const cocos2d::Vec2& target)
+{
+	for (auto var : m_playerlist)
+	{
+		if (var->getPlayerName() == playername&&var->getRoleName() == rolename)
+		{
+			Vec2 start{ var->getWorldPos().x / MapGridW,var->getWorldPos().y / MapGridH };
+			FindRoad froad{ start, target, GetMapInfo(), MapCountX, MapCountY };
+			froad.ExecuteAStar();
+			if (froad.isHasRoad())
+			{
+				var->setMoveRoad(froad.GetRoadList());
+			}
+		}
+	}
 }

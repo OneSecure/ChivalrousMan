@@ -5,10 +5,14 @@
 
 enum M_Type
 {
-	M_EntryGame,
-	M_InitData,
-	M_WorldTalk,
-	M_PrivateTalk,
+	M_EntryGame,   //
+	M_InitData,      //初始化玩家数据
+	M_WorldTalk,     //世界聊天消息
+	M_PrivateTalk,    //私聊消息
+	M_InitPos,      //初始化位置
+	M_PlayerLeave,   //玩家离线
+	M_MoveTo,    //玩家移动到某处
+	M_VerifyPos,   //校验玩家位置
 };
 
 struct Player_Info
@@ -19,22 +23,25 @@ struct Player_Info
 	float mana;
 	float attack;
 	float defense;
-};
-
-struct EntryGame_Msg
-{
-	M_Type type;
-	char playername[40];
-	char rolename[40];
+	int curmap;
+	std::string playertype;
+	float x;
+	float y;
+	int fd;
 };
 
 struct InitData_Msg
 {
 	M_Type type;
+	char playername[40];
+	char rolename[40];
 	float blood;
 	float mana;
 	float attack;
 	float defense;
+	int curmap;
+	char playertype[10];
+	int fd;
 };
 
 struct WorldTalk_Msg
@@ -50,6 +57,40 @@ struct PrivateTalk_Msg
 	char msg[200];
 };
 
+struct InitPos_Msg
+{
+	M_Type type;
+	float x;
+	float y;
+	int fd;
+};
+
+struct PlayerLeave_Msg
+{
+	M_Type type;
+	int fd;
+};
+
+struct PrivateMsg
+{
+	int dest;
+	std::string msg;
+};
+
+struct MoveTo_Msg
+{
+	M_Type type;
+	float x;
+	float y;
+	int fd;
+};
+
+struct  VerifyPos_Msg
+{
+	M_Type type;
+	float x;
+	float y;
+	int fd;
+};
 
 #endif // SHAREDATA_H
-

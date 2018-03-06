@@ -198,7 +198,7 @@ void CameraPlayer::initStateInfo(const int& level)
 	clearRoadList();
 	m_flag = 0;
 	RELEASE_NULL(m_state);
-	m_state = new PlayerWait(m_face);
+	m_state = new PlayerWait(m_face, GetStringData("PlayerType"));
 	AdjustPlayerAndMapPos();
 }
 

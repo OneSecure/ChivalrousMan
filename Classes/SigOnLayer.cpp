@@ -103,8 +103,8 @@ void SigOnLayer::SigonEvent()
 		MessageBox("两次密码不一致", "提示");
 		return;
 	}
-	DBDao<Player> dao;
-	Player player;
+	DBDao<GamePlayer> dao;
+	GamePlayer player;
 	player[1] = playername;
 	player[2] = playerpsw;
 	std::stringstream ss;

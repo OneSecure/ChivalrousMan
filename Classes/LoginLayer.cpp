@@ -144,12 +144,12 @@ void LoginLayer::LoginEvent()
 		this->removeChildByName("cushion");
 		return;
 	}
-	DBDao<Player> dao;
-	Player player;
+	DBDao<GamePlayer> dao;
+	GamePlayer player;
 	player.setplayerName(playername);
 	player.setplayerPsw(playerpsw);
 	dao.setModel(player);
-	std::vector<Player> list = dao.queryModel();
+	std::vector<GamePlayer> list = dao.queryModel();
 	if (list.size() == 0)
 	{
 		MessageBox("用户名或密码错误", "提示");

@@ -6,6 +6,7 @@
 #include"GameUILayer.h"
 #include"StartMenu.h"
 #include"CameraPlayer.h"
+#include"CMClient.h"
 
 bool GameMenuLayer::init()
 {
@@ -71,6 +72,7 @@ void GameMenuLayer::onBackGameCallBack(cocos2d::CCObject* sender)
 
 void GameMenuLayer::onBackMainMenu(cocos2d::CCObject* sender)
 {
+	CMClient::getInstance()->SendPlayerLeaveMsg();
 	CameraPlayer::getPlayerInstance()->SaveGameData();
 	GO_BACK_START_MENU();
 }

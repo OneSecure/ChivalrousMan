@@ -7,7 +7,7 @@
 class PlayerRun:public PlayerState
 {
 public:
-	PlayerRun(cocos2d::Sprite* face);
+	PlayerRun(cocos2d::Sprite* face,const std::string& playertype);
 	~PlayerRun();
 
 	virtual void changeAnimation(Dir dir) override; 

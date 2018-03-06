@@ -3,6 +3,7 @@
 #include"GameData.h"
 #include"GameDynamicData.h"
 #include"SimpleAudioEngine.h"
+#include"CMClient.h"
 
 using namespace CocosDenshion;
 using namespace std;
@@ -35,12 +36,12 @@ void AudioSystem::WorkThread()
 		
 		CheckBgMusic();
 		Sleep(50);
-	/*	count++;
-		if (count > 60&&GetIntData("Save")==1)
+		count++;
+		if (count >= 80)
 		{
-			SaveGameData();
+			CMClient::getInstance()->VerifyPlayerPos();
 			count = 0;
-		}*/
+		}
 	}
 }
 

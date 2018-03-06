@@ -195,8 +195,8 @@ void NewGameLayer::moveBracket(cocos2d::Vec2 dest, float delay)
 
 void NewGameLayer::addRoleNums()
 {
-	DBDao<Player> dao;
-	Player player;
+	DBDao<GamePlayer> dao;
+	GamePlayer player;
 	std::string rolenums = GetStringData("rolenums");
 	int num = std::stoi(rolenums) + 1;
 	std::stringstream ss;

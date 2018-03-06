@@ -5,8 +5,8 @@
 #include"CameraPlayer.h"
 #include"GameDynamicData.h"
 
-PlayerRun::PlayerRun(Sprite* face):
-	PlayerState(face)
+PlayerRun::PlayerRun(Sprite* face,const std::string& playertype):
+	PlayerState(face,playertype)
 {
 
 }
@@ -18,6 +18,7 @@ PlayerRun::~PlayerRun()
 
 void PlayerRun::changeAnimation(Dir dir)
 {
+	m_dir = dir;
 	switch (dir)
 	{
 	case Dir::Dir_Left:
@@ -47,8 +48,8 @@ void PlayerRun::changeAnimation(Dir dir)
 
 PlayerState* PlayerRun::goNextState()
 {
-	PlayerWait* wait = new PlayerWait(m_playerFace);
-	wait->changeAnimation(PlayerDir());
+	PlayerWait* wait = new PlayerWait(m_playerFace, m_playerType);
+	wait->changeAnimation(m_dir);
 	delete this;
 	return wait;
 }

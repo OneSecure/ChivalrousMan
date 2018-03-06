@@ -33,5 +33,9 @@ void  TaskLayer::initTaskItem(cocos2d::Vec2 basePos)
 		taskitem->setPosition(basePos.x, basePos.y - index * 80);
 		this->addChild(taskitem);
 		++index;
+		if (index > 6)
+		{
+			return;
+		}
 	}
 }

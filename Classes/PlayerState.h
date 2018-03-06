@@ -6,7 +6,7 @@
 class PlayerState
 {
 public:
-	PlayerState(cocos2d::Sprite* face);
+	PlayerState(cocos2d::Sprite* face,const std::string& playertype);
 	virtual ~PlayerState();
 
 	/*
@@ -29,6 +29,8 @@ protected:
 	void change(const char* name);
 
 	cocos2d::Sprite* m_playerFace;
+	std::string m_playerType;
+	Dir m_dir;
 };
 
 #endif // !

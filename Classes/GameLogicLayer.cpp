@@ -10,6 +10,7 @@
 #include"GameScene.h"
 #include"ObjectLayer.h"
 #include"FightLayer.h"
+#include"CMClient.h"
 #include<stack>
 #include<functional>
 
@@ -35,6 +36,7 @@ void  GameLogicLayer::onTouchEnded(Touch *touch, Event *unused_event)
 	targetPos.y /= MapGridH;
 	FOUR_LOSE_FIVE_ADD(targetPos.x);
 	FOUR_LOSE_FIVE_ADD(targetPos.y);
+	CMClient::getInstance()->SendMoveToMsg(targetPos);
 	Vec2 startPos{ PlayerPos.x / MapGridW,PlayerPos.y / MapGridH };
 	FindRoad fdroad(startPos, targetPos, GetMapInfo(), MapCountX, MapCountY);
 	fdroad.ExecuteAStar();

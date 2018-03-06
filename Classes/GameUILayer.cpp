@@ -12,6 +12,7 @@
 #include"RoleInfoLayer.h"
 #include"CameraPlayer.h"
 #include"TaskLayer.h"
+#include"PlayerListLayer.h"
 #include"CMClient.h"
 #include<string>
 
@@ -86,8 +87,12 @@ void GameUILayer::generateUserInterface()
 	menu->addChild(m_skill);
 	m_taskItem = MenuItemImage::create(StringValue("TaskIcon"), StringValue("TaskIcon"),
 		this, menu_selector(GameUILayer::onTaskIconClickCallback));
-	m_taskItem->setPosition(m_skill->getPositionX() - m_skill->getContentSize().width - 20, m_skill->getPositionY());
+	m_taskItem->setPosition(m_skill->getPositionX() - m_skill->getContentSize().width - 15, m_skill->getPositionY());
 	menu->addChild(m_taskItem);
+	auto npplayer = MenuItemImage::create(StringValue("NearPlayer"), StringValue("NearPlayer"), this,
+		menu_selector(GameUILayer::onNearPlayerBtnClick));
+	npplayer->setPosition(m_taskItem->getPositionX() - m_taskItem->getContentSize().width - 15, m_taskItem->getPositionY());
+	menu->addChild(npplayer);
 
 	m_worldMap = MenuItemImage::create(StringValue("MapIcon"),
 		StringValue("MapIcon"), this,
@@ -215,6 +220,12 @@ void GameUILayer::onTaskIconClickCallback(cocos2d::CCObject* sender)
 {
 	ClickAction(sender);
 	SHOW_AND_DELETE_LAYER(TaskLayer);
+}
+
+void GameUILayer::onNearPlayerBtnClick(cocos2d::CCObject* sender)
+{
+	ClickAction(sender);
+	SHOW_AND_DELETE_LAYER(PlayerListLayer);
 }
 
 bool GameUILayer::onTextFieldAttachWithIME(TextFieldTTF * sender)

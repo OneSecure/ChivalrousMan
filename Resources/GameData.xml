@@ -42,6 +42,10 @@
   <key>XBArrow</key>
   <string>Skill/XBArrow/</string>
   <!-- 按钮 -->
+  <key>PrivateTalkBtn</key>
+  <string>button/PTBtn.png</string>
+  <key>MakeTeamBtn</key>
+  <string>button/TeamBtn.png</string>
   <key>Disassemble</key>
   <string>button/DisassembleBtn.png</string>
   <key>RunNormalBtn</key>
@@ -115,6 +119,8 @@
   <key>TrunOff</key>
   <string>trunOff.png</string>
   <!-- 文本素材 -->
+  <key>NearPlayerText</key>
+  <string>周围玩家</string>
   <key>NetConnectText</key>
   <string>连接网络中......</string>
   <key>PickTaskText</key>
@@ -269,6 +275,10 @@
   <key>NpcVallige</key>
   <string>Npc/NpcVallige.png</string>
   <!-- 背景素材 -->
+  <key>PlayerItemBg</key>
+  <string>PlayerItemBg.png</string>
+  <key>PlayerListBg</key>
+  <string>NPListBg.png</string>
   <key>PickTaskBg</key>
   <string>PickTaskBg.png</string>
   <key>TaskItemBg</key>
@@ -426,6 +436,8 @@
   <key>PlayerFps</key>
   <string>0.06</string>
   <!-- 其它素材 -->
+  <key>NearPlayer</key>
+  <string>NPIcon.png</string>
   <key>Taskh</key>
   <string>taskh.png</string>
   <key>Tasks</key>

@@ -8,11 +8,11 @@ private: varType varName=""; \
 public: varType& get##funName(void){return varName;} \
 public: void set##funName(const varType& var) {varName=var;}
 
-class Player
+class GamePlayer
 {
 public:
-	Player() {}
-	~Player() {}
+	GamePlayer() {}
+	~GamePlayer() {}
 
 	GettingAndSetting(std::string, playerName, playerName);
 	GettingAndSetting(std::string, playerPsw, playerPsw);
