@@ -41,17 +41,23 @@ bool PlayerItem::init(const Player_Info& info)
 
 		auto namelabel = LabelTTF::create(info.rolename, "¿¬Ìå", 16);
 		namelabel->setAnchorPoint(ccp(0, 0.5));
-		namelabel->setPosition(head->getPositionX() + 30, 20);
+		namelabel->setPosition(head->getPositionX() + 34, 18);
 		this->addChild(namelabel);
+
+		auto gradelabel = LabelTTF::create(StringValue("GradeText") + NTS(info.grade), "¿¬Ìå", 16);
+		gradelabel->setAnchorPoint(ccp(0, 0.5));
+		gradelabel->setColor(Color3B::ORANGE);
+		gradelabel->setPosition(head->getPositionX() + 34, -15);
+		this->addChild(gradelabel);
 		
 		auto ptalkBtn = MenuItemImage::create(StringValue("PrivateTalkBtn"),
 			StringValue("PrivateTalkBtn"), this, menu_selector(PlayerItem::onPrivateTalkClick));
-		ptalkBtn->setPosition(80, 20);
+		ptalkBtn->setPosition(80, 15);
 		menu->addChild(ptalkBtn);
 		
-		auto maketeamBtn = MenuItemImage::create(StringValue(""),
-			StringValue(""), this, menu_selector(PlayerItem::onMakeTeamClick));
-		maketeamBtn->setPosition(80, -20);
+		auto maketeamBtn = MenuItemImage::create(StringValue("MakeTeamBtn"),
+			StringValue("MakeTeamBtn"), this, menu_selector(PlayerItem::onMakeTeamClick));
+		maketeamBtn->setPosition(80, -15);
 		menu->addChild(maketeamBtn);
 		return true;
 	}

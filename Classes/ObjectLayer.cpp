@@ -143,7 +143,7 @@ void ObjectLayer::updateOtherPlayerScreenPos()
 	for (auto var : m_playerlist)
 	{
 		pos.x = PlayerFacePos().x + (var->getWorldPos().x - PlayerPos.x);
-		pos.y = PlayerFacePos().y + (var->getWorldPos().y - PlayerPos.y) + 47;  //»æÖÆÎó²î
+		pos.y = PlayerFacePos().y + (var->getWorldPos().y - PlayerPos.y) + 50;  //»æÖÆÎó²î
 		var->setPosition(pos);
 	}
 }
@@ -207,6 +207,22 @@ void ObjectLayer::verifyPlayerPos(const std::string& playername, const std::stri
 		if (var->getPlayerName() == playername&&var->getRoleName() == rolename)
 		{
 			var->setWorldPos(pos);
+			return;
+		}
+	}
+}
+
+void ObjectLayer::updatePlayerData(const std::string& playername, const std::string& rolename, UpdateData_Msg msg)
+{
+	for (auto var : m_playerlist)
+	{
+		if (var->getPlayerName() == playername&&var->getRoleName() == rolename)
+		{
+			var->setAttack(msg.attack);
+			var->setBlood(msg.blood);
+			var->setDefense(msg.defense);
+			var->setMana(msg.mana);
+			return;
 		}
 	}
 }

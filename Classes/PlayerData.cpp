@@ -1,5 +1,6 @@
 #include"PlayerData.h"
 #include"Commen.h"
+#include"CMClient.h"
 
 PlayerData::PlayerData()
 {
@@ -57,10 +58,7 @@ void PlayerData::upGrade()
 	m_exp = 0;
 	++m_grade;
 	m_maxExp += m_grade * 100;
-	m_attack += 5;
-	m_defense += 5;
-	m_blood += 30;
-	m_mana += 30;
+	addProperty(30, 30, 5, 5);
 }
 
 void PlayerData::addProperty(float blood, float mana, float attack, float defense)
@@ -69,4 +67,5 @@ void PlayerData::addProperty(float blood, float mana, float attack, float defens
 	m_mana += mana;
 	m_attack += attack;
 	m_defense += defense;
+	CMClient::getInstance()->updatePlayerData();
 }

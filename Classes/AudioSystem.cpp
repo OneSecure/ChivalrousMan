@@ -37,7 +37,7 @@ void AudioSystem::WorkThread()
 		CheckBgMusic();
 		Sleep(50);
 		count++;
-		if (count >= 80)
+		if (count >= 160&&GetIntData("IsHaveGameScene")==1)
 		{
 			CMClient::getInstance()->VerifyPlayerPos();
 			count = 0;

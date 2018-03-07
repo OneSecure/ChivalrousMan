@@ -53,6 +53,7 @@ void  CMClient::OnRecv(char* buff)
 		pinfo.playertype = rlmsg->playertype;
 		pinfo.rolename = rlmsg->rolename;
 		pinfo.fd = rlmsg->fd;
+		pinfo.grade = rlmsg->grade;
 		m_playerlist.push_back(pinfo);
 	}
 		break;
@@ -90,6 +91,16 @@ void  CMClient::OnRecv(char* buff)
 	case M_VerifyPos:
 	{
 		doPlayerPosVerifyMsg((VerifyPos_Msg*)buff);
+	}
+		break;
+	case M_UpdateData:
+	{
+		doPlayerDataUpdaeMsg((UpdateData_Msg*)buff);
+	}
+		break;
+	case M_UpdateMap:
+	{
+		doUpdatePlayerMapMsg((UpdateMap_Msg*)buff);
 	}
 		break;
 	default:
@@ -134,6 +145,7 @@ void CMClient::SendInitPlayerData()
 	msg.blood = GetPlayerData().getblood();
 	msg.defense = GetPlayerData().getdefense();
 	msg.mana = GetPlayerData().getmana();
+	msg.grade = GetPlayerData().getgrade();
 	msg.fd = -1;
 	SendMsg((char*)&msg, sizeof(msg));
 }
@@ -206,7 +218,7 @@ void CMClient::doPlayerMoveToMsg(MoveTo_Msg* msg)
 
 void CMClient::doPlayerPosVerifyMsg(VerifyPos_Msg* msg)
 {
-	for (auto var : m_playerlist)
+	for (auto& var : m_playerlist)
 	{
 		if (var.fd == msg->fd)
 		{
@@ -225,4 +237,53 @@ void CMClient::VerifyPlayerPos()
 	msg.y = PlayerPos.y;
 	msg.fd = -1;
 	SendMsg((char*)&msg, sizeof(msg));
+}
+
+void CMClient::updatePlayerData()
+{
+	UpdateData_Msg msg;
+	msg.type = M_UpdateData;
+	msg.attack = GetPlayerData().getattack();
+	msg.blood = GetPlayerData().getblood();
+	msg.defense = GetPlayerData().getdefense();
+	msg.fd = -1;
+	msg.grade = GetPlayerData().getgrade();
+	msg.mana = GetPlayerData().getmana();
+	SendMsg((char*)&msg, sizeof(msg));
+}
+
+void CMClient::doPlayerDataUpdaeMsg(UpdateData_Msg* msg)
+{
+	for (auto& var : m_playerlist)
+	{
+		if (var.fd == msg->fd)
+		{
+			var.attack = msg->attack;
+			var.defense = msg->defense;
+			var.blood = msg->blood;
+		 	var.grade=msg->grade;
+			var.mana = msg->mana;
+			CurGameScene()->getObjectLayer()->updatePlayerData(var.playername, var.rolename, *msg);
+		}
+	}
+}
+
+void CMClient::updatePlayerMap()
+{
+	UpdateMap_Msg msg;
+	msg.type = M_UpdateMap;
+	msg.fd = -1;
+	msg.curmap = GetIntData("CurMap");
+	SendMsg((char*)&msg, sizeof(msg));
+}
+
+void CMClient::doUpdatePlayerMapMsg(UpdateMap_Msg* msg)
+{
+	for (auto& var : m_playerlist)
+	{
+		if (var.fd == msg->fd)
+		{
+			var.curmap = msg->curmap;
+		}
+	}
 }

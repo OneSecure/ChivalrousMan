@@ -42,6 +42,8 @@
   <key>XBArrow</key>
   <string>Skill/XBArrow/</string>
   <!-- 按钮 -->
+  <key>ScrollBar</key>
+  <string>ScrollBar.png</string>
   <key>PrivateTalkBtn</key>
   <string>button/PTBtn.png</string>
   <key>MakeTeamBtn</key>
@@ -275,6 +277,8 @@
   <key>NpcVallige</key>
   <string>Npc/NpcVallige.png</string>
   <!-- 背景素材 -->
+  <key>ScrollBarBg</key>
+  <string>ScrollBarBg.png</string>
   <key>PlayerItemBg</key>
   <string>PlayerItemBg.png</string>
   <key>PlayerListBg</key>

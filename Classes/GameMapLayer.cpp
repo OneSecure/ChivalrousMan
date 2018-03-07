@@ -6,6 +6,7 @@
 #include"CameraPlayer.h"
 #include"GameLogicLayer.h"
 #include"Door.h"
+#include"CMClient.h"
 #include<sstream>
 
 #define UpdateSpeed 60
@@ -14,12 +15,9 @@ bool GameMapLayer::init()
 {
 	if (Layer::init())
 	{
-	/*	auto back = Sprite::create(StringValue("GameBg"), Rect{ 0,0,SCREEN.width,SCREEN.height });
-		back->setPosition(SCREEN.width*0.5, SCREEN.height*0.5);
-		this->addChild(back);*/
-
 		m_curMaps = Node::create();
 		this->addChild(m_curMaps);
+		CMClient::getInstance()->updatePlayerMap();
 		return true;
 	}
 	return false;

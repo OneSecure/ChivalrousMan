@@ -9,6 +9,7 @@
 
 class GamePlayer;
 struct Player_Info;
+struct UpdateData_Msg;
 
 /*
 *class ObjectLayer
@@ -65,6 +66,15 @@ public:
 	*@param pos:校准的位置
 	*/
 	void verifyPlayerPos(const std::string& playername, const std::string& rolename, const cocos2d::Vec2& pos);
+
+	/*
+	* updatePlayerData(const std::string& playername, const std::string& rolename, UpdateData_Msg msg);
+	*更新玩家数据
+	*@param playername:玩家名称
+	*@param rolename:角色名称
+	*@param msg:保存玩家新数据的消息
+	*/
+	void updatePlayerData(const std::string& playername, const std::string& rolename, UpdateData_Msg msg);
 
 	/*
 	*判断对应玩家角色是否已经存在对象层中

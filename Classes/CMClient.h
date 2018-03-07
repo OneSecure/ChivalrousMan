@@ -76,6 +76,30 @@ public:
 	*/
 	void VerifyPlayerPos();
 
+	/*
+	*updatePlayerData();
+	*向服务器更新玩家数据
+	*/
+	void updatePlayerData();
+
+	/*
+	*处理玩家数据更新消息
+	*doPlayerDataUpdaeMsg();
+	*/
+	void doPlayerDataUpdaeMsg(UpdateData_Msg* msg);
+
+	/*
+	*updatePlayerMap();
+	*更新玩家当前所在地图
+	*/
+	void updatePlayerMap();
+
+	/*
+	* doUpdatePlayerMapMsg();
+	*处理更新玩家地图消息
+	*/
+	void doUpdatePlayerMapMsg(UpdateMap_Msg* msg);
+
 	const std::list<Player_Info>& getPlayerList() { return m_playerlist; }
 private:
 	CMClient();
