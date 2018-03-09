@@ -4,7 +4,17 @@
 #include"PreProcess.h"
 #include"TCPClient.h"
 #include"ShareData.h"
+#include<deque>
 #include<list>
+#include<map>
+
+struct TalkMsg
+{
+	std::string rolename;    //谁发送的
+	std::string destname;   //发给谁
+	std::string msg;             //消息内容
+	bool change = false;
+};
 
 class CMClient Inherit(Net::CTCPClient)
 {
@@ -101,6 +111,24 @@ public:
 	void doUpdatePlayerMapMsg(UpdateMap_Msg* msg);
 
 	const std::list<Player_Info>& getPlayerList() { return m_playerlist; }
+
+	/*
+	*findRoleNameByFd(const int& fd);
+	*通过玩家的唯一标识查找其名称
+	*@param fd:玩家的唯一标识
+	*@return string:玩家的名称·
+	*/
+	std::string findRoleNameByFd(const int& fd);
+
+	/*
+	*添加世界聊天消息
+	*/
+	void addWorldTalkMsg(WorldTalk_Msg* msg);
+
+	/*
+	*添加私聊消息
+	*/
+	void addPrivateTalkMsg(PrivateTalk_Msg* msg);
 private:
 	CMClient();
 	~CMClient();
@@ -117,8 +145,8 @@ private:
 	unsigned long m_port;
 
 	std::list<Player_Info> m_playerlist;
-	std::list<std::string> m_worldTalkMsgs;
-	std::list<PrivateMsg> m_privateTalkMsgs;
+	std::deque<TalkMsg> m_worldTalkMsgs;
+	std::map<int, std::deque<TalkMsg>> m_privateTalkMsgs;
 };
 
 #endif // !__CM_CLIENT_H__

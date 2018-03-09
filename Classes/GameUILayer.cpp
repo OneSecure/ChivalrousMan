@@ -13,6 +13,7 @@
 #include"CameraPlayer.h"
 #include"TaskLayer.h"
 #include"PlayerListLayer.h"
+#include"MsgListLayer.h"
 #include"CMClient.h"
 #include<string>
 
@@ -198,10 +199,16 @@ void GameUILayer::onHeadClickCallBack(cocos2d::CCObject* sender)
 void GameUILayer::onSendClickCallBack(cocos2d::CCObject* sender)
 {
 	ClickAction();
-	WorldTalk_Msg msg;
-	msg.type = M_WorldTalk;
-	strcpy_s(msg.msg, m_editFrame->getString().c_str());
-	CMClient::getInstance()->SendMsg((char*)&msg, sizeof(msg));
+	if (m_editFrame->getString() != "")
+	{
+		WorldTalk_Msg msg;
+		msg.type = M_WorldTalk;
+		msg.fd = -1;
+		strcpy_s(msg.msg, m_editFrame->getString().c_str());
+		CMClient::getInstance()->addWorldTalkMsg(&msg);
+		CMClient::getInstance()->SendMsg((char*)&msg, sizeof(msg));
+		m_editFrame->setString("");
+	}
 }
 
 void GameUILayer::onMenuClickCallBack(cocos2d::CCObject* sender)
@@ -260,4 +267,32 @@ void GameUILayer::update(float dt)
 	std::string glodtext = StringValue("Glod") + ":" + NumberToString(GetPlayerData().getglod());
 	m_glodlabel->setString(glodtext);
 	m_expBar->setPercentage((GetPlayerData().getexp() / GetPlayerData().getmaxExp()) * 100);
+}
+
+void GameUILayer::updateWorldTalkQueue(const TalkMsg& msg)
+{
+	auto talklabel = LabelTTF::create(msg.rolename + StringValue("Say") + ":" + msg.msg, "¿¬Ìå", 15);
+	cocos2d::Vec2 pos = m_talkFrame->getPosition();
+	pos.x = pos.x - m_talkFrame->getContentSize().width*0.5 + 8;
+	pos.y = pos.y - m_talkFrame->getContentSize().height*0.5 + 22;
+	talklabel->setColor(Color3B::BLACK);
+	talklabel->setAnchorPoint(ccp(0, 0.5));
+	talklabel->setPosition(pos);
+	this->addChild(talklabel);
+	for (auto var : m_worldTalkQueue)
+	{
+		var->setPositionY(var->getPositionY() + 18);
+	}
+	m_worldTalkQueue.push_back(talklabel);
+	if (m_worldTalkQueue.size()>5)
+	{
+		this->removeChild(m_worldTalkQueue.front());
+		m_worldTalkQueue.pop_front();
+	}
+}
+
+void GameUILayer::onMsgIconClickCallback(cocos2d::CCObject* sender)
+{
+	ClickAction(sender);
+	SHOW_AND_DELETE_LAYER(MsgListLayer);
 }

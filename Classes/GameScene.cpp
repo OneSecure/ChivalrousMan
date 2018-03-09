@@ -53,8 +53,8 @@ bool GameScene::init(const int& level)
 		m_logicLayer = GameLogicLayer::create();
 		this->addChild(m_logicLayer);
 
-		auto UILayer = GameUILayer::create();
-		this->addChild(UILayer);
+		m_uiLayer= GameUILayer::create();
+		this->addChild(m_uiLayer);
 		SetIntData("Save", 1);
 		SetIntData("IsHaveGameScene", 1);
 		CMClient::getInstance()->SendInitPos();

@@ -59,6 +59,7 @@ bool PlayerItem::init(const Player_Info& info)
 			StringValue("MakeTeamBtn"), this, menu_selector(PlayerItem::onMakeTeamClick));
 		maketeamBtn->setPosition(80, -15);
 		menu->addChild(maketeamBtn);
+		m_fd = info.fd;
 		return true;
 	}
 	return false;

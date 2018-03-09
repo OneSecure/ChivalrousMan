@@ -30,6 +30,8 @@ private:
 	*组队按钮点击回调函数
 	*/
 	void onMakeTeamClick(cocos2d::CCObject* sender);
+
+	PROPERTY__REF(int, m_fd, Fd)
 };
 
 #endif // !__PLAYER_ITEM_H__

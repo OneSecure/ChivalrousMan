@@ -2,6 +2,9 @@
 #ifndef __GAME_UI_LAYER_H__
 #define __GAME_UI_LAYER_H__
 #include"PreProcess.h"
+#include<deque>
+
+struct TalkMsg;
 
 /*
 *class GameUILayer
@@ -20,6 +23,13 @@ public:
 	*重设菜单层为false
 	*/
 	void resetMenulayer();
+
+	/*
+	*updateWorldTalkQueue(const TalkMsg& msg);
+	*更新世界聊天消息队列
+	*@param msg：新添加的消息
+	*/
+	void updateWorldTalkQueue(const TalkMsg& msg);
 private:
 	/*
 	*doWorldTalkMsg();
@@ -74,6 +84,12 @@ private:
 	*/
 	void onNearPlayerBtnClick(cocos2d::CCObject* sender);
 
+	/*
+	*onMsgIconClickCallback(cocos2d::CCObject* sender);
+	*消息图标点击回调函数
+	*/
+	void onMsgIconClickCallback(cocos2d::CCObject* sender);
+
 	void update(float dt) override;
 	
 	virtual void onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *unused_event);
@@ -93,11 +109,12 @@ private:
 	cocos2d::MenuItemImage* m_backpack;       //背包
 	cocos2d::MenuItemImage* m_skill;                //技能
 	cocos2d::MenuItemImage* m_taskItem;        //任务
-	cocos2d::Sprite* m_talkFrame;   //世界聊天框
+	cocos2d::Sprite* m_talkFrame;           //世界聊天框
 	cocos2d::MenuItemImage* m_sendBtn;  //发送按钮
 	cocos2d::TextFieldTTF* m_editFrame;       //编辑消息框
 	cocos2d::MenuItemImage* m_menuBtn;
 	cocos2d::LabelTTF* m_glodlabel;    //显示玩家金币
+	std::deque<cocos2d::LabelTTF*> m_worldTalkQueue;   //世界聊天队列
 	
 	bool m_isclickGameMenuLayer = false;
 	bool m_isclickSkillLayer = false;
@@ -107,6 +124,7 @@ private:
 	bool m_isclickMapLayer = false;
 	bool m_isclickTaskLayer = false;
 	bool m_isclickPlayerListLayer = false;
+	bool m_isclickMsgListLayer = false;
 	bool m_isClickLayer = false;
 };
 

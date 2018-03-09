@@ -51,12 +51,14 @@ struct InitData_Msg
 struct WorldTalk_Msg
 {
 	M_Type type;
+	int fd;
 	char msg[200];
 };
 
 struct PrivateTalk_Msg
 {
 	M_Type type;
+	int fd;
 	int dest;
 	char msg[200];
 };
@@ -73,12 +75,6 @@ struct PlayerLeave_Msg
 {
 	M_Type type;
 	int fd;
-};
-
-struct PrivateMsg
-{
-	int dest;
-	std::string msg;
 };
 
 struct MoveTo_Msg

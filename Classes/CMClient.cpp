@@ -5,6 +5,7 @@
 #include"CameraPlayer.h"
 #include"GameScene.h"
 #include"ObjectLayer.h"
+#include"GameUILayer.h"
 #include<fstream>
 #include<string>
 
@@ -59,17 +60,12 @@ void  CMClient::OnRecv(char* buff)
 		break;
 	case M_WorldTalk:
 	{
-		WorldTalk_Msg* rlmsg = (WorldTalk_Msg*)buff;
-		m_worldTalkMsgs.push_back(rlmsg->msg);
+		addWorldTalkMsg((WorldTalk_Msg*)buff);
 	}
 		break;
 	case M_PrivateTalk:
 	{
-		PrivateTalk_Msg* rlmsg = (PrivateTalk_Msg*)buff;
-		PrivateMsg pmsg;
-		pmsg.dest = rlmsg->dest;
-		pmsg.msg = rlmsg->msg;
-		m_privateTalkMsgs.push_back(pmsg);
+		addPrivateTalkMsg((PrivateTalk_Msg*)buff);
 	}
 		break;
 	case M_InitPos:
@@ -285,5 +281,54 @@ void CMClient::doUpdatePlayerMapMsg(UpdateMap_Msg* msg)
 		{
 			var.curmap = msg->curmap;
 		}
+	}
+}
+
+std::string CMClient::findRoleNameByFd(const int& fd)
+{
+	for(const auto& var:m_playerlist)
+	{
+		if (var.fd == fd)
+		{
+			return var.rolename;
+		}
+	}
+}
+
+void CMClient::addWorldTalkMsg(WorldTalk_Msg* msg)
+{
+	TalkMsg tmsg;
+	if (msg->fd != -1)
+		tmsg.rolename = findRoleNameByFd(msg->fd);
+	else
+		tmsg.rolename = StringValue("Me");
+	tmsg.msg = msg->msg;
+	m_worldTalkMsgs.push_back(tmsg);
+	if (m_worldTalkMsgs.size() > 100)
+	{
+		m_worldTalkMsgs.pop_front();
+	}
+	CurGameScene()->getGameUiLayer()->updateWorldTalkQueue(tmsg);
+}
+
+void CMClient::addPrivateTalkMsg(PrivateTalk_Msg* msg)
+{
+	TalkMsg tmsg;
+	if (msg->fd != -1)
+		tmsg.rolename = findRoleNameByFd(msg->fd);
+	else
+		tmsg.rolename = StringValue("Me");
+	tmsg.destname = findRoleNameByFd(msg->dest);
+	tmsg.msg = msg->msg;
+	if (m_privateTalkMsgs.find(msg->dest) != m_privateTalkMsgs.end())
+	{
+		if (m_privateTalkMsgs.size() >= 6)
+			m_privateTalkMsgs.erase(m_privateTalkMsgs.begin());
+	}
+	m_privateTalkMsgs[msg->dest].push_back(tmsg);
+	if (m_privateTalkMsgs[msg->dest].size() >10)
+	{
+		m_privateTalkMsgs[msg->dest].pop_front();
+		m_privateTalkMsgs[msg->dest][0].change = true;
 	}
 }
