@@ -2,7 +2,16 @@
 #include"Commen.h"
 using namespace std;
 
+#define RETURN_VALUE(__TYPE__)     \
+auto pRet = m_dictionary->valueForKey(key);      \
+if (strcmp(pRet->getCString(), ""))   \
+{   \
+	return pRet->__TYPE__();   \
+}   \
+return m_dictionary1->valueForKey(key)->__TYPE__();
+
 #define DataFileName "GameData.xml"
+#define DataFileName1 "GameData1.xml"
 
 DEFINE_SINGLE_ATTRIBUTES(GameData);
 
@@ -14,26 +23,27 @@ GameData::GameData()
  GameData::~GameData()
 {
 	 RELEASE_NULL(m_dictionary);
+	 RELEASE_NULL(m_dictionary1);
 }
 
-string GameData::getStringByKey(const std::string & key)
+ std::string GameData::getStringByKey(const std::string & key)
 {
-	return m_dictionary->valueForKey(key)->getCString();
+	RETURN_VALUE(getCString);
 }
 
 int GameData::getIntByKey(const std::string& key)
 {
-	return m_dictionary->valueForKey(key)->intValue();
+	RETURN_VALUE(intValue);
 }
 
 bool GameData::getBoolByKey(const std::string& key)
 {
-	return m_dictionary->valueForKey(key)->boolValue();
+	RETURN_VALUE(boolValue);
 }
 
 float GameData::getFloatByKey(const std::string& key)
 {
-	return m_dictionary->valueForKey(key)->floatValue();
+	RETURN_VALUE(floatValue);
 }
 
 void  GameData::release()
@@ -44,11 +54,13 @@ void  GameData::release()
 bool GameData::init()
 {
 	m_dictionary = Dictionary::createWithContentsOfFile(DataFileName);
-	if (m_dictionary == nullptr)
+	m_dictionary1 = Dictionary::createWithContentsOfFile(DataFileName1);
+	if (m_dictionary == nullptr||m_dictionary1==nullptr)
 	{
 		return false;
 	}
 	CC_SAFE_RETAIN(m_dictionary);
+	CC_SAFE_RETAIN(m_dictionary1);
 	return true;
 }
 

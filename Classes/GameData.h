@@ -34,6 +34,7 @@ private:
 	bool init();
 
 	cocos2d::Dictionary* m_dictionary;
+	cocos2d::Dictionary* m_dictionary1;
 
 	SINGLE_ATTRIBUTES(GameData);
 };
