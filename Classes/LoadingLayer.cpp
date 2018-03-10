@@ -14,6 +14,7 @@ LoadingLayer* LoadingLayer::create(const std::string& tip, const std::string& pr
 	{
 		delete pRet;
 		pRet = nullptr;
+		return nullptr;
 	}
 }
 

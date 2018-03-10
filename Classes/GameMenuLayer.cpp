@@ -3,10 +3,16 @@
 #include"GameDynamicData.h"
 #include"GameData.h"
 #include"GameScene.h"
+#include"BeginScene.h"
 #include"GameUILayer.h"
 #include"StartMenu.h"
 #include"CameraPlayer.h"
 #include"CMClient.h"
+
+#define LEAVE_AND_SAVE_DATA()   \
+CMClient::getInstance()->SendPlayerLeaveMsg();   \
+CameraPlayer::getPlayerInstance()->SaveGameData();   \
+SetIntData("IsHaveGameScene", 0)
 
 bool GameMenuLayer::init()
 {
@@ -48,7 +54,7 @@ bool GameMenuLayer::init()
 		backMainMenu->setColor(ccc3(0, 0, 0));
 		menu->addChild(backMainMenu);
 
-		auto changeCount = MenuItemLabel::create(Label::create(StringValue("ChangeCount"), "¿¬Ìå", 40));
+		auto changeCount = MenuItemLabel::create(Label::create(StringValue("ChangeCount"), "¿¬Ìå", 40), this, menu_selector(GameMenuLayer::onChangeCountClick));
 		changeCount->setColor(ccc3(0, 0, 0));
 		changeCount->setPosition(size.width*0.5, size.height*0.4);
 		menu->addChild(changeCount);
@@ -72,7 +78,14 @@ void GameMenuLayer::onBackGameCallBack(cocos2d::CCObject* sender)
 
 void GameMenuLayer::onBackMainMenu(cocos2d::CCObject* sender)
 {
-	CMClient::getInstance()->SendPlayerLeaveMsg();
-	CameraPlayer::getPlayerInstance()->SaveGameData();
+	LEAVE_AND_SAVE_DATA();
 	GO_BACK_START_MENU();
+}
+
+void GameMenuLayer::onChangeCountClick(cocos2d::CCObject* sender)
+{
+	LEAVE_AND_SAVE_DATA();
+	auto startScene = BeginScene::create();
+	auto reScene = CCTransitionFadeDown::create(1, startScene);
+	Director::getInstance()->replaceScene(reScene);
 }

@@ -101,8 +101,9 @@ public:
 	/*
 	*updatePlayerMap();
 	*更新玩家当前所在地图
+	*@param level:玩家所在的新地图
 	*/
-	void updatePlayerMap();
+	void updatePlayerMap(const int& level);
 
 	/*
 	* doUpdatePlayerMapMsg();
@@ -121,6 +122,14 @@ public:
 	std::string findRoleNameByFd(const int& fd);
 
 	/*
+	*findPlayerInfoByFd(const int& fd);
+	*通过玩家唯一标识查找玩家信息
+	*@param fd:玩家唯一标识
+	*@return Player_Info：玩家信息
+	*/
+	Player_Info findPlayerInfoByFd(const int& fd);
+
+	/*
 	*添加世界聊天消息
 	*/
 	void addWorldTalkMsg(WorldTalk_Msg* msg);
@@ -129,6 +138,28 @@ public:
 	*添加私聊消息
 	*/
 	void addPrivateTalkMsg(PrivateTalk_Msg* msg);
+
+	/*
+	*处理队伍申请消息
+	*/
+	void doTeamApplyMsg(TeamApply_Msg* msg);
+
+	std::map<int, std::deque<TalkMsg>>& getPrivateMsgs() { return m_privateTalkMsgs; }
+
+	std::list<int>& getApplyTeamList() { return m_applyTeamList; }
+
+	/*
+	*doRefuseTeamMsg(RefuseTeam_Msg* msg);
+	*处理拒绝组队消息
+	*@param msg：拒绝消息内容
+	*/
+	void doRefuseTeamMsg(RefuseTeam_Msg* msg);
+
+	/*
+	*处理同意组队消息
+	*@param msg：同意消息内容
+	*/
+	void doAgreeTeamMsg(AgreeTeam_Msg* msg);
 private:
 	CMClient();
 	~CMClient();
@@ -144,9 +175,10 @@ private:
 	std::string m_serverip;
 	unsigned long m_port;
 
-	std::list<Player_Info> m_playerlist;
-	std::deque<TalkMsg> m_worldTalkMsgs;
-	std::map<int, std::deque<TalkMsg>> m_privateTalkMsgs;
+	std::list<Player_Info> m_playerlist;            //其他玩家列表
+	std::list<int> m_applyTeamList;          //队伍申请列表
+	std::deque<TalkMsg> m_worldTalkMsgs;    //世界聊天消息
+	std::map<int, std::deque<TalkMsg>> m_privateTalkMsgs;    //私聊消息
 };
 
 #endif // !__CM_CLIENT_H__

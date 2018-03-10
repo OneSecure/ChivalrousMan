@@ -6,6 +6,8 @@
 #include"GameScene.h"
 #include"ObjectLayer.h"
 #include"GameUILayer.h"
+#include"PrivateTalkLayer.h"
+#include"TipLayer.h"
 #include<fstream>
 #include<string>
 
@@ -99,6 +101,21 @@ void  CMClient::OnRecv(char* buff)
 		doUpdatePlayerMapMsg((UpdateMap_Msg*)buff);
 	}
 		break;
+	case M_TeamApply:
+	{
+		doTeamApplyMsg((TeamApply_Msg*)buff);
+	}
+		break;
+	case M_RefuseTeam:
+	{
+		doRefuseTeamMsg((RefuseTeam_Msg*)buff);
+	}
+		break;
+	case M_AgreeTeam:
+	{
+		doAgreeTeamMsg((AgreeTeam_Msg*)buff);
+	}
+		break;
 	default:
 		break;
 	}
@@ -158,13 +175,14 @@ void CMClient::SendInitPos()
 
 void CMClient::doInitPlayerPosMsg(InitPos_Msg* msg)
 {
-	for (auto& var : m_playerlist)
+	for (auto var=m_playerlist.begin();var!=m_playerlist.end();++var)
 	{
-		if (msg->fd == var.fd)
+		if (msg->fd == var->fd)
 		{
-			var.x = msg->x;
-			var.y = msg->y;
-			CurGameScene()->getObjectLayer()->addPlayer(var);
+			var->x = msg->x;
+			var->y = msg->y;
+			if (GetIntData("IsHaveGameScene") == 1)
+				CurGameScene()->getObjectLayer()->addPlayer(*var);
 		}
 	}
 }
@@ -183,7 +201,9 @@ void CMClient::removePlayer(int fd)
 	{
 		if (it->fd == fd)
 		{
-			CurGameScene()->getObjectLayer()->removePlayer(it->playername, it->rolename);
+			if (GetIntData("IsHaveGameScene") == 1)
+				CurGameScene()->getObjectLayer()->removePlayer(it->playername, it->rolename);
+			m_privateTalkMsgs.erase(it->fd);
 			m_playerlist.erase(it);
 			return;
 		}
@@ -207,20 +227,22 @@ void CMClient::doPlayerMoveToMsg(MoveTo_Msg* msg)
 	{
 		if (var.fd == msg->fd)
 		{
-			CurGameScene()->getObjectLayer()->moveOtherPlayer(var.playername, var.rolename, target);
+			if (GetIntData("IsHaveGameScene") == 1)
+				CurGameScene()->getObjectLayer()->moveOtherPlayer(var.playername, var.rolename, target);
 		}
 	}
 }
 
 void CMClient::doPlayerPosVerifyMsg(VerifyPos_Msg* msg)
 {
-	for (auto& var : m_playerlist)
+	for (auto var=m_playerlist.begin();var!=m_playerlist.begin();++var)
 	{
-		if (var.fd == msg->fd)
+		if (var->fd == msg->fd)
 		{
-			var.x = msg->x;
-			var.y = msg->y;
-			CurGameScene()->getObjectLayer()->verifyPlayerPos(var.playername, var.rolename, Vec2{ msg->x,msg->y });
+			var->x = msg->x;
+			var->y = msg->y;
+			if (GetIntData("IsHaveGameScene") == 1)
+				CurGameScene()->getObjectLayer()->verifyPlayerPos(var->playername, var->rolename, Vec2{ msg->x,msg->y });
 		}
 	}
 }
@@ -250,49 +272,55 @@ void CMClient::updatePlayerData()
 
 void CMClient::doPlayerDataUpdaeMsg(UpdateData_Msg* msg)
 {
-	for (auto& var : m_playerlist)
+	for (auto var =m_playerlist.begin();var!=m_playerlist.end();++var)
 	{
-		if (var.fd == msg->fd)
+		if (var->fd == msg->fd)
 		{
-			var.attack = msg->attack;
-			var.defense = msg->defense;
-			var.blood = msg->blood;
-		 	var.grade=msg->grade;
-			var.mana = msg->mana;
-			CurGameScene()->getObjectLayer()->updatePlayerData(var.playername, var.rolename, *msg);
+			var->attack = msg->attack;
+			var->defense = msg->defense;
+			var->blood = msg->blood;
+			var->grade=msg->grade;
+			var->mana = msg->mana;
+			if (GetIntData("IsHaveGameScene") == 1)
+				CurGameScene()->getObjectLayer()->updatePlayerData(var->playername, var->rolename, *msg);
 		}
 	}
 }
 
-void CMClient::updatePlayerMap()
+void CMClient::updatePlayerMap(const int& level)
 {
 	UpdateMap_Msg msg;
 	msg.type = M_UpdateMap;
 	msg.fd = -1;
-	msg.curmap = GetIntData("CurMap");
+	msg.curmap = level;
 	SendMsg((char*)&msg, sizeof(msg));
 }
 
 void CMClient::doUpdatePlayerMapMsg(UpdateMap_Msg* msg)
 {
-	for (auto& var : m_playerlist)
+	for (auto var=m_playerlist.begin();var!=m_playerlist.end();++var)
 	{
-		if (var.fd == msg->fd)
+		if (var->fd == msg->fd)
 		{
-			var.curmap = msg->curmap;
+			var->curmap = msg->curmap;
+			if (GetIntData("IsHaveGameScene") == 1)
+			{
+				CurGameScene()->getObjectLayer()->addPlayer(*var);
+			}
 		}
 	}
 }
 
 std::string CMClient::findRoleNameByFd(const int& fd)
 {
-	for(const auto& var:m_playerlist)
+	for(auto var:m_playerlist)
 	{
 		if (var.fd == fd)
 		{
 			return var.rolename;
 		}
 	}
+	return "";
 }
 
 void CMClient::addWorldTalkMsg(WorldTalk_Msg* msg)
@@ -308,27 +336,95 @@ void CMClient::addWorldTalkMsg(WorldTalk_Msg* msg)
 	{
 		m_worldTalkMsgs.pop_front();
 	}
-	CurGameScene()->getGameUiLayer()->updateWorldTalkQueue(tmsg);
+	if (GetIntData("IsHaveGameScene") == 1)
+		CurGameScene()->getGameUiLayer()->updateWorldTalkQueue(tmsg);
 }
 
 void CMClient::addPrivateTalkMsg(PrivateTalk_Msg* msg)
 {
 	TalkMsg tmsg;
+	int realfd;
 	if (msg->fd != -1)
+	{
 		tmsg.rolename = findRoleNameByFd(msg->fd);
+		realfd = msg->fd;
+	}
 	else
+	{
 		tmsg.rolename = StringValue("Me");
-	tmsg.destname = findRoleNameByFd(msg->dest);
+		realfd = msg->dest;
+	}
+	tmsg.destname = findRoleNameByFd(realfd);
+	if (tmsg.destname == "")
+	{
+		TipLayer* tplayer = TipLayer::createTipLayer(StringValue("OffLine"));
+		if (GetIntData("IsHaveGameScene") == 1)
+			CurGameScene()->addChild(tplayer);
+		return;
+	}
 	tmsg.msg = msg->msg;
-	if (m_privateTalkMsgs.find(msg->dest) != m_privateTalkMsgs.end())
+	if (m_privateTalkMsgs.find(realfd) != m_privateTalkMsgs.end())
 	{
 		if (m_privateTalkMsgs.size() >= 6)
 			m_privateTalkMsgs.erase(m_privateTalkMsgs.begin());
 	}
-	m_privateTalkMsgs[msg->dest].push_back(tmsg);
-	if (m_privateTalkMsgs[msg->dest].size() >10)
+	m_privateTalkMsgs[realfd].push_back(tmsg);
+	if (GetIntData("IsHaveGameScene") == 1)
 	{
-		m_privateTalkMsgs[msg->dest].pop_front();
-		m_privateTalkMsgs[msg->dest][0].change = true;
+		PrivateTalkLayer* ptlayer = (PrivateTalkLayer*)CurGameScene()->getChildByName("PrivateTalkLayer");
+		if (ptlayer != nullptr)
+			ptlayer->addMsg(tmsg.rolename, tmsg.msg);
+	}
+	if (msg->fd != -1)
+	{
+		m_privateTalkMsgs[realfd][0].change = true;
+		if (GetIntData("IsHaveGameScene") == 1)
+			CurGameScene()->getGameUiLayer()->setRedSpot(true);
+	}
+	if (m_privateTalkMsgs[realfd].size() >18)
+	{
+		m_privateTalkMsgs[realfd].pop_front();
+	}
+}
+
+Player_Info CMClient::findPlayerInfoByFd(const int& fd)
+{
+	Player_Info info;
+	for (const auto& var : m_playerlist)
+	{
+		if (var.fd == fd)
+		{
+			return var;
+		}
+	}
+	return info;
+}
+
+void CMClient::doTeamApplyMsg(TeamApply_Msg* msg)
+{
+	m_applyTeamList.push_back(msg->fd);
+	if (GetIntData("IsHaveGameScene") == 1)
+	{
+		CurGameScene()->getGameUiLayer()->setTeamSpot(true);
+	}
+}
+
+void CMClient::doRefuseTeamMsg(RefuseTeam_Msg* msg)
+{
+	std::string name = findRoleNameByFd(msg->fd);
+	TipLayer* tiplayer = TipLayer::createTipLayer(name + StringValue("RefuseText"));
+	if (GetIntData("IsHaveGameScene") == 1)
+	{
+		CurGameScene()->addChild(tiplayer);
+	}
+}
+
+void CMClient::doAgreeTeamMsg(AgreeTeam_Msg* msg)
+{
+	std::string name = findRoleNameByFd(msg->fd);
+	TipLayer* tiplayer = TipLayer::createTipLayer(name + StringValue("AgreeText"));
+	if (GetIntData("IsHaveGameScene") == 1)
+	{
+		CurGameScene()->addChild(tiplayer);
 	}
 }

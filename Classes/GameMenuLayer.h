@@ -25,7 +25,15 @@ private:
 	*/
 	void onBackGameCallBack(cocos2d::CCObject* sender);
 
+	/*
+	*返回主菜单按钮回调函数
+	*/
 	void onBackMainMenu(cocos2d::CCObject* sender);
+
+	/*
+	*切换账号按钮回调函数
+	*/
+	void onChangeCountClick(cocos2d::CCObject* sender);
 };
 
 

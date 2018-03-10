@@ -14,12 +14,15 @@
 #include"BackPackManager.h"
 #include"SkillManager.h"
 #include"EquipmentManager.h"
+#include"CMClient.h"
+#include"FindRoad.h"
 #include<map>
 
 CameraPlayer* CameraPlayer::m_instance = nullptr;
 
 CameraPlayer::CameraPlayer()
 {
+	m_teamStatus = P_STATUS_NORMAL;
 }
 
 CameraPlayer::~CameraPlayer()
@@ -92,6 +95,8 @@ bool CameraPlayer::move()
 	{
 		std::pair<Vec2, Vec2> pos = changeMapPosToUI();
 		m_face->setPosition(pos.first);
+		float zorder = 100.0f - (m_pos.y / MapWidth) * 100;
+		m_face->setZOrder(zorder);
 		MapLayer->drawMap(pos.second.x, pos.second.y);
 		return true;
 	}
@@ -197,6 +202,7 @@ void CameraPlayer::initStateInfo(const int& level)
 	}
 	clearRoadList();
 	m_flag = 0;
+	m_dir = Dir::Dir_Down;
 	RELEASE_NULL(m_state);
 	m_state = new PlayerWait(m_face, GetStringData("PlayerType"));
 	AdjustPlayerAndMapPos();
@@ -257,4 +263,26 @@ void CameraPlayer::SaveGameData()
 	BackPackManager::getInstance()->saveBackpackInfo();
 	EquipmentManager::getInstance()->saveEquipmentInfo();
 	SkillManager::getInstance()->saveSkillInfo();
+}
+
+bool CameraPlayer::moveTo(cocos2d::Vec2 targetPos)
+{
+	m_vx = 0;
+	m_vy = 0;
+	CMClient::getInstance()->SendMoveToMsg(targetPos);
+	int h = MapGridH;
+	int w = MapGridW;
+	targetPos.x /= w;
+	targetPos.y /= h;
+	FOUR_LOSE_FIVE_ADD(targetPos.x);
+	FOUR_LOSE_FIVE_ADD(targetPos.y);
+	Vec2 startPos{ m_pos.x / w,m_pos.y / h };
+	FindRoad fdroad(startPos, targetPos, GetMapInfo(), MapCountX, MapCountY);
+	fdroad.ExecuteAStar();
+	if (fdroad.isHasRoad())
+	{
+		setMoveRoad(fdroad.GetRoadList());
+		return true;
+	}
+	return false;
 }

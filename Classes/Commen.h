@@ -168,5 +168,30 @@ fin.close()
 	auto move1 = ScaleTo::create(0.1, 1.0);   \
 	((MenuItemImage*)sender)->runAction(Sequence::createWithTwoActions(move, move1))
 
+#define ITEM_COMMEN(__TYPE__,BGNAME,HEADX)    \
+auto bg = Sprite::create(BGNAME);   \
+this->addChild(bg);   \
+auto menu = Menu::create(); \
+menu->setPosition(0, 0);   \
+this->addChild(menu);   \
+auto headFrame = Sprite::create(StringValue("HeadFrame"));   \
+headFrame->setPosition(HEADX, 0);   \
+headFrame->setScale(0.8, 0.8);   \
+this->addChild(headFrame);   \
+auto head = MenuItemImage::create(StringValue(info.playertype + "Head"),   \
+	StringValue(info.playertype + "Head"), this,    \
+	menu_selector(__TYPE__::onHeadClick));   \
+head->setPosition(headFrame->getPosition().x - 5, headFrame->getPosition().y + 5);  \
+menu->addChild(head);   \
+auto namelabel = LabelTTF::create(info.rolename, "¿¬Ìå", 16);   \
+namelabel->setAnchorPoint(ccp(0, 0.5));   \
+namelabel->setPosition(head->getPositionX() + 34, 18);   \
+this->addChild(namelabel);   \
+auto gradelabel = LabelTTF::create(StringValue("GradeText") + NTS(info.grade), "¿¬Ìå", 16);   \
+gradelabel->setAnchorPoint(ccp(0, 0.5));   \
+gradelabel->setColor(Color3B::ORANGE);   \
+gradelabel->setPosition(head->getPositionX() + 34, -15);   \
+this->addChild(gradelabel)
+
 
 #endif  // !__COMMEN_H__

@@ -149,10 +149,19 @@ void LoginLayer::LoginEvent()
 	player.setplayerName(playername);
 	player.setplayerPsw(playerpsw);
 	dao.setModel(player);
+	long time = GetTickCount64();
 	std::vector<GamePlayer> list = dao.queryModel();
+	long time1 = GetTickCount64();
 	if (list.size() == 0)
 	{
-		MessageBox("用户名或密码错误", "提示");
+		if (time1 - time ==0)
+		{
+			MessageBox("网络断开连接", "提示");
+		}
+		else
+		{
+			MessageBox("用户名或密码错误", "提示");
+		}
 		this->removeChildByName("cushion");
 		return;
 	}

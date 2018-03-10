@@ -1,7 +1,6 @@
 #include"GameLogicLayer.h"
 #include"Commen.h"
 #include"CameraPlayer.h"
-#include"FindRoad.h"
 #include"MapInfo.h"
 #include"GameData.h"
 #include"Door.h"
@@ -30,20 +29,8 @@ bool GameLogicLayer::init()
 void  GameLogicLayer::onTouchEnded(Touch *touch, Event *unused_event)
 {
 	Vec2 pos = touch->getLocation();
-	int w = MapGridW;
 	Vec2 targetPos{ PlayerPos.x + (pos.x - GetPlayerFace()->getPosition().x),PlayerPos.y + (pos.y - GetPlayerFace()->getPosition().y) };
-	targetPos.x /= MapGridW;
-	targetPos.y /= MapGridH;
-	FOUR_LOSE_FIVE_ADD(targetPos.x);
-	FOUR_LOSE_FIVE_ADD(targetPos.y);
-	CMClient::getInstance()->SendMoveToMsg(targetPos);
-	Vec2 startPos{ PlayerPos.x / MapGridW,PlayerPos.y / MapGridH };
-	FindRoad fdroad(startPos, targetPos, GetMapInfo(), MapCountX, MapCountY);
-	fdroad.ExecuteAStar();
-	if (fdroad.isHasRoad())
-	{
-		SetPlayerMoveRoad(fdroad.GetRoadList());
-	}
+	CameraPlayer::getPlayerInstance()->moveTo(targetPos);
 }
 
 void GameLogicLayer::update(float dt)
@@ -89,27 +76,34 @@ void GameLogicLayer::gotoDestMap(const std::string& dest)
 	SetIntData("IsHaveGameScene", 0);
 	std::function<bool(void)> func = [] {return true; };
 	ExcessiveScene* ex = nullptr;
+	int level = 0;
 	if (dest == "map1")
 	{
 		ex = ExcessiveScene::createExcessice(LEVEL_ONE, func, 1);
+		level = LEVEL_ONE;
 	}
 	else if (dest == "map2")
 	{
 		ex = ExcessiveScene::createExcessice(LEVEL_TWO, func, 1);
+		level = LEVEL_TWO;
 	}
 	else if (dest == "map3")
 	{
 		ex = ExcessiveScene::createExcessice(LEVEL_THREE, func, 1);
+		level = LEVEL_THREE;
 	}
 	else if (dest == "map4")
 	{
 		ex = ExcessiveScene::createExcessice(LEVEL_FOUR, func, 1);
+		level = LEVEL_FOUR;
 	}
 	else if (dest == "map5")
 	{
 		ex = ExcessiveScene::createExcessice(LEVEL_FIVE, func, 1);
+		level = LEVEL_FIVE;
 	}
 	Director::getInstance()->replaceScene(ex);
+	CMClient::getInstance()->updatePlayerMap(level);
 }
 
 void GameLogicLayer::checkCollisionNpc()

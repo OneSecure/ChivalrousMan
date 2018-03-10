@@ -17,7 +17,6 @@ bool GameMapLayer::init()
 	{
 		m_curMaps = Node::create();
 		this->addChild(m_curMaps);
-		CMClient::getInstance()->updatePlayerMap();
 		return true;
 	}
 	return false;

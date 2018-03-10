@@ -58,10 +58,10 @@ private:
 	void initBackPackThing();
 
 	cocos2d::Vec2 m_basePoint;
-	cocos2d::Sprite* m_selector;
-	cocos2d::CCObject* m_curSel;
+	cocos2d::Sprite* m_selector = nullptr;
+	cocos2d::CCObject* m_curSel = nullptr;
 	std::vector<cocos2d::LabelTTF*> m_numlabels;   
-	cocos2d::Menu* m_menu;
+	cocos2d::Menu* m_menu = nullptr;
 };
 
 #endif // !__BACK_PACK_LAYER

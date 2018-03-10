@@ -42,6 +42,16 @@
   <key>XBArrow</key>
   <string>Skill/XBArrow/</string>
   <!-- 按钮 -->
+  <key>TeamOkBtn</key>
+  <string>button/AccessBtn.png</string>
+  <key>TeamRefuseBtn</key>
+  <string>button/RefuseBtn.png</string>
+  <key>SendMsgBtn1</key>
+  <string>button/SendMsgBtn1.png</string>
+  <key>SendMsgBtn2</key>
+  <string>button/SendMsgBtn2.png</string>
+  <key>DelBtn</key>
+  <string>button/DelBtn.png</string>
   <key>ScrollBar</key>
   <string>ScrollBar.png</string>
   <key>PrivateTalkBtn</key>
@@ -121,6 +131,18 @@
   <key>TrunOff</key>
   <string>trunOff.png</string>
   <!-- 文本素材 -->
+  <key>AgreeText</key>
+  <string>同意组队</string>
+  <key>RefuseText</key>
+  <string>拒绝了组队申请</string>
+  <key>ApplyListText</key>
+  <string>申请列表</string>
+  <key>MemberText</key>
+  <string>成员列表</string>
+  <key>OffLine</key>
+  <string>对方已下线</string>
+  <key>MsgListText</key>
+  <string>消息列表</string>
   <key>Say</key>
   <string>说</string>
   <key>Me</key>
@@ -281,6 +303,12 @@
   <key>NpcVallige</key>
   <string>Npc/NpcVallige.png</string>
   <!-- 背景素材 -->
+  <key>PTBg</key>
+  <string>PTBg.png</string>
+  <key>MsgListBg</key>
+  <string>MsgListBg.png</string>
+  <key>MsgItemBg</key>
+  <string>MsgItemBg.png</string>
   <key>ScrollBarBg</key>
   <string>ScrollBarBg.png</string>
   <key>PlayerItemBg</key>
@@ -301,8 +329,6 @@
   <string>FightBg.png</string>
   <key>SkillBg</key>
   <string>SkillBg.png</string>
-  <key>TipBg</key>
-  <string>tipbg.png</string>
   <key>DetailBg</key>
   <string>DetailBg.png</string>
   <key>MenuBg</key>
@@ -444,6 +470,14 @@
   <key>PlayerFps</key>
   <string>0.06</string>
   <!-- 其它素材 -->
+  <key>TeamIcon</key>
+  <string>TeamIcon.png</string>
+  <key>PTEditFrame</key>
+  <string>PTEdit.png</string>
+  <key>MsgTip</key>
+  <string>MsgTip.png</string>
+  <key>MsgIcon</key>
+  <string>msgIcon.png</string>
   <key>NearPlayer</key>
   <string>NPIcon.png</string>
   <key>Taskh</key>

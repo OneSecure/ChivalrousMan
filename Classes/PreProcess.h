@@ -123,5 +123,9 @@ enum class Player_Type
 #define NS_WSTASK 3003   //有等待提交的任务
 #define NS_STASK  3004    //有待提交任务
 
+//玩家状态
+#define P_STATUS_NORMAL 4001
+#define P_STATUS_HEADER 4002
+#define P_STATUS_MEMBER 4003
 #endif // !__PRE_PRECESS_H__
 

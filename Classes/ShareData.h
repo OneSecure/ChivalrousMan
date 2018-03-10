@@ -14,8 +14,11 @@ enum M_Type
 	M_MoveTo,    //玩家移动到某处
 	M_VerifyPos,   //校验玩家位置
 	M_UpdateData,   //更新玩家信息
-	M_UpdateMap,
-};
+	M_UpdateMap,  //更新玩家所在地图信息
+	M_TeamApply,   //队伍申请消息
+	M_RefuseTeam,    //拒绝组队申请
+	M_AgreeTeam,     //同意组队
+}; 
 
 struct Player_Info
 {
@@ -109,6 +112,45 @@ struct UpdateMap_Msg
 	M_Type type;
 	int fd;
 	int curmap;
+};
+
+struct TeamApply_Msg
+{
+	M_Type type;
+	int fd;
+	int dest;
+	
+	TeamApply_Msg()
+	{
+		fd = -1;
+		type = M_TeamApply;
+	}
+};
+
+struct RefuseTeam_Msg
+{
+	M_Type type;
+	int fd;
+	int dest;
+
+	RefuseTeam_Msg()
+	{
+		fd = -1;
+		type = M_RefuseTeam;
+	}
+};
+
+struct AgreeTeam_Msg
+{
+	M_Type type;
+	int fd;
+	int dest;
+	
+	AgreeTeam_Msg()
+	{
+		type = M_AgreeTeam;
+		fd = -1;
+	}
 };
 
 #endif // SHAREDATA_H

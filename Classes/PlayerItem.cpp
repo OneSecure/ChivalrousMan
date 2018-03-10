@@ -2,6 +2,10 @@
 #include"Commen.h"
 #include"GameData.h"
 #include"ShareData.h"
+#include"GameDynamicData.h"
+#include"GameScene.h"
+#include"PrivateTalkLayer.h"
+#include"CMClient.h"
 
 PlayerItem* PlayerItem::create(const Player_Info& info)
 {
@@ -23,32 +27,7 @@ bool PlayerItem::init(const Player_Info& info)
 {
 	if (Node::init())
 	{
-		auto bg = Sprite::create(StringValue("PlayerItemBg"));
-		this->addChild(bg);
-
-		auto menu = Menu::create();
-		menu->setPosition(0, 0);
-		this->addChild(menu);
-		auto headFrame = Sprite::create(StringValue("HeadFrame"));
-		headFrame->setPosition(-80, 0);
-		headFrame->setScale(0.8, 0.8);
-		this->addChild(headFrame);
-		auto head = MenuItemImage::create(StringValue(info.playertype + "Head"),
-			StringValue(info.playertype + "Head"), this,
-			menu_selector(PlayerItem::onHeadClick));
-		head->setPosition(headFrame->getPosition().x - 5, headFrame->getPosition().y + 5);
-		menu->addChild(head);
-
-		auto namelabel = LabelTTF::create(info.rolename, "¿¬Ìå", 16);
-		namelabel->setAnchorPoint(ccp(0, 0.5));
-		namelabel->setPosition(head->getPositionX() + 34, 18);
-		this->addChild(namelabel);
-
-		auto gradelabel = LabelTTF::create(StringValue("GradeText") + NTS(info.grade), "¿¬Ìå", 16);
-		gradelabel->setAnchorPoint(ccp(0, 0.5));
-		gradelabel->setColor(Color3B::ORANGE);
-		gradelabel->setPosition(head->getPositionX() + 34, -15);
-		this->addChild(gradelabel);
+		ITEM_COMMEN(PlayerItem, StringValue("PlayerItemBg"), -80);
 		
 		auto ptalkBtn = MenuItemImage::create(StringValue("PrivateTalkBtn"),
 			StringValue("PrivateTalkBtn"), this, menu_selector(PlayerItem::onPrivateTalkClick));
@@ -73,9 +52,15 @@ void PlayerItem::onHeadClick(cocos2d::CCObject* sender)
 void PlayerItem::onPrivateTalkClick(cocos2d::CCObject* sender)
 {
 	ClickAction(sender);
+	auto ptlayer = PrivateTalkLayer::create(m_fd);
+	CurGameScene()->addChild(ptlayer);
+	getParent()->setVisible(false);
 }
 
 void PlayerItem::onMakeTeamClick(cocos2d::CCObject* sender)
 {
 	ClickAction(sender);
+	TeamApply_Msg msg;
+	msg.dest = m_fd;
+	CMClient::getInstance()->SendMsg((char*)&msg, sizeof(msg));
 }

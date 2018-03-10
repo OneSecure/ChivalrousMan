@@ -45,7 +45,7 @@ bool GameScene::init(const int& level)
 		char name[40] = { 0 };
 		sprintf_s(name, "%sWaitDown", GetStringData("PlayerType").c_str());
 		auto player = Sprite::create(StringValue(name));
-		this->addChild(player);
+		m_objectLayer->addChild(player);
 		SetPlayerVelocity(FloatValue("PlayerSpeed"));
 		SetPlayerFace(player);
 		InitPlayerState(level);

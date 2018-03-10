@@ -14,6 +14,7 @@ bool PlayerListLayer::init()
 		auto bg = Sprite::create(StringValue("PlayerListBg"));
 		bg->setPosition(size.width*0.5, size.height*0.5);
 		this->addChild(bg);
+		setName("PlayerListLayer");
 		
 		auto titlelabel = LabelTTF::create(StringValue("NearPlayerText"), "¿¬Ìå", 30);
 		titlelabel->setColor(Color3B::YELLOW);
@@ -27,15 +28,11 @@ bool PlayerListLayer::init()
 		scrollbarBg->setPosition(bg->getPositionX() + bg->getContentSize().width*0.5 - 20, size.height*0.5-5);
 		this->addChild(scrollbarBg);
 
-		auto menu = Menu::create();
-		menu->setPosition(0, 0);
-		this->addChild(menu);
 		m_topPos = ccp(scrollbarBg->getPositionX(), scrollbarBg->getPositionY() + scrollbarBg->getContentSize().height*0.5 - 30);
 		m_bottomPos = ccp(scrollbarBg->getPositionX(), scrollbarBg->getPositionY() - scrollbarBg->getContentSize().height*0.5 + 30);
-		m_scrollBar = MenuItemImage::create(StringValue("ScrollBar"), StringValue("ScrollBar"), this,
-			menu_selector(PlayerListLayer::onScrollBarClick));
+		m_scrollBar = Sprite::create(StringValue("ScrollBar"));
 		m_scrollBar->setPosition(m_topPos);
-		menu->addChild(m_scrollBar);
+		this->addChild(m_scrollBar);
 
 		return true;
 	}
@@ -47,27 +44,12 @@ void PlayerListLayer::initPlayerItem()
 	m_basePos.x -= 15;
 	m_basePos.y += 190;
 	int index = 0;
-	/*for (int i = 0; i < 15; ++i)
-	{
-		Player_Info info;
-		info.rolename = "hahhaha" + NTS(i);
-		info.grade = i + 1;
-		info.playertype = "Player2";
-		auto item = PlayerItem::create(info);
-		item->setPosition(m_basePos.x, m_basePos.y - i * 80);
-		this->addChild(item);
-		m_itemlist.push_back(item);
-		if (i >5)
-		{
-			item->setVisible(false);
-		}
-	}*/
 	for (auto var : CMClient::getInstance()->getPlayerList())
 	{
 		if (var.curmap == GetIntData("CurMap"))
 		{
 			auto item = PlayerItem::create(var);
-			item->setPosition(m_basePos.x, m_basePos.y + index * 82);
+			item->setPosition(m_basePos.x, m_basePos.y - index * 82);
 			this->addChild(item);
 			m_itemlist.push_back(item);
 			++index;
@@ -90,14 +72,13 @@ bool PlayerListLayer::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused
 
 void PlayerListLayer::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *unused_event)
 {
-	m_scrollClick = false;
 	m_click = false;
 	recoverItem(m_dy);
 }
 
 void PlayerListLayer::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *unused_event)
 {
-	if (m_click||m_scrollClick)
+	if (m_click)
 	{
 		float dy = touch->getLocation().y - m_startPos.y;
 		auto y = m_startScrollPos.y + dy;
@@ -106,11 +87,6 @@ void PlayerListLayer::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *unused
 		m_scrollBar->setPosition(m_startScrollPos.x, y);
 		moveItem(dy / 20);
 	}
-}
-
-void PlayerListLayer::onScrollBarClick(cocos2d::CCObject* sender)
-{
-	m_scrollClick = true;
 }
 
 void PlayerListLayer::moveItem(float dy)

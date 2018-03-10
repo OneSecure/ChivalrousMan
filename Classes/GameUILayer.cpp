@@ -14,6 +14,7 @@
 #include"TaskLayer.h"
 #include"PlayerListLayer.h"
 #include"MsgListLayer.h"
+#include"TeamLayer.h"
 #include"CMClient.h"
 #include<string>
 
@@ -79,7 +80,7 @@ void GameUILayer::generateUserInterface()
 	m_backpack = MenuItemImage::create(StringValue("BackPack"), 
 		StringValue("BackPack"),this,
 		menu_selector(GameUILayer::onBackPackClickCallBack));
-	m_backpack->setPosition(size.width - m_backpack->getContentSize().width*0.5 - 15, m_backpack->getContentSize().height*0.5 + 20);
+	m_backpack->setPosition(size.width - m_backpack->getContentSize().width*0.5 - 15, m_backpack->getContentSize().height*0.5 + 10);
 	m_skill = MenuItemImage::create(StringValue("SkillIcon"),
 		StringValue("SkillIcon"), this,
 		menu_selector(GameUILayer::onSkillClickCallBack));
@@ -94,7 +95,23 @@ void GameUILayer::generateUserInterface()
 		menu_selector(GameUILayer::onNearPlayerBtnClick));
 	npplayer->setPosition(m_taskItem->getPositionX() - m_taskItem->getContentSize().width - 15, m_taskItem->getPositionY());
 	menu->addChild(npplayer);
+	m_msgicon = MenuItemImage::create(StringValue("MsgIcon"), StringValue("MsgIcon"),
+		this, menu_selector(GameUILayer::onMsgIconClickCallback));
+	m_msgicon->setPosition(npplayer->getPositionX() - npplayer->getContentSize().width - 15, npplayer->getPositionY() - 4);
+	menu->addChild(m_msgicon);
+	auto teamIcon = MenuItemImage::create(StringValue("TeamIcon"), StringValue("TeamIcon"), this,
+		menu_selector(GameUILayer::onTeamIconClick));
+	teamIcon->setPosition(m_msgicon->getPositionX() - m_msgicon->getContentSize().width - 15, m_msgicon->getPositionY()+3);
+	menu->addChild(teamIcon);
 
+	m_teamSpot = Sprite::create(StringValue("MsgTip"));
+	m_teamSpot->setPosition(teamIcon->getPositionX() + 20, teamIcon->getPositionY() + 10);
+	this->addChild(m_teamSpot);
+	m_teamSpot->setVisible(false);
+	m_redSpot = Sprite::create(StringValue("MsgTip"));
+	m_redSpot->setPosition(m_msgicon->getPositionX() + 20, m_msgicon->getPositionY() + 10);
+	this->addChild(m_redSpot);
+	m_redSpot->setVisible(false);
 	m_worldMap = MenuItemImage::create(StringValue("MapIcon"),
 		StringValue("MapIcon"), this,
 		menu_selector(GameUILayer::onMapIconClickCallBack));
@@ -294,5 +311,23 @@ void GameUILayer::updateWorldTalkQueue(const TalkMsg& msg)
 void GameUILayer::onMsgIconClickCallback(cocos2d::CCObject* sender)
 {
 	ClickAction(sender);
+	setRedSpot(false);
 	SHOW_AND_DELETE_LAYER(MsgListLayer);
+}
+
+void GameUILayer::onTeamIconClick(cocos2d::CCObject* sender)
+{
+	ClickAction(sender);
+	setTeamSpot(false);
+	SHOW_AND_DELETE_LAYER(TeamLayer);
+}
+
+void GameUILayer::setRedSpot(bool b)
+{
+	m_redSpot->setVisible(b);
+}
+
+void GameUILayer::setTeamSpot(bool b)
+{
+	m_teamSpot->setVisible(b);
 }

@@ -6,11 +6,11 @@
 
 class PlayerState;
 
-class GamePlayer Inherit(cocos2d::Node)
+class XGamePlayer Inherit(cocos2d::Node)
 {
-	CLASS_ESSENTAIL(GamePlayer)
+	CLASS_ESSENTAIL(XGamePlayer)
 public:
-	static GamePlayer* create(const Player_Info& pinfo);
+	static XGamePlayer* create(const Player_Info& pinfo);
 
 	bool init(const Player_Info& pinfo);
 	
@@ -67,6 +67,13 @@ public:
 	*@param road：移动路径
 	*/
 	void setMoveRoad(std::stack<cocos2d::Vec2>& road);
+
+	/*
+	*moveTo(cocos2d::Vec2 targetPos);
+	*移动到目标地点
+	*@param targetPos:目标地点
+	*/
+	bool moveTo(cocos2d::Vec2 targetPos);
 private:
 	/*
 	*初始化游戏玩家数据
@@ -98,6 +105,7 @@ private:
 	PROPERTY__REF(float,m_vx,Vx)
 	PROPERTY__REF(float,m_vy,Vy)
 	PROPERTY__REF(float,m_v,V)
+	PROPERTY__REF(float,m_teamStatus,TeamStatus)
 };
 
 #endif // !__PLAYER_H__

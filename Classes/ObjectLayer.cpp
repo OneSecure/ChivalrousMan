@@ -90,7 +90,7 @@ void ObjectLayer::initOtherPlayer()
 {
 	for (auto var : CMClient::getInstance()->getPlayerList())
 	{
-		auto player = GamePlayer::create(var);
+		auto player = XGamePlayer::create(var);
 		m_playerlist.push_back(player);
 		this->addChild(player);
 	}
@@ -134,6 +134,8 @@ void ObjectLayer::updateNpcScreenPos()
 		pos.x = PlayerFacePos().x + (it->getX() - PlayerPos.x);
 		pos.y = PlayerFacePos().y + (it->getY() - PlayerPos.y);
 		it->getFace()->setPosition(pos);
+		float zorder = 100.0f - (it->getY() / MapWidth) * 100;
+		it->getFace()->setZOrder(zorder);
 	}
 }
 
@@ -143,8 +145,10 @@ void ObjectLayer::updateOtherPlayerScreenPos()
 	for (auto var : m_playerlist)
 	{
 		pos.x = PlayerFacePos().x + (var->getWorldPos().x - PlayerPos.x);
-		pos.y = PlayerFacePos().y + (var->getWorldPos().y - PlayerPos.y) + 50;  //»æÖÆÎó²î
+		pos.y = PlayerFacePos().y + (var->getWorldPos().y - PlayerPos.y);  //»æÖÆÎó²î
 		var->setPosition(pos);
+		float zorder = 100.0f - (var->getWorldPos().y / MapWidth) * 100;
+		var->setZOrder(zorder);
 	}
 }
 
@@ -168,9 +172,18 @@ void ObjectLayer::addPlayer(const Player_Info& pinfo)
 		}
 		else
 		{
-			auto player = GamePlayer::create(pinfo);
+			auto player = XGamePlayer::create(pinfo);
 			m_playerlist.push_back(player);
 			this->addChild(player);
+		}
+	}
+	else
+	{
+		auto it = existPlayer(pinfo.playername, pinfo.rolename);
+		if (it != m_playerlist.end())
+		{
+			this->removeChild(*it);
+			m_playerlist.erase(it);
 		}
 	}
 }
@@ -188,7 +201,7 @@ void ObjectLayer::removePlayer(const std::string& playername, const std::string&
 	}
 }
 
-std::list<GamePlayer*>::iterator ObjectLayer::existPlayer(const std::string& playername, const std::string& rolename)
+std::list<XGamePlayer*>::iterator ObjectLayer::existPlayer(const std::string& playername, const std::string& rolename)
 {
 	for (auto it = m_playerlist.begin(); it != m_playerlist.end(); ++it)
 	{
@@ -233,13 +246,7 @@ void ObjectLayer::moveOtherPlayer(const std::string& playername, const std::stri
 	{
 		if (var->getPlayerName() == playername&&var->getRoleName() == rolename)
 		{
-			Vec2 start{ var->getWorldPos().x / MapGridW,var->getWorldPos().y / MapGridH };
-			FindRoad froad{ start, target, GetMapInfo(), MapCountX, MapCountY };
-			froad.ExecuteAStar();
-			if (froad.isHasRoad())
-			{
-				var->setMoveRoad(froad.GetRoadList());
-			}
+			var->moveTo(target);
 		}
 	}
 }

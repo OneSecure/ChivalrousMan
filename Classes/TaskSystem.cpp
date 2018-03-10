@@ -193,4 +193,5 @@ int TaskSystem::checkTask(int index,std::string& name)
 			return var.type;
 		}
 	}
+	return -1;
 }

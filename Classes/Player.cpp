@@ -6,10 +6,11 @@
 #include"PlayerRun.h"
 #include"MapInfo.h"
 #include"CameraPlayer.h"
+#include"FindRoad.h"
 
-GamePlayer* GamePlayer::create(const Player_Info& pinfo)
+XGamePlayer* XGamePlayer::create(const Player_Info& pinfo)
 {
-	GamePlayer* pRet = new GamePlayer;
+	XGamePlayer* pRet = new XGamePlayer;
 	if (pRet&&pRet->init(pinfo))
 	{
 		pRet->autorelease();
@@ -23,7 +24,7 @@ GamePlayer* GamePlayer::create(const Player_Info& pinfo)
 	}
 }
 
-bool GamePlayer::init(const Player_Info& pinfo)
+bool XGamePlayer::init(const Player_Info& pinfo)
 {
 	if (Node::init())
 	{
@@ -32,11 +33,12 @@ bool GamePlayer::init(const Player_Info& pinfo)
 		sprintf_s(name, "%sWaitDown", m_playerType.c_str());
 		m_face = Sprite::create(StringValue(name));
 		m_face->setPosition(0, 0);
+		m_face->setAnchorPoint(ccp(0.5, 0.1));
 		this->addChild(m_face);
 		m_state = new PlayerWait(m_face, m_playerType);
 
 		m_namelabel = LabelTTF::create(m_roleName, "¿¬Ìå", 20);
-		m_namelabel->setPosition(0, 75);
+		m_namelabel->setPosition(0, 120);
 		this->addChild(m_namelabel);
 		
 		scheduleUpdate();
@@ -45,7 +47,7 @@ bool GamePlayer::init(const Player_Info& pinfo)
 	return false;
 }
 
-void GamePlayer::InitData(const Player_Info& pinfo)
+void XGamePlayer::InitData(const Player_Info& pinfo)
 {
 	m_vx = 0;
 	m_vy = 0;
@@ -63,7 +65,7 @@ void GamePlayer::InitData(const Player_Info& pinfo)
 	m_flag = 0;
 }
 
-bool GamePlayer::move()
+bool XGamePlayer::move()
 {
 	if (m_vx == 0 && m_vy == 0)
 	{
@@ -74,31 +76,37 @@ bool GamePlayer::move()
 	return true;
 }
 
-void GamePlayer::setVelocity(const float& v)
+void XGamePlayer::setVelocity(const float& v)
 {
 	m_v = v;
 }
 
-bool GamePlayer::trunDir(const float& angle)
+bool XGamePlayer::trunDir(const float& angle)
 {
+	bool bRet = false;
+	if (m_vx == 0 && m_vy == 0)
+	{
+		bRet = true;
+	}
 	m_vx = m_v*sinf(angle);
 	m_vy = m_v*cosf(angle);
 	Dir newDir = abs(m_vx) > abs(m_vy) ? (m_vx > 0 ?
 		Dir::Dir_Right : Dir::Dir_Left) :
 		(m_vy > 0 ? Dir::Dir_Up : Dir::Dir_Down);
-	bool bRet = (m_dir != newDir);
+	if (!bRet)
+		bRet = (m_dir != newDir);
 	if (bRet)
 		m_state->changeAnimation(newDir);
 	m_dir = newDir;
 	return bRet; 
 }
 
-const Dir& GamePlayer::getDir()
+const Dir& XGamePlayer::getDir()
 {
 	return m_dir;
 }
 
-bool GamePlayer::canMove()
+bool XGamePlayer::canMove()
 {
 	if (!m_roadList.empty())
 	{
@@ -114,7 +122,7 @@ bool GamePlayer::canMove()
 	return false;
 }
 
-void GamePlayer::clearRoadList()
+void XGamePlayer::clearRoadList()
 {
 	while (!m_roadList.empty())
 	{
@@ -122,7 +130,7 @@ void GamePlayer::clearRoadList()
 	}
 }
 
-void GamePlayer::goNext()
+void XGamePlayer::goNext()
 {
 	Vec2 pos = m_roadList.top();
 	int w = MapGridW;
@@ -139,15 +147,36 @@ void GamePlayer::goNext()
 	trunDir(angle);
 }
 
-void GamePlayer::setMoveRoad(std::stack<cocos2d::Vec2>& road)
+void XGamePlayer::setMoveRoad(std::stack<cocos2d::Vec2>& road)
 {
 	m_roadList = road;
 }
 
-void GamePlayer::update(float dt)
+void XGamePlayer::update(float dt)
 {
 	if (canMove())
 	{
 		move();
 	}
+}
+
+bool XGamePlayer::moveTo(cocos2d::Vec2 targetPos)
+{
+	m_vx = 0;
+	m_vy = 0;
+	int h = MapGridH;
+	int w = MapGridW;
+	targetPos.x /= w;
+	targetPos.y /= h;
+	FOUR_LOSE_FIVE_ADD(targetPos.x);
+	FOUR_LOSE_FIVE_ADD(targetPos.y);
+	Vec2 start{ m_worldPos.x / w,m_worldPos.y / h };
+	FindRoad froad{ start, targetPos, GetMapInfo(), MapCountX, MapCountY };
+	froad.ExecuteAStar();
+	if (froad.isHasRoad())
+	{
+		this->setMoveRoad(froad.GetRoadList());
+		return true;
+	}
+	return false;
 }

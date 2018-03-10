@@ -22,8 +22,10 @@ public:
 	GettingAndSetting(float, m_x, X);
 	//世界地图y坐标
 	GettingAndSetting(float, m_y, Y);
-	//Npc表象
-	GettingAndSetting(cocos2d::Sprite*, m_face, Face);
+	
+	cocos2d::Sprite* getFace() { return m_face; }
+
+	void setFace(cocos2d::Sprite* face) { m_face = face; m_face->setAnchorPoint(cocos2d::ccp(0.5, 0.1)); }
 
 	/*
 	*collisionEvent();
@@ -83,6 +85,8 @@ public:
 	
 	void initTaskTalk(const std::string& filename);
 protected:
+	//Npc表象
+	cocos2d::Sprite* m_face;
 	std::vector<std::string> m_talkmsg;
 	std::vector<std::string> m_tmptalk;
 	

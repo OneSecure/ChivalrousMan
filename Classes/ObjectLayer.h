@@ -7,7 +7,7 @@
 #include<vector>
 #include<string>
 
-class GamePlayer;
+class XGamePlayer;
 struct Player_Info;
 struct UpdateData_Msg;
 
@@ -82,7 +82,7 @@ public:
 	*@param rolename：角色名称
 	*@return std::list<Player*>::iterator：存在返回对应链表的迭代器，不存在返回末尾迭代器
 	*/
-	std::list<GamePlayer*>::iterator existPlayer(const std::string& playername,const std::string& rolename);
+	std::list<XGamePlayer*>::iterator existPlayer(const std::string& playername,const std::string& rolename);
 private:
 	/*
 	*checkmissedTask();
@@ -134,7 +134,7 @@ private:
 	void clearNpcObjectLayer();
 
 	std::vector<Npc*> m_npcList;
-	std::list<GamePlayer*> m_playerlist;
+	std::list<XGamePlayer*> m_playerlist;
 };
 
 #endif // !__OBJECT_LAYER_H__

@@ -30,6 +30,16 @@ public:
 	*@param msg：新添加的消息
 	*/
 	void updateWorldTalkQueue(const TalkMsg& msg);
+
+	/*
+	*设置消息提醒是否可见与否
+	*/
+	void setRedSpot(bool b);
+
+	/*
+	*设置组队消息提醒可见与否
+	*/
+	void setTeamSpot(bool b);
 private:
 	/*
 	*doWorldTalkMsg();
@@ -89,6 +99,12 @@ private:
 	*消息图标点击回调函数
 	*/
 	void onMsgIconClickCallback(cocos2d::CCObject* sender);
+	
+	/*
+	*onTeamIconClick(cocos2d::CCObject* sender);
+	*队伍图标点击回调函数
+	*/
+	void onTeamIconClick(cocos2d::CCObject* sender);
 
 	void update(float dt) override;
 	
@@ -115,6 +131,9 @@ private:
 	cocos2d::MenuItemImage* m_menuBtn;
 	cocos2d::LabelTTF* m_glodlabel;    //显示玩家金币
 	std::deque<cocos2d::LabelTTF*> m_worldTalkQueue;   //世界聊天队列
+	cocos2d::Sprite* m_redSpot;
+	cocos2d::Sprite* m_teamSpot;
+	cocos2d::MenuItemImage* m_msgicon;
 	
 	bool m_isclickGameMenuLayer = false;
 	bool m_isclickSkillLayer = false;
@@ -125,6 +144,7 @@ private:
 	bool m_isclickTaskLayer = false;
 	bool m_isclickPlayerListLayer = false;
 	bool m_isclickMsgListLayer = false;
+	bool m_isclickTeamLayer = false;
 	bool m_isClickLayer = false;
 };
 

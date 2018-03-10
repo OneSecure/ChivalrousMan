@@ -70,6 +70,8 @@ bool BackPackLayer::init()
 void BackPackLayer::sellBtnCallback(cocos2d::CCObject* sender)
 {
 	ClickAction();
+	if (m_curSel == nullptr)
+		return;
 	Thing* pth = dynamic_cast<Thing*>(m_curSel);
 	int index = pth->getTag();
 	int nums = std::stoi(m_numlabels[index]->getString());
@@ -89,6 +91,8 @@ void BackPackLayer::sellBtnCallback(cocos2d::CCObject* sender)
 void BackPackLayer::useBtnCallBack(cocos2d::CCObject* sender)
 {
 	ClickAction();
+	if (m_curSel == nullptr)
+		return;
 	Thing* pth = dynamic_cast<Thing*>(m_curSel);
 	int index = pth->getTag();
 	int nums = std::stoi(m_numlabels[index]->getString());

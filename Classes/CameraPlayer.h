@@ -20,6 +20,7 @@
 #define InitPlayerState CameraPlayer::getPlayerInstance()->initStateInfo
 #define GetPlayerData CameraPlayer::getPlayerInstance()->getPlayerData
 #define AttackPlayer CameraPlayer::getPlayerInstance()->beAttack
+#define PlayerTeamStatus CameraPlayer::getPlayerInstance()->getTeamStatus
 
 class PlayerState;
 
@@ -122,6 +123,14 @@ public:
 	*持久化保存游戏角色数据
 	*/
 	void SaveGameData();
+
+	/*
+	*MoveTo(const cocos2d::Vec2& targetPos);
+	*移到某点
+	*@param targetPos:将要移动到的目标地点世界地图坐标
+	*@return bool：返回true表示可以移动到，返回false表示不可
+	*/
+	bool moveTo(cocos2d::Vec2 targetPos);
 private:
 	/*
 	*AdjustPlayerAndMapPos()
@@ -158,9 +167,10 @@ private:
 
 	//标记状态改变
 	int m_flag;
-
 	//保存玩家数据
 	PlayerData m_playerData;
+	//玩家队伍状态
+	PROPERTY__REF(int, m_teamStatus, TeamStatus)
 };
 
 #endif // !__PLAYER_H__

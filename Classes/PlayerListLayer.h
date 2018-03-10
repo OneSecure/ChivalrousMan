@@ -23,8 +23,6 @@ public:
 private:
 	void initPlayerItem();
 
-	void onScrollBarClick(cocos2d::CCObject* sender);
-
 	/*
 	*moveItem(float dy);
 	*移动列表中的item
@@ -40,13 +38,12 @@ private:
 	void recoverItem(float dy);
 
 	std::vector<PlayerItem*> m_itemlist;
-	cocos2d::MenuItemImage* m_scrollBar; 
+	cocos2d::Sprite* m_scrollBar; 
 	cocos2d::Vec2 m_basePos;    //
 	cocos2d::Vec2 m_topPos;            //滚动条的位置上限
 	cocos2d::Vec2 m_bottomPos;      //滚动条的位置下限
 	float m_pagenums = 6;                //一页所能存放的最大Item数
 	bool m_click = false;
-	bool m_scrollClick = false;
 	cocos2d::Vec2 m_startPos;          //开始点击的位置
 	cocos2d::Vec2 m_startScrollPos; //点击开始ScrollBar的位置
 	float m_dy = 0;
