@@ -127,5 +127,12 @@ enum class Player_Type
 #define P_STATUS_NORMAL 4001
 #define P_STATUS_HEADER 4002
 #define P_STATUS_MEMBER 4003
+
+//队伍按钮行为
+#define TB_DISSOLVE 5001
+#define TB_QUIT 5002
+#define TB_KICKOUT 5003
+#define TB_NULL 5004
+
 #endif // !__PRE_PRECESS_H__
 

@@ -6,14 +6,14 @@
 #include<atomic>
 #include<mutex>
 
-class AudioSystem
+class HelpToolSystem
 {
-	GET_SINGLE_OBJECT(AudioSystem);
+	GET_SINGLE_OBJECT(HelpToolSystem);
 public:
 	static void releaseAudioSystem();
 private:
-	AudioSystem();
-	~AudioSystem();
+	HelpToolSystem();
+	~HelpToolSystem();
 
 	void CheckBgMusic();
 	
@@ -22,7 +22,7 @@ private:
 	std::thread* m_threadHandle = nullptr;
 	bool m_exitThread;
 
-	SINGLE_ATTRIBUTES(AudioSystem);
+	SINGLE_ATTRIBUTES(HelpToolSystem);
 };
 
 #endif // !__AUDIO_SYSYTEM_H__

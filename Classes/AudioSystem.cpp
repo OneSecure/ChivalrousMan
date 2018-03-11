@@ -3,20 +3,23 @@
 #include"GameData.h"
 #include"GameDynamicData.h"
 #include"SimpleAudioEngine.h"
+#include"TeamManager.h"
+#include"CameraPlayer.h"
 #include"CMClient.h"
+#include"MapInfo.h"
 
 using namespace CocosDenshion;
 using namespace std;
 
-DEFINE_SINGLE_ATTRIBUTES(AudioSystem);
+DEFINE_SINGLE_ATTRIBUTES(HelpToolSystem);
 
-AudioSystem::AudioSystem():
+HelpToolSystem::HelpToolSystem():
 	m_exitThread(false)
 {
-	m_threadHandle = new std::thread{ &AudioSystem::WorkThread,this };
+	m_threadHandle = new std::thread{ &HelpToolSystem::WorkThread,this };
 }
 
-AudioSystem::~AudioSystem()
+HelpToolSystem::~HelpToolSystem()
 {
 	m_exitThread = true;
 	if (m_threadHandle != nullptr)
@@ -24,9 +27,10 @@ AudioSystem::~AudioSystem()
 	RELEASE_NULL(m_threadHandle);
 }
 
-void AudioSystem::WorkThread()
+void HelpToolSystem::WorkThread()
 {
 	long count = 0;
+	long count2 = 0;
 	while (true)
 	{
 		if (m_exitThread)
@@ -37,15 +41,30 @@ void AudioSystem::WorkThread()
 		CheckBgMusic();
 		Sleep(50);
 		count++;
+		count2++;
 		if (count >= 180&&GetIntData("IsHaveGameScene")==1)
 		{
 			CMClient::getInstance()->VerifyPlayerPos();
 			count = 0;
 		}
+		if (count2 >= 4 && PlayerTeamStatus() == P_STATUS_HEADER)
+		{
+			for (auto var : TeamManager::getInstance()->getTeamMembers())
+			{
+				auto info = CMClient::getInstance()->findPlayerInfoByFd(var.first);
+				int  mapindex=GetIntData("CurMap");
+				if (info.curmap != mapindex)
+				{
+					Vec2 target{ GetFloatData("DestX"),GetFloatData("DestY") };
+					CMClient::getInstance()->sendTeamGotoMapMsg("map" + NTS(mapindex), target, var.first);
+				}
+			}
+			count2 = 0;
+		}
 	}
 }
 
-void AudioSystem::CheckBgMusic()
+void HelpToolSystem::CheckBgMusic()
 {
 	if (GetIntData("BgMusic") == 1)
 	{
@@ -59,7 +78,7 @@ void AudioSystem::CheckBgMusic()
 	}
 }
 
-void AudioSystem::releaseAudioSystem()
+void HelpToolSystem::releaseAudioSystem()
 {
 	RELEASE_NULL(m_instance);
 }

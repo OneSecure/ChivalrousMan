@@ -10,6 +10,8 @@
 #include"ObjectLayer.h"
 #include"FightLayer.h"
 #include"CMClient.h"
+#include"TeamManager.h"
+#include"TipLayer.h"
 #include<stack>
 #include<functional>
 
@@ -28,9 +30,22 @@ bool GameLogicLayer::init()
 
 void  GameLogicLayer::onTouchEnded(Touch *touch, Event *unused_event)
 {
+	if (PlayerTeamStatus() == P_STATUS_MEMBER)
+	{
+		auto tiplayer = TipLayer::createTipLayer(StringValue("TeamingText"));
+		CurGameScene()->addChild(tiplayer);
+		return;
+	}
 	Vec2 pos = touch->getLocation();
 	Vec2 targetPos{ PlayerPos.x + (pos.x - GetPlayerFace()->getPosition().x),PlayerPos.y + (pos.y - GetPlayerFace()->getPosition().y) };
-	CameraPlayer::getPlayerInstance()->moveTo(targetPos);
+	bool bRet=CameraPlayer::getPlayerInstance()->moveTo(targetPos);
+	if (CameraPlayer::getPlayerInstance()->getTeamStatus() == P_STATUS_HEADER&&bRet)
+	{
+		std::function<void(float)> func = [&targetPos](float) {
+			CameraPlayer::getPlayerInstance()->moveTeamMembers(targetPos);
+		};
+		scheduleOnce(func, 0.1, "movemember");
+	}
 }
 
 void GameLogicLayer::update(float dt)
@@ -53,6 +68,9 @@ void GameLogicLayer::update(float dt)
 
 void GameLogicLayer::checkEntryDoor()
 {
+	checkGotoMap();
+	if (PlayerTeamStatus() == P_STATUS_MEMBER)
+		return;
 	std::vector<Door> doors = GetDoorPosInfo();
 	int size = doors.size();
 	int count = 0;
@@ -103,7 +121,6 @@ void GameLogicLayer::gotoDestMap(const std::string& dest)
 		level = LEVEL_FIVE;
 	}
 	Director::getInstance()->replaceScene(ex);
-	CMClient::getInstance()->updatePlayerMap(level);
 }
 
 void GameLogicLayer::checkCollisionNpc()
@@ -132,6 +149,8 @@ void GameLogicLayer::checkCollisionNpc()
 
 void GameLogicLayer::randomMeetMonster()
 {
+	if (PlayerTeamStatus() == P_STATUS_MEMBER)
+		return;
 	//产生怪物间隔
 	static int interval = 0;
 	std::random_device rand;
@@ -181,5 +200,19 @@ std::string  GameLogicLayer::monsterName()
 	}
 	default:
 		return "";
+	}
+}
+
+void GameLogicLayer::checkGotoMap()
+{
+	if (CMClient::getInstance()->getGotoMapMsgs().size() > 0)
+	{
+		TeamGotoMap_Msg msg = CMClient::getInstance()->getGotoMapMsgs().back();
+		SetFloatData("DestX", msg.x);
+		SetFloatData("DestY", msg.y);
+		SetIntData("IsDoor", 1);
+		unscheduleUpdate();
+		gotoDestMap(msg.map);
+		CMClient::getInstance()->getGotoMapMsgs().clear();
 	}
 }

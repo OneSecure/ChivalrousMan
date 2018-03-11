@@ -14,6 +14,7 @@
 #include"BackPackManager.h"
 #include"SkillManager.h"
 #include"EquipmentManager.h"
+#include"TeamManager.h"
 #include"CMClient.h"
 #include"FindRoad.h"
 #include<map>
@@ -265,11 +266,11 @@ void CameraPlayer::SaveGameData()
 	SkillManager::getInstance()->saveSkillInfo();
 }
 
-bool CameraPlayer::moveTo(cocos2d::Vec2 targetPos)
+bool CameraPlayer::moveTo(cocos2d::Vec2 targetPos, int less)
 {
 	m_vx = 0;
 	m_vy = 0;
-	CMClient::getInstance()->SendMoveToMsg(targetPos);
+	Vec2 tmp = targetPos;
 	int h = MapGridH;
 	int w = MapGridW;
 	targetPos.x /= w;
@@ -278,11 +279,21 @@ bool CameraPlayer::moveTo(cocos2d::Vec2 targetPos)
 	FOUR_LOSE_FIVE_ADD(targetPos.y);
 	Vec2 startPos{ m_pos.x / w,m_pos.y / h };
 	FindRoad fdroad(startPos, targetPos, GetMapInfo(), MapCountX, MapCountY);
+	fdroad.lessOne(less);
 	fdroad.ExecuteAStar();
 	if (fdroad.isHasRoad())
 	{
+		CMClient::getInstance()->SendMoveToMsg(tmp, less);
 		setMoveRoad(fdroad.GetRoadList());
 		return true;
 	}
 	return false;
+}
+
+void CameraPlayer::moveTeamMembers(cocos2d::Vec2 target)
+{
+	for (auto var : TeamManager::getInstance()->getTeamMembers())
+	{
+		CMClient::getInstance()->sendTeamMoveMsg(target, var.first);
+	}
 }

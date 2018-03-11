@@ -31,6 +31,7 @@ bool GameScene::init(const int& level)
 	if (Scene::init())
 	{
 		SetCurGameScene(this);
+		setName("GameScene");
 		char mapname[40] = { 0 };
 		sprintf_s(mapname, "map%d", level);
 		SetIntData("CurMap", level);
@@ -87,5 +88,17 @@ void GameScene::resumeAllActions(cocos2d::Node* hoster)
 		{
 			resumeAllActions(it);
 		}
+	}
+}
+
+void GameScene::pauseOrResumeLogicLayer(bool b)
+{
+	if (b)
+	{
+		m_logicLayer->pauseSchedulerAndActions();
+	}
+	else
+	{
+		m_logicLayer->resumeSchedulerAndActions();
 	}
 }

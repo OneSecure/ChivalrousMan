@@ -154,6 +154,7 @@ private:
 	float m_settlementExp = 0;      //结算经验
 	int m_mmor = 1;                      //纪录回合数
 	cocos2d::CCObject* sender;     //选中的技能
+	std::vector<Node*> m_otherPlayers;
 };
 
 #endif // ! __FIGHT_LAYER_HH_

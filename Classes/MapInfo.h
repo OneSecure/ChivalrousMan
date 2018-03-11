@@ -67,6 +67,8 @@ public:
 	*从文件加载地图信息
 	*/
 	void loadDoorInfo(const std::string& name);
+
+	cocos2d::Vec2 getDestMapPos(const std::string& mapname);
 private:
 	/*
 	*releaseMapInfo();

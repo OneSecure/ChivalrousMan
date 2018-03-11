@@ -128,9 +128,16 @@ public:
 	*MoveTo(const cocos2d::Vec2& targetPos);
 	*移到某点
 	*@param targetPos:将要移动到的目标地点世界地图坐标
+	*@param less：是否少移动一格
 	*@return bool：返回true表示可以移动到，返回false表示不可
 	*/
-	bool moveTo(cocos2d::Vec2 targetPos);
+	bool moveTo(cocos2d::Vec2 targetPos, int less = 0);
+
+	/*
+	*移动队伍成员
+	*@param target：移动的目的地
+	*/
+	void moveTeamMembers(cocos2d::Vec2 target);
 private:
 	/*
 	*AdjustPlayerAndMapPos()

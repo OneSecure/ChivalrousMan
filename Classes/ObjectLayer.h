@@ -39,7 +39,7 @@ public:
 	*在对象层新添要显示的玩家
 	*@param pinfo:玩家信息
 	*/
-	void addPlayer(const Player_Info& pinfo);
+	void addPlayer(Player_Info pinfo);
 
 	/*
 	*removePlayer(const std::string& playername, const std::string& rolename);
@@ -56,7 +56,7 @@ public:
 	*@param rolenmae:角色名称
 	*@param target：目标位置
 	*/
-	void moveOtherPlayer(const std::string& playername, const std::string& rolename, const cocos2d::Vec2& target);
+	void moveOtherPlayer(const std::string& playername, const std::string& rolename, const cocos2d::Vec2& target, int less = 0);
 	
 	/*
 	*verifyPlayerPos(const std::string& playername, const std::string& rolename, const cocos2d::Vec2& pos);

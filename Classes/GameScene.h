@@ -36,6 +36,12 @@ public:
 	void resumeAllActions(cocos2d::Node* hoster);
 
 	/*
+	*暂停或者重启游戏逻辑层
+	*@param b：
+	*/
+	void pauseOrResumeLogicLayer(bool b);
+
+	/*
 	*获取对象层对象
 	*/
 	inline ObjectLayer* getObjectLayer() { return m_objectLayer; }
@@ -50,7 +56,6 @@ public:
 	*/
 	GameUILayer* getGameUiLayer() { return m_uiLayer; }
 private:
-
 	GameLogicLayer* m_logicLayer;
 	GameMapLayer* m_mapLayer;
 	ObjectLayer* m_objectLayer;

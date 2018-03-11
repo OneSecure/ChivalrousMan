@@ -73,7 +73,7 @@ public:
 	*移动到目标地点
 	*@param targetPos:目标地点
 	*/
-	bool moveTo(cocos2d::Vec2 targetPos);
+	bool moveTo(cocos2d::Vec2 targetPos, int less = 0);
 private:
 	/*
 	*初始化游戏玩家数据

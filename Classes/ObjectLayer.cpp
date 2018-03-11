@@ -42,6 +42,7 @@ bool ObjectLayer::init(const int& level)
 	if (Layer::init())
 	{
 		initNpcObject(level);
+		initOtherPlayer();
 		this->scheduleUpdate();
 		return true;
 	}
@@ -90,9 +91,12 @@ void ObjectLayer::initOtherPlayer()
 {
 	for (auto var : CMClient::getInstance()->getPlayerList())
 	{
-		auto player = XGamePlayer::create(var);
-		m_playerlist.push_back(player);
-		this->addChild(player);
+		if (var.curmap == GetIntData("CurMap"))
+		{
+			auto player = XGamePlayer::create(var);
+			m_playerlist.push_back(player);
+			this->addChild(player);
+		}
 	}
 }
 
@@ -161,7 +165,7 @@ void ObjectLayer::clearNpcObjectLayer()
 	m_npcList.clear();
 }
 
-void ObjectLayer::addPlayer(const Player_Info& pinfo)
+void ObjectLayer::addPlayer(Player_Info pinfo)
 {
 	if (GetIntData("CurMap") == pinfo.curmap)
 	{
@@ -240,13 +244,13 @@ void ObjectLayer::updatePlayerData(const std::string& playername, const std::str
 	}
 }
 
-void ObjectLayer::moveOtherPlayer(const std::string& playername, const std::string& rolename, const cocos2d::Vec2& target)
+void ObjectLayer::moveOtherPlayer(const std::string& playername, const std::string& rolename, const cocos2d::Vec2& target,int less)
 {
 	for (auto var : m_playerlist)
 	{
 		if (var->getPlayerName() == playername&&var->getRoleName() == rolename)
 		{
-			var->moveTo(target);
+			var->moveTo(target, less);
 		}
 	}
 }

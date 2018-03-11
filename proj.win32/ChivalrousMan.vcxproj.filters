@@ -31,9 +31,6 @@
     <Filter Include="src\Delegate\private">
       <UniqueIdentifier>{0115ae3a-b8a6-4a42-9332-08db518555c9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Layer\public">
-      <UniqueIdentifier>{83aa6ccd-eac9-4bbd-bb1a-2a5d5f8366b1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\Layer\private">
       <UniqueIdentifier>{0c673976-a4de-4d07-924a-246e3af16d53}</UniqueIdentifier>
     </Filter>
@@ -67,11 +64,62 @@
     <Filter Include="src\DBConnect">
       <UniqueIdentifier>{ba4b6466-82d7-4d45-bc50-276ed015d3a2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\DBConnect\private">
-      <UniqueIdentifier>{7155d772-f939-40f0-9a96-271ef3acff16}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\DBConnect\public">
       <UniqueIdentifier>{b96e0201-310f-4c86-8c3b-4dbe22818ca9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Net">
+      <UniqueIdentifier>{e20cb19b-8318-4d47-9dd4-7d4f811ef6ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Net\private">
+      <UniqueIdentifier>{5c08c752-3e86-4a76-922b-5951306f5957}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Net\public">
+      <UniqueIdentifier>{a38c839c-a137-46ad-bfa9-b46cfe2c12d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Thing">
+      <UniqueIdentifier>{8af80093-8aab-444a-acd3-1997c8360359}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Thing\private">
+      <UniqueIdentifier>{8c43619f-97ae-416e-90c1-bf017c6cc568}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Thing\public">
+      <UniqueIdentifier>{63c1d98c-721c-4bc1-b3f3-df5ceaced024}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Layer\public">
+      <UniqueIdentifier>{83aa6ccd-eac9-4bbd-bb1a-2a5d5f8366b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Monster">
+      <UniqueIdentifier>{77c16e9b-fd20-4040-be16-dba19abba71b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Monster\public">
+      <UniqueIdentifier>{3e545b90-4cb5-4003-99a7-59306db6e784}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Monster\private">
+      <UniqueIdentifier>{ecec9a97-1231-4aba-83ea-610bf4a3b74f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Thing\Skill">
+      <UniqueIdentifier>{d86e1c00-d77f-44cd-99f9-39260da76ddf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Thing\Equipment">
+      <UniqueIdentifier>{5e6d56eb-7473-4923-b916-81eb126c2ff0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Thing\Medication">
+      <UniqueIdentifier>{47c3c5d9-d826-4fd4-a61c-b15d552e7965}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Thing\Skill\public">
+      <UniqueIdentifier>{2ac9e130-7d28-43df-a6e4-10f23b204a7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Thing\Skill\private">
+      <UniqueIdentifier>{b38789d7-cc4e-4915-b6df-ebf4b994db69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Node">
+      <UniqueIdentifier>{98faf9b5-8418-473c-901b-877942188560}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Node\public">
+      <UniqueIdentifier>{3c306bb4-47cd-4b60-a7ad-279f9025af3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Node\private">
+      <UniqueIdentifier>{1d8a3374-5203-4890-b909-d488bd63048f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -103,9 +151,6 @@
       <Filter>src\Scene\private</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\GameScene.cpp">
-      <Filter>src\Scene\private</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\HelloWorldScene.cpp">
       <Filter>src\Scene\private</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Login.cpp">
@@ -150,9 +195,6 @@
     <ClCompile Include="..\Classes\PlayerRun.cpp">
       <Filter>src\State\private</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\DBDao.cpp">
-      <Filter>src\DBConnect\private</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\GameLogicLayer.cpp">
       <Filter>src\Layer\private</Filter>
     </ClCompile>
@@ -167,6 +209,183 @@
     </ClCompile>
     <ClCompile Include="..\Classes\TaskSystem.cpp">
       <Filter>src\Tool\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ObjectLayer.cpp">
+      <Filter>src\Layer\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GameUILayer.cpp">
+      <Filter>src\Layer\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GameMenuLayer.cpp">
+      <Filter>src\Layer\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\NpcVallige.cpp">
+      <Filter>src\Model\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Npc.cpp">
+      <Filter>src\Model\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\NpcBlue.cpp">
+      <Filter>src\Model\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\NpcEquip.cpp">
+      <Filter>src\Model\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\NpcMonk.cpp">
+      <Filter>src\Model\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\NpcPink.cpp">
+      <Filter>src\Model\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\NpcSkill.cpp">
+      <Filter>src\Model\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\NpcMamom.cpp">
+      <Filter>src\Model\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\BeginLayer.cpp">
+      <Filter>src\Layer\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ReflectNpc.cpp">
+      <Filter>src\Tool\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Door.cpp">
+      <Filter>src\Model\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\TCPClient.cpp">
+      <Filter>src\Net\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Lock.cpp">
+      <Filter>src\Net\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\TalkLayer.cpp">
+      <Filter>src\Layer\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\CMClient.cpp">
+      <Filter>src\Net\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\SkillLayer.cpp">
+      <Filter>src\Layer\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\BackPackLayer.cpp">
+      <Filter>src\Layer\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\TaskLayer.cpp">
+      <Filter>src\Layer\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\DealLayer.cpp">
+      <Filter>src\Layer\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Thing.cpp">
+      <Filter>src\Thing\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PlayerData.cpp">
+      <Filter>src\Model\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\WorldMapLayer.cpp">
+      <Filter>src\Layer\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\DetailLayer.cpp">
+      <Filter>src\Layer\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\TipLayer.cpp">
+      <Filter>src\Layer\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Monster.cpp">
+      <Filter>src\Monster\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\FightLayer.cpp">
+      <Filter>src\Layer\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\SkillManager.cpp">
+      <Filter>src\Tool\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\BackPackManager.cpp">
+      <Filter>src\Tool\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\HurtValueLayer.cpp">
+      <Filter>src\Layer\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\EquipMent.cpp">
+      <Filter>src\Thing\Equipment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Medication.cpp">
+      <Filter>src\Thing\Medication</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Skill.cpp">
+      <Filter>src\Thing\Skill\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\CrackIt.cpp">
+      <Filter>src\Thing\Skill\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Danate.cpp">
+      <Filter>src\Thing\Skill\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\RealSkill.cpp">
+      <Filter>src\Thing\Skill\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\DragonRoar.cpp">
+      <Filter>src\Thing\Skill\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\LightStrike.cpp">
+      <Filter>src\Thing\Skill\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Long.cpp">
+      <Filter>src\Thing\Skill\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\RecallCountermand.cpp">
+      <Filter>src\Thing\Skill\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\SealOfTheBlade.cpp">
+      <Filter>src\Thing\Skill\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\XBArrow.cpp">
+      <Filter>src\Thing\Skill\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\SkillFactory.cpp">
+      <Filter>src\Tool\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\RoleInfoLayer.cpp">
+      <Filter>src\Layer\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\EquipmentManager.cpp">
+      <Filter>src\Tool\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\TaskItem.cpp">
+      <Filter>src\Node\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PickupTaskLayer.cpp">
+      <Filter>src\Layer\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Player.cpp">
+      <Filter>src\Model\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PlayerListLayer.cpp">
+      <Filter>src\Layer\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PlayerItem.cpp">
+      <Filter>src\Node\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\MsgListLayer.cpp">
+      <Filter>src\Layer\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\MsgItem.cpp">
+      <Filter>src\Node\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PrivateTalkLayer.cpp">
+      <Filter>src\Layer\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\TeamMsgItem.cpp">
+      <Filter>src\Node\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\TeamLayer.cpp">
+      <Filter>src\Layer\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\TeamManager.cpp">
+      <Filter>src\Tool\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\MemberItem.cpp">
+      <Filter>src\Node\private</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -198,9 +417,6 @@
       <Filter>src\Scene\public</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\GameScene.h">
-      <Filter>src\Scene\public</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\HelloWorldScene.h">
       <Filter>src\Scene\public</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Login.h">
@@ -269,6 +485,192 @@
     <ClInclude Include="..\Classes\TaskSystem.h">
       <Filter>src\Tool\public</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\ObjectLayer.h">
+      <Filter>src\Layer\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GameUILayer.h">
+      <Filter>src\Layer\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Model.h">
+      <Filter>src\DBConnect\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GameMenuLayer.h">
+      <Filter>src\Layer\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\NpcVallige.h">
+      <Filter>src\Model\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Npc.h">
+      <Filter>src\Model\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\NpcBlue.h">
+      <Filter>src\Model\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\NpcEquip.h">
+      <Filter>src\Model\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\NpcManmom.h">
+      <Filter>src\Model\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\NpcMonk.h">
+      <Filter>src\Model\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\NpcPink.h">
+      <Filter>src\Model\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\NpcSkill.h">
+      <Filter>src\Model\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BeginLayer.h">
+      <Filter>src\Layer\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ReflectNpc.h">
+      <Filter>src\Tool\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Door.h">
+      <Filter>src\Model\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TCPClient.h">
+      <Filter>src\Net\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Lock.h">
+      <Filter>src\Net\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\public.h">
+      <Filter>src\Net\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TalkLayer.h">
+      <Filter>src\Layer\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\CMClient.h">
+      <Filter>src\Net\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SkillLayer.h">
+      <Filter>src\Layer\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BackPackLayer.h">
+      <Filter>src\Layer\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TaskLayer.h">
+      <Filter>src\Layer\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\DealLayer.h">
+      <Filter>src\Layer\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PlayerData.h">
+      <Filter>src\Model\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\DetailLayer.h">
+      <Filter>src\Layer\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TipLayer.h">
+      <Filter>src\Layer\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Monster.h">
+      <Filter>src\Monster\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\FightLayer.h">
+      <Filter>src\Layer\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SkillManager.h">
+      <Filter>src\Tool\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BackPackManager.h">
+      <Filter>src\Tool\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\HurtValueLayer.h">
+      <Filter>src\Layer\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Thing.h">
+      <Filter>src\Thing\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\EquipMent.h">
+      <Filter>src\Thing\Equipment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Medication.h">
+      <Filter>src\Thing\Medication</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Skill.h">
+      <Filter>src\Thing\Skill\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\CrackIt.h">
+      <Filter>src\Thing\Skill\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Danate.h">
+      <Filter>src\Thing\Skill\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\RealSkill.h">
+      <Filter>src\Thing\Skill\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\DragonRoar.h">
+      <Filter>src\Thing\Skill\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\LightStrike.h">
+      <Filter>src\Thing\Skill\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Long.h">
+      <Filter>src\Thing\Skill\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\RecallCountermand.h">
+      <Filter>src\Thing\Skill\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SealOfTheBlade.h">
+      <Filter>src\Thing\Skill\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\XBArrow.h">
+      <Filter>src\Thing\Skill\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SkillFactory.h">
+      <Filter>src\Tool\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\RoleInfoLayer.h">
+      <Filter>src\Layer\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\EquipmentManager.h">
+      <Filter>src\Tool\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TaskItem.h">
+      <Filter>src\Node\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PickupTaskLayer.h">
+      <Filter>src\Layer\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ShareData.h">
+      <Filter>src\Net\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Player.h">
+      <Filter>src\Model\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PlayerListLayer.h">
+      <Filter>src\Layer\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PlayerItem.h">
+      <Filter>src\Node\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MsgListLayer.h">
+      <Filter>src\Layer\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MsgItem.h">
+      <Filter>src\Node\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PrivateTalkLayer.h">
+      <Filter>src\Layer\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TeamMsgItem.h">
+      <Filter>src\Node\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TeamLayer.h">
+      <Filter>src\Layer\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TeamManager.h">
+      <Filter>src\Tool\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\WorldMapLayer.h">
+      <Filter>src\Layer\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MemberItem.h">
+      <Filter>src\Node\public</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">
@@ -279,5 +681,11 @@
     <Xml Include="..\Resources\GameData.xml">
       <Filter>resource</Filter>
     </Xml>
+    <Xml Include="..\Resources\GameData1.xml">
+      <Filter>resource</Filter>
+    </Xml>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\game.ico" />
   </ItemGroup>
 </Project>

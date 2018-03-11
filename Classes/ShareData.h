@@ -14,10 +14,14 @@ enum M_Type
 	M_MoveTo,    //玩家移动到某处
 	M_VerifyPos,   //校验玩家位置
 	M_UpdateData,   //更新玩家信息
-	M_UpdateMap,  //更新玩家所在地图信息
 	M_TeamApply,   //队伍申请消息
 	M_RefuseTeam,    //拒绝组队申请
 	M_AgreeTeam,     //同意组队
+	M_TeamMove,      //队伍移动
+	M_TeamGotoMap,   //队伍切换地图·
+	M_DissolveTeam,   //解散队伍
+	M_QuitTeam,         //退出队伍
+	M_KickOutteam,    //踢出队伍
 }; 
 
 struct Player_Info
@@ -72,6 +76,7 @@ struct InitPos_Msg
 	float x;
 	float y;
 	int fd;
+	int curmap;
 };
 
 struct PlayerLeave_Msg
@@ -86,6 +91,12 @@ struct MoveTo_Msg
 	float x;
 	float y;
 	int fd;
+	int less;
+
+	MoveTo_Msg()
+	{
+		less = 0;
+	}
 };
 
 struct  VerifyPos_Msg
@@ -105,13 +116,6 @@ struct UpdateData_Msg
 	float defense;
 	int grade;
 	int fd;
-};
-
-struct UpdateMap_Msg
-{
-	M_Type type;
-	int fd;
-	int curmap;
 };
 
 struct TeamApply_Msg
@@ -151,6 +155,51 @@ struct AgreeTeam_Msg
 		type = M_AgreeTeam;
 		fd = -1;
 	}
+};
+
+struct TeamMove_Msg
+{
+	M_Type type;
+	float x;
+	float y;
+	int fd;
+	int dest;
+
+	TeamMove_Msg()
+	{
+		type = M_TeamMove;
+		fd = -1;
+		dest = -1;
+	}
+};
+
+struct TeamGotoMap_Msg
+{
+	M_Type type;
+	char map[10];
+	float x;
+	float y;
+	int dest;
+	
+	TeamGotoMap_Msg()
+	{
+		type = M_TeamGotoMap;
+	}
+};
+
+struct TeamManage_Msg
+{
+	M_Type type;
+	int fd;
+	int dest;
+};
+
+struct TeamFight_Msg
+{
+	M_Type type;
+	char name[20];
+	int fd;
+	int dest;
 };
 
 #endif // SHAREDATA_H

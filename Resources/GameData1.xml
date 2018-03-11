@@ -3,6 +3,28 @@
 <plist version="1.0">
  <!-- 游戏静态数据 -->
 <dict>
+  <key>NotEqualMap</key>
+  <string>不在同一张地图</string>
+  <key>TeamingText</key>
+  <string>组队中无法操作</string>
+  <key>TeamMemberText</key>
+  <string>队员</string>
+  <key>TeamHeaderText</key>
+  <string>队长</string>
+  <!-- 按钮 -->
+  <key>DissolveTeamBtn</key>
+  <string>button/Dissolve.png</string>
+  <key>KickOutTeamBtn</key>
+  <string>button/KickOut.png</string>
+  <key>QuitTeamBtn</key>
+  <string>button/QuitBtn.png</string>
+  <!--背景素材-->
+  <key>TipBg</key>
+  <string>tipbg.png</string>
+  <key>PTBg</key>
+  <string>PTBg.png</string>
+  <key>MsgListBg</key>
+  <string>MsgListBg.png</string>
   <!--  Npc相关素材  -->
   <key>NpcBlue</key>
   <string>Npc/NpcBlue.png</string>

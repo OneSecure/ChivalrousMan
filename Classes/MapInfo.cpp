@@ -141,3 +141,15 @@ void MapInfo::reset()
 	m_doorPos.clear();
 	releaseMapInfo();
 }
+
+cocos2d::Vec2 MapInfo::getDestMapPos(const std::string& mapname)
+{
+	for (auto var : m_doorPos)
+	{
+		if (var.dest == mapname)
+		{
+			return var.destPos;
+		}
+	}
+	return Vec2{ 0,0 };
+}

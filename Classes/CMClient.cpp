@@ -7,6 +7,7 @@
 #include"ObjectLayer.h"
 #include"GameUILayer.h"
 #include"PrivateTalkLayer.h"
+#include"TeamManager.h"
 #include"TipLayer.h"
 #include<fstream>
 #include<string>
@@ -45,19 +46,7 @@ void  CMClient::OnRecv(char* buff)
 		break;
 	case M_InitData:
 	{
-		Player_Info pinfo;
-		InitData_Msg* rlmsg = (InitData_Msg*)buff;	
-		pinfo.playername = rlmsg->playername;
-		pinfo.attack = rlmsg->attack;
-		pinfo.blood = rlmsg->blood;
-		pinfo.curmap = rlmsg->curmap;
-		pinfo.defense = rlmsg->defense;
-		pinfo.mana = rlmsg->mana;
-		pinfo.playertype = rlmsg->playertype;
-		pinfo.rolename = rlmsg->rolename;
-		pinfo.fd = rlmsg->fd;
-		pinfo.grade = rlmsg->grade;
-		m_playerlist.push_back(pinfo);
+		doInitMsg((InitData_Msg*)buff);
 	}
 		break;
 	case M_WorldTalk:
@@ -66,40 +55,24 @@ void  CMClient::OnRecv(char* buff)
 	}
 		break;
 	case M_PrivateTalk:
-	{
 		addPrivateTalkMsg((PrivateTalk_Msg*)buff);
-	}
 		break;
 	case M_InitPos:
-	{
 		doInitPlayerPosMsg((InitPos_Msg*)buff);
-	}
 		break;
 	case M_PlayerLeave:
 	{
-		PlayerLeave_Msg* rlmsg = (PlayerLeave_Msg*)buff;
-		removePlayer(rlmsg->fd);
+		doPlayerLeaveMsg((PlayerLeave_Msg*)buff);
 	}
 		break;
 	case M_MoveTo:
-	{
 		doPlayerMoveToMsg((MoveTo_Msg*)buff);
-	}
 		break;
 	case M_VerifyPos:
-	{
 		doPlayerPosVerifyMsg((VerifyPos_Msg*)buff);
-	}
 		break;
 	case M_UpdateData:
-	{
 		doPlayerDataUpdaeMsg((UpdateData_Msg*)buff);
-	}
-		break;
-	case M_UpdateMap:
-	{
-		doUpdatePlayerMapMsg((UpdateMap_Msg*)buff);
-	}
 		break;
 	case M_TeamApply:
 	{
@@ -107,14 +80,19 @@ void  CMClient::OnRecv(char* buff)
 	}
 		break;
 	case M_RefuseTeam:
-	{
 		doRefuseTeamMsg((RefuseTeam_Msg*)buff);
-	}
 		break;
 	case M_AgreeTeam:
-	{
 		doAgreeTeamMsg((AgreeTeam_Msg*)buff);
-	}
+		break;
+	case M_TeamMove:
+		doTeamMoveMsg((TeamMove_Msg*)buff);
+		break;
+	case M_TeamGotoMap:
+		doTeamGotoMapMsg((TeamGotoMap_Msg*)buff);
+		break;
+	case M_DissolveTeam:
+		doTeamDissolveMsg();
 		break;
 	default:
 		break;
@@ -148,6 +126,7 @@ int CMClient::Connect()
 
 void CMClient::SendInitPlayerData()
 {
+	m_playerlist.clear();
 	InitData_Msg msg;
 	msg.type = M_InitData;
 	strcpy_s(msg.playername, GetStringData("playername").c_str());
@@ -170,7 +149,24 @@ void CMClient::SendInitPos()
 	msg.x = PlayerPos.x;
 	msg.y = PlayerPos.y;
 	msg.fd = -1;
+	msg.curmap = GetIntData("CurMap");
 	SendMsg((char*)&msg, sizeof(msg));
+}
+
+void CMClient::doInitMsg(InitData_Msg* msg)
+{
+	Player_Info pinfo;
+	pinfo.playername = msg->playername;
+	pinfo.attack = msg->attack;
+	pinfo.blood = msg->blood;
+	pinfo.curmap =msg->curmap;
+	pinfo.defense = msg->defense;
+	pinfo.mana = msg->mana;
+	pinfo.playertype = msg->playertype;
+	pinfo.rolename = msg->rolename;
+	pinfo.fd = msg->fd;
+	pinfo.grade = msg->grade;
+	m_playerlist.push_back(pinfo);
 }
 
 void CMClient::doInitPlayerPosMsg(InitPos_Msg* msg)
@@ -181,6 +177,7 @@ void CMClient::doInitPlayerPosMsg(InitPos_Msg* msg)
 		{
 			var->x = msg->x;
 			var->y = msg->y;
+			var->curmap = msg->curmap;
 			if (GetIntData("IsHaveGameScene") == 1)
 				CurGameScene()->getObjectLayer()->addPlayer(*var);
 		}
@@ -195,6 +192,11 @@ void CMClient::SendPlayerLeaveMsg()
 	SendMsg((char*)&msg, sizeof(msg));
 }
 
+void CMClient::doPlayerLeaveMsg(PlayerLeave_Msg* msg)
+{
+	removePlayer(msg->fd);
+}
+
 void CMClient::removePlayer(int fd)
 {
 	for (auto it = m_playerlist.begin(); it != m_playerlist.end(); ++it)
@@ -203,6 +205,7 @@ void CMClient::removePlayer(int fd)
 		{
 			if (GetIntData("IsHaveGameScene") == 1)
 				CurGameScene()->getObjectLayer()->removePlayer(it->playername, it->rolename);
+			TeamManager::getInstance()->removeTeamMembers(it->fd);
 			m_privateTalkMsgs.erase(it->fd);
 			m_playerlist.erase(it);
 			return;
@@ -210,13 +213,14 @@ void CMClient::removePlayer(int fd)
 	}
 }
 
-void CMClient::SendMoveToMsg(const cocos2d::Vec2& pos)
+void CMClient::SendMoveToMsg(const cocos2d::Vec2& pos,int less)
 {
 	MoveTo_Msg msg;
 	msg.type = M_MoveTo;
 	msg.fd = -1;
 	msg.x = pos.x;
 	msg.y = pos.y;
+	msg.less = less;
 	SendMsg((char*)&msg, sizeof(msg));
 }
 
@@ -228,7 +232,7 @@ void CMClient::doPlayerMoveToMsg(MoveTo_Msg* msg)
 		if (var.fd == msg->fd)
 		{
 			if (GetIntData("IsHaveGameScene") == 1)
-				CurGameScene()->getObjectLayer()->moveOtherPlayer(var.playername, var.rolename, target);
+				CurGameScene()->getObjectLayer()->moveOtherPlayer(var.playername, var.rolename, target, msg->less);
 		}
 	}
 }
@@ -283,30 +287,6 @@ void CMClient::doPlayerDataUpdaeMsg(UpdateData_Msg* msg)
 			var->mana = msg->mana;
 			if (GetIntData("IsHaveGameScene") == 1)
 				CurGameScene()->getObjectLayer()->updatePlayerData(var->playername, var->rolename, *msg);
-		}
-	}
-}
-
-void CMClient::updatePlayerMap(const int& level)
-{
-	UpdateMap_Msg msg;
-	msg.type = M_UpdateMap;
-	msg.fd = -1;
-	msg.curmap = level;
-	SendMsg((char*)&msg, sizeof(msg));
-}
-
-void CMClient::doUpdatePlayerMapMsg(UpdateMap_Msg* msg)
-{
-	for (auto var=m_playerlist.begin();var!=m_playerlist.end();++var)
-	{
-		if (var->fd == msg->fd)
-		{
-			var->curmap = msg->curmap;
-			if (GetIntData("IsHaveGameScene") == 1)
-			{
-				CurGameScene()->getObjectLayer()->addPlayer(*var);
-			}
 		}
 	}
 }
@@ -403,6 +383,10 @@ Player_Info CMClient::findPlayerInfoByFd(const int& fd)
 void CMClient::doTeamApplyMsg(TeamApply_Msg* msg)
 {
 	m_applyTeamList.push_back(msg->fd);
+	if (m_applyTeamList.size() > 6)
+	{
+		m_applyTeamList.pop_front();
+	}
 	if (GetIntData("IsHaveGameScene") == 1)
 	{
 		CurGameScene()->getGameUiLayer()->setTeamSpot(true);
@@ -427,4 +411,49 @@ void CMClient::doAgreeTeamMsg(AgreeTeam_Msg* msg)
 	{
 		CurGameScene()->addChild(tiplayer);
 	}
+	CameraPlayer::getPlayerInstance()->setTeamStatus(P_STATUS_HEADER);
+	TeamManager::getInstance()->createTeam(msg->fd, P_STATUS_MEMBER);
+}
+
+void CMClient::sendTeamMoveMsg(cocos2d::Vec2 target, int dest)
+{
+	TeamMove_Msg msg;
+	msg.x = target.x;
+	msg.y = target.y;
+	msg.dest = dest;
+	SendMsg((char*)&msg, sizeof(msg));
+}
+
+void CMClient::doTeamMoveMsg(TeamMove_Msg* msg)
+{
+	CameraPlayer::getPlayerInstance()->moveTo(Vec2{ msg->x,msg->y }, 1);
+}
+
+void CMClient::sendTeamGotoMapMsg(std::string map, cocos2d::Vec2 target, int dest)
+{
+	TeamGotoMap_Msg msg;
+	msg.dest = dest;
+	strcpy_s(msg.map, map.c_str());
+	msg.x = target.x;
+	msg.y = target.y;
+	SendMsg((char*)&msg, sizeof(msg));
+}
+
+void CMClient::doTeamGotoMapMsg(TeamGotoMap_Msg* msg)
+{
+	if (CCDirector::getInstance()->getRunningScene()->getName() == "GameScene")
+		m_gotoMapMsgs.push_back(*msg);
+}
+
+void CMClient::SendTeamDissolveMsg(int dest)
+{
+	TeamManage_Msg msg;
+	msg.type = M_DissolveTeam;
+	msg.dest = dest;
+	SendMsg((char*)&msg, sizeof(msg));
+}
+
+void CMClient::doTeamDissolveMsg()
+{
+	TeamManager::getInstance()->dissolveTeam();
 }

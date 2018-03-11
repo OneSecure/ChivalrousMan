@@ -288,12 +288,6 @@
   <key>tfPasswd</key>
   <string>输入密码</string>
   <!-- 背景素材 -->
-  <key>TipBg</key>
-  <string>tipbg.png</string>
-  <key>PTBg</key>
-  <string>PTBg.png</string>
-  <key>MsgListBg</key>
-  <string>MsgListBg.png</string>
   <key>MsgItemBg</key>
   <string>MsgItemBg.png</string>
   <key>ScrollBarBg</key>

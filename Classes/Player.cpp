@@ -160,7 +160,7 @@ void XGamePlayer::update(float dt)
 	}
 }
 
-bool XGamePlayer::moveTo(cocos2d::Vec2 targetPos)
+bool XGamePlayer::moveTo(cocos2d::Vec2 targetPos,int less)
 {
 	m_vx = 0;
 	m_vy = 0;
@@ -172,6 +172,7 @@ bool XGamePlayer::moveTo(cocos2d::Vec2 targetPos)
 	FOUR_LOSE_FIVE_ADD(targetPos.y);
 	Vec2 start{ m_worldPos.x / w,m_worldPos.y / h };
 	FindRoad froad{ start, targetPos, GetMapInfo(), MapCountX, MapCountY };
+	froad.lessOne(less);
 	froad.ExecuteAStar();
 	if (froad.isHasRoad())
 	{

@@ -70,7 +70,8 @@
     <IncludePath>E:\Cocos2dx-Project\ChivalrousMan\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LibraryPath>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>E:\Cocos2dx-Project\ChivalrousMan\lib;$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>E:\Cocos2dx-Project\ChivalrousMan\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -153,68 +154,186 @@ xcopy /Y /Q "$(COCOS_X_ROOT)\cocos2d-x-3.10\prebuilt\win32\*.*" "$(OutDir)"
     <ClCompile Include="..\Classes\Animal.cpp" />
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\AudioSystem.cpp" />
+    <ClCompile Include="..\Classes\BackPackLayer.cpp" />
+    <ClCompile Include="..\Classes\BackPackManager.cpp" />
+    <ClCompile Include="..\Classes\BeginLayer.cpp" />
     <ClCompile Include="..\Classes\BeginScene.cpp" />
-    <ClCompile Include="..\Classes\DBDao.cpp" />
+    <ClCompile Include="..\Classes\CMClient.cpp" />
+    <ClCompile Include="..\Classes\CrackIt.cpp" />
+    <ClCompile Include="..\Classes\Danate.cpp" />
+    <ClCompile Include="..\Classes\DealLayer.cpp" />
+    <ClCompile Include="..\Classes\DetailLayer.cpp" />
+    <ClCompile Include="..\Classes\Door.cpp" />
+    <ClCompile Include="..\Classes\DragonRoar.cpp" />
     <ClCompile Include="..\Classes\EndScene.cpp" />
+    <ClCompile Include="..\Classes\EquipMent.cpp" />
+    <ClCompile Include="..\Classes\EquipmentManager.cpp" />
     <ClCompile Include="..\Classes\ExcessiveScene.cpp" />
+    <ClCompile Include="..\Classes\FightLayer.cpp" />
     <ClCompile Include="..\Classes\FindRoad.cpp" />
     <ClCompile Include="..\Classes\GameData.cpp" />
     <ClCompile Include="..\Classes\GameDynamicData.cpp" />
     <ClCompile Include="..\Classes\GameLogicLayer.cpp" />
+    <ClCompile Include="..\Classes\GameMenuLayer.cpp" />
     <ClCompile Include="..\Classes\GameScene.cpp" />
-    <ClCompile Include="..\Classes\HelloWorldScene.cpp" />
+    <ClCompile Include="..\Classes\GameUILayer.cpp" />
+    <ClCompile Include="..\Classes\HurtValueLayer.cpp" />
+    <ClCompile Include="..\Classes\LightStrike.cpp" />
     <ClCompile Include="..\Classes\LoadingLayer.cpp" />
+    <ClCompile Include="..\Classes\Lock.cpp" />
     <ClCompile Include="..\Classes\Login.cpp" />
     <ClCompile Include="..\Classes\LoginLayer.cpp" />
+    <ClCompile Include="..\Classes\Long.cpp" />
     <ClCompile Include="..\Classes\MapInfo.cpp" />
     <ClCompile Include="..\Classes\GameMapLayer.cpp" />
+    <ClCompile Include="..\Classes\Medication.cpp" />
+    <ClCompile Include="..\Classes\MemberItem.cpp" />
+    <ClCompile Include="..\Classes\Monster.cpp" />
+    <ClCompile Include="..\Classes\MsgItem.cpp" />
+    <ClCompile Include="..\Classes\MsgListLayer.cpp" />
+    <ClCompile Include="..\Classes\PickupTaskLayer.cpp" />
+    <ClCompile Include="..\Classes\Player.cpp" />
+    <ClCompile Include="..\Classes\PlayerData.cpp" />
+    <ClCompile Include="..\Classes\PlayerItem.cpp" />
+    <ClCompile Include="..\Classes\PlayerListLayer.cpp" />
+    <ClCompile Include="..\Classes\PrivateTalkLayer.cpp" />
+    <ClCompile Include="..\Classes\RealSkill.cpp" />
+    <ClCompile Include="..\Classes\RecallCountermand.cpp" />
+    <ClCompile Include="..\Classes\RoleInfoLayer.cpp" />
+    <ClCompile Include="..\Classes\SealOfTheBlade.cpp" />
+    <ClCompile Include="..\Classes\Skill.cpp" />
+    <ClCompile Include="..\Classes\SkillFactory.cpp" />
+    <ClCompile Include="..\Classes\SkillManager.cpp" />
+    <ClCompile Include="..\Classes\TaskItem.cpp" />
+    <ClCompile Include="..\Classes\TaskLayer.cpp" />
+    <ClCompile Include="..\Classes\TeamLayer.cpp" />
+    <ClCompile Include="..\Classes\TeamManager.cpp" />
+    <ClCompile Include="..\Classes\TeamMsgItem.cpp" />
+    <ClCompile Include="..\Classes\Thing.cpp" />
+    <ClCompile Include="..\Classes\TipLayer.cpp" />
+    <ClCompile Include="..\Classes\WorldMapLayer.cpp" />
     <ClCompile Include="..\Classes\NewGameLayer.cpp" />
     <ClCompile Include="..\Classes\NewGameScene.cpp" />
     <ClCompile Include="..\Classes\CameraPlayer.cpp" />
+    <ClCompile Include="..\Classes\Npc.cpp" />
+    <ClCompile Include="..\Classes\NpcBlue.cpp" />
+    <ClCompile Include="..\Classes\NpcEquip.cpp" />
+    <ClCompile Include="..\Classes\NpcMamom.cpp" />
+    <ClCompile Include="..\Classes\NpcMonk.cpp" />
+    <ClCompile Include="..\Classes\NpcPink.cpp" />
+    <ClCompile Include="..\Classes\NpcSkill.cpp" />
+    <ClCompile Include="..\Classes\NpcVallige.cpp" />
+    <ClCompile Include="..\Classes\ObjectLayer.cpp" />
     <ClCompile Include="..\Classes\PlayerRun.cpp" />
     <ClCompile Include="..\Classes\PlayerState.cpp" />
     <ClCompile Include="..\Classes\PlayerWait.cpp" />
+    <ClCompile Include="..\Classes\ReflectNpc.cpp" />
     <ClCompile Include="..\Classes\SelectLayer.cpp" />
     <ClCompile Include="..\Classes\SelectScene.cpp" />
     <ClCompile Include="..\Classes\SignOn.cpp" />
     <ClCompile Include="..\Classes\SigOnLayer.cpp" />
+    <ClCompile Include="..\Classes\SkillLayer.cpp" />
     <ClCompile Include="..\Classes\StartMenu.cpp" />
+    <ClCompile Include="..\Classes\TalkLayer.cpp" />
     <ClCompile Include="..\Classes\TaskSystem.cpp" />
+    <ClCompile Include="..\Classes\TCPClient.cpp" />
+    <ClCompile Include="..\Classes\XBArrow.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\Animal.h" />
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\AudioSystem.h" />
+    <ClInclude Include="..\Classes\BackPackLayer.h" />
+    <ClInclude Include="..\Classes\BackPackManager.h" />
+    <ClInclude Include="..\Classes\BeginLayer.h" />
     <ClInclude Include="..\Classes\BeginScene.h" />
+    <ClInclude Include="..\Classes\CMClient.h" />
     <ClInclude Include="..\Classes\Commen.h" />
+    <ClInclude Include="..\Classes\CrackIt.h" />
+    <ClInclude Include="..\Classes\Danate.h" />
     <ClInclude Include="..\Classes\DBDao.h" />
+    <ClInclude Include="..\Classes\DealLayer.h" />
+    <ClInclude Include="..\Classes\DetailLayer.h" />
+    <ClInclude Include="..\Classes\Door.h" />
+    <ClInclude Include="..\Classes\DragonRoar.h" />
     <ClInclude Include="..\Classes\EndScene.h" />
+    <ClInclude Include="..\Classes\EquipMent.h" />
+    <ClInclude Include="..\Classes\EquipmentManager.h" />
     <ClInclude Include="..\Classes\ExcessiveScene.h" />
+    <ClInclude Include="..\Classes\FightLayer.h" />
     <ClInclude Include="..\Classes\FindRoad.h" />
     <ClInclude Include="..\Classes\GameData.h" />
     <ClInclude Include="..\Classes\GameDynamicData.h" />
     <ClInclude Include="..\Classes\GameLogicLayer.h" />
+    <ClInclude Include="..\Classes\GameMenuLayer.h" />
     <ClInclude Include="..\Classes\GameScene.h" />
-    <ClInclude Include="..\Classes\HelloWorldScene.h" />
+    <ClInclude Include="..\Classes\GameUILayer.h" />
+    <ClInclude Include="..\Classes\HurtValueLayer.h" />
+    <ClInclude Include="..\Classes\LightStrike.h" />
     <ClInclude Include="..\Classes\LoadingLayer.h" />
+    <ClInclude Include="..\Classes\Lock.h" />
     <ClInclude Include="..\Classes\Login.h" />
     <ClInclude Include="..\Classes\LoginLayer.h" />
+    <ClInclude Include="..\Classes\Long.h" />
     <ClInclude Include="..\Classes\MapInfo.h" />
     <ClInclude Include="..\Classes\GameMapLayer.h" />
+    <ClInclude Include="..\Classes\Medication.h" />
+    <ClInclude Include="..\Classes\MemberItem.h" />
+    <ClInclude Include="..\Classes\Monster.h" />
+    <ClInclude Include="..\Classes\MsgItem.h" />
+    <ClInclude Include="..\Classes\MsgListLayer.h" />
+    <ClInclude Include="..\Classes\PickupTaskLayer.h" />
+    <ClInclude Include="..\Classes\Player.h" />
+    <ClInclude Include="..\Classes\PlayerData.h" />
+    <ClInclude Include="..\Classes\PlayerItem.h" />
+    <ClInclude Include="..\Classes\PlayerListLayer.h" />
+    <ClInclude Include="..\Classes\PrivateTalkLayer.h" />
+    <ClInclude Include="..\Classes\RealSkill.h" />
+    <ClInclude Include="..\Classes\RecallCountermand.h" />
+    <ClInclude Include="..\Classes\RoleInfoLayer.h" />
+    <ClInclude Include="..\Classes\SealOfTheBlade.h" />
+    <ClInclude Include="..\Classes\ShareData.h" />
+    <ClInclude Include="..\Classes\Skill.h" />
+    <ClInclude Include="..\Classes\SkillFactory.h" />
+    <ClInclude Include="..\Classes\SkillManager.h" />
+    <ClInclude Include="..\Classes\TaskItem.h" />
+    <ClInclude Include="..\Classes\TaskLayer.h" />
+    <ClInclude Include="..\Classes\TeamLayer.h" />
+    <ClInclude Include="..\Classes\TeamManager.h" />
+    <ClInclude Include="..\Classes\TeamMsgItem.h" />
+    <ClInclude Include="..\Classes\Thing.h" />
+    <ClInclude Include="..\Classes\TipLayer.h" />
+    <ClInclude Include="..\Classes\WorldMapLayer.h" />
+    <ClInclude Include="..\Classes\Model.h" />
     <ClInclude Include="..\Classes\NewGameLayer.h" />
     <ClInclude Include="..\Classes\NewGameScene.h" />
     <ClInclude Include="..\Classes\CameraPlayer.h" />
+    <ClInclude Include="..\Classes\Npc.h" />
+    <ClInclude Include="..\Classes\NpcBlue.h" />
+    <ClInclude Include="..\Classes\NpcEquip.h" />
+    <ClInclude Include="..\Classes\NpcManmom.h" />
+    <ClInclude Include="..\Classes\NpcMonk.h" />
+    <ClInclude Include="..\Classes\NpcPink.h" />
+    <ClInclude Include="..\Classes\NpcSkill.h" />
+    <ClInclude Include="..\Classes\NpcVallige.h" />
+    <ClInclude Include="..\Classes\ObjectLayer.h" />
     <ClInclude Include="..\Classes\PlayerRun.h" />
     <ClInclude Include="..\Classes\PlayerState.h" />
     <ClInclude Include="..\Classes\PlayerWait.h" />
     <ClInclude Include="..\Classes\PreProcess.h" />
+    <ClInclude Include="..\Classes\public.h" />
+    <ClInclude Include="..\Classes\ReflectNpc.h" />
     <ClInclude Include="..\Classes\SelectLayer.h" />
     <ClInclude Include="..\Classes\SelectScene.h" />
     <ClInclude Include="..\Classes\SignOn.h" />
     <ClInclude Include="..\Classes\SigOnLayer.h" />
+    <ClInclude Include="..\Classes\SkillLayer.h" />
     <ClInclude Include="..\Classes\StartMenu.h" />
+    <ClInclude Include="..\Classes\TalkLayer.h" />
     <ClInclude Include="..\Classes\TaskSystem.h" />
+    <ClInclude Include="..\Classes\TCPClient.h" />
+    <ClInclude Include="..\Classes\XBArrow.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
   <ItemGroup>
@@ -222,6 +341,10 @@ xcopy /Y /Q "$(COCOS_X_ROOT)\cocos2d-x-3.10\prebuilt\win32\*.*" "$(OutDir)"
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\Resources\GameData.xml" />
+    <Xml Include="..\Resources\GameData1.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\game.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

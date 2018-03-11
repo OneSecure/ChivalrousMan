@@ -28,6 +28,11 @@ class FindRoad
 public:
 	FindRoad(cocos2d::Vec2 startPos,cocos2d::Vec2 targetPos,int** map,int countx, int county);
 	~FindRoad();
+	
+	/*
+	*减少一个
+	*/
+	void lessOne(int less);
 
 	void ExecuteAStar();
 
@@ -39,10 +44,13 @@ public:
 
 	bool OnCloseList(_Pos& pos);
 
-	std::stack<cocos2d::Vec2> GetRoadList();
+	std::stack<cocos2d::Vec2>& GetRoadList();
 
 	inline bool isHasRoad() { return hasRoad; }
 
+	/*
+	*在开启列表中查找距离最短的位置
+	*/
 	std::list<_Pos*>::iterator FindFromOpenMin();
 private:
 	void GetRoad();
@@ -58,6 +66,7 @@ private:
 	int m_county;
 	int** m_map;
 	bool hasRoad = true;
+	int less = 0;
 };
 
 #endif // !__FIND_ROAD_H__

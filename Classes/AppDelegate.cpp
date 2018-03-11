@@ -17,6 +17,7 @@
 #include"EquipmentManager.h"
 #include"SkillManager.h"
 #include"BackPackManager.h"
+#include"TeamManager.h"
 #include"TaskLayer.h"
 
 #define LoadPlayerAnimation(player)    \
@@ -48,7 +49,7 @@ AppDelegate::AppDelegate()
 AppDelegate::~AppDelegate() 
 {
 	CameraPlayer::release();
-	AudioSystem::releaseAudioSystem();
+	HelpToolSystem::releaseAudioSystem();
 	MapInfo::release();
 	ReflectNpc::release();
 	CMClient::release();
@@ -57,6 +58,7 @@ AppDelegate::~AppDelegate()
 	BackPackManager::release();
 	GameData::release();
 	GameDynamicData::release();
+	TeamManager::release();
 }
 
 //if you want a different context,just modify the value of glContextAttrs
@@ -93,7 +95,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	CMClient::getInstance();
 	registerReflectClass();
 	LoadResource();
-	AudioSystem::getInstance();
+	HelpToolSystem::getInstance();
 
 	auto scene = BeginScene::create();
 

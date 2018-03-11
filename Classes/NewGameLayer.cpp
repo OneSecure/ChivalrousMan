@@ -9,6 +9,7 @@
 #include"Model.h"
 #include"CameraPlayer.h"
 #include"PlayerData.h"
+#include"CMClient.h"
 #include<functional>
 #include<sstream>
 
@@ -221,7 +222,9 @@ void NewGameLayer::constructPlayerInfo(PlayerInfo& playerinfo,const std::string&
 	SetInfo(speed, 4);
 	SetInfo(exp, 0);
 	SetInfo(maxExp, 100);
+	CameraPlayer::getPlayerInstance()->setTeamStatus(P_STATUS_NORMAL);
 	playerinfo.setdestx("100");
 	playerinfo.setdesty("100");
 	playerinfo.setlevel(NTS(LEVEL_ONE));
+	CMClient::getInstance()->SendInitPlayerData();
 }

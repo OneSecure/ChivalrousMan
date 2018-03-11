@@ -49,6 +49,11 @@ private:
 	*生成遇到怪物的名字
 	*/
 	std::string monsterName();
+
+	/*
+	*检查前往某地图
+	*/
+	void checkGotoMap();
 };
 
 #endif // !__GAME_LOGIC_LAYER_H__

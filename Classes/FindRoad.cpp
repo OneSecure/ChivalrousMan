@@ -144,12 +144,17 @@ void FindRoad::GetRoad()
 	_Pos *pos = m_curPos;
 	while (pos->parent!=NULL)
 	{
-		m_roadList.push(Vec2{ (float)pos->x,(float)pos->y });
+		less == 1 ? less = 0 : m_roadList.push(Vec2{ (float)pos->x,(float)pos->y });
 		pos = pos->parent;
 	} 
 }
 
-std::stack<cocos2d::Vec2> FindRoad::GetRoadList()
+std::stack<cocos2d::Vec2>& FindRoad::GetRoadList()
 {
 	return m_roadList;
+}
+
+void FindRoad::lessOne(int less)
+{
+	this->less = less;
 }

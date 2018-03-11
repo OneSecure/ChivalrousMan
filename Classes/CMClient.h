@@ -43,13 +43,18 @@ public:
 	*向服务器发送初始化位置信息
 	*/
 	void SendInitPos();
+
+	/*
+	*处理初始化消息
+	*/
+	void doInitMsg(InitData_Msg* msg);
 	
 	/*
 	*SendMoveToMsg(const cocos2d::Vec2& pos);
 	*发送移动至目标位置消息
 	*@param pos:目标位置
 	*/
-	void SendMoveToMsg(const cocos2d::Vec2& pos);
+	void SendMoveToMsg(const cocos2d::Vec2& pos, int less = 0);
 
 	/*
 	*处理玩家初始化位置信息消息
@@ -60,6 +65,11 @@ public:
 	*发送玩家离线消息
 	*/
 	void SendPlayerLeaveMsg();
+
+	/*
+	*处理玩家离线消息
+	*/
+	void doPlayerLeaveMsg(PlayerLeave_Msg* msg);
 
 	/*
 	*删除玩家
@@ -98,20 +108,7 @@ public:
 	*/
 	void doPlayerDataUpdaeMsg(UpdateData_Msg* msg);
 
-	/*
-	*updatePlayerMap();
-	*更新玩家当前所在地图
-	*@param level:玩家所在的新地图
-	*/
-	void updatePlayerMap(const int& level);
-
-	/*
-	* doUpdatePlayerMapMsg();
-	*处理更新玩家地图消息
-	*/
-	void doUpdatePlayerMapMsg(UpdateMap_Msg* msg);
-
-	const std::list<Player_Info>& getPlayerList() { return m_playerlist; }
+	std::list<Player_Info>& getPlayerList() { return m_playerlist; }
 
 	/*
 	*findRoleNameByFd(const int& fd);
@@ -160,6 +157,44 @@ public:
 	*@param msg：同意消息内容
 	*/
 	void doAgreeTeamMsg(AgreeTeam_Msg* msg);
+
+	/*
+	*发送队伍移动消息
+	*@param target：移动到的目的地
+	*@param dest：发送给的目标
+	*/
+	void sendTeamMoveMsg(cocos2d::Vec2 target, int dest);
+
+	/*
+	*处理队伍移动消息
+	*/
+	void doTeamMoveMsg(TeamMove_Msg* msg);
+
+	/*
+	*发送队伍进入地图消息
+	*@param map：进入的地图名
+	*@param target ：目的坐标
+	*@param dest：发送给谁
+	*/
+	void sendTeamGotoMapMsg(std::string map, cocos2d::Vec2 target, int dest);
+
+	/*
+	*处理队伍进入某地图消息
+	*/
+	void doTeamGotoMapMsg(TeamGotoMap_Msg* msg);
+
+	/*
+	*SendTeamDissolveMsg(int dest)
+	*@param dest：发送给谁
+	*/
+	void SendTeamDissolveMsg(int dest);
+
+	/*
+	*处理队伍解散消息
+	*/
+	void doTeamDissolveMsg();
+
+	std::list<TeamGotoMap_Msg>& getGotoMapMsgs() { return m_gotoMapMsgs; }
 private:
 	CMClient();
 	~CMClient();
@@ -179,6 +214,7 @@ private:
 	std::list<int> m_applyTeamList;          //队伍申请列表
 	std::deque<TalkMsg> m_worldTalkMsgs;    //世界聊天消息
 	std::map<int, std::deque<TalkMsg>> m_privateTalkMsgs;    //私聊消息
+	std::list<TeamGotoMap_Msg> m_gotoMapMsgs;            //保存前往某地图消息
 };
 
 #endif // !__CM_CLIENT_H__
