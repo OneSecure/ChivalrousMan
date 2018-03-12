@@ -31,10 +31,11 @@ public:
 	/*
 	*根据怪物名称创建战斗场景
 	*@param name：怪物
+	*@param nums:怪物数量
 	*/
-	static cocos2d::Scene* createFightScene(const std::string& name);
+	static cocos2d::Scene* createFightScene(const std::string& name, int nums = 1);
 
-	bool init(const std::string& name);
+	bool init(const std::string& name, int nums);
 
 	/*
 	*移除怪物
@@ -90,7 +91,7 @@ private:
 	*randomNumMonster();
 	*生成随机数量的怪物
 	*/
-	void randomNumMonster(const std::string& name);
+	void randomNumMonster(const std::string& name, int nums);
 
 	/*
 	*选择怪物点击回调函数

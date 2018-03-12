@@ -9,6 +9,7 @@
 #include"PrivateTalkLayer.h"
 #include"TeamManager.h"
 #include"TipLayer.h"
+#include"FightLayer.h"
 #include<fstream>
 #include<string>
 
@@ -93,6 +94,9 @@ void  CMClient::OnRecv(char* buff)
 		break;
 	case M_DissolveTeam:
 		doTeamDissolveMsg();
+		break;
+	case M_TeamFight:
+		doTeamFightMsg((TeamFight_Msg*)buff);
 		break;
 	default:
 		break;
@@ -456,4 +460,31 @@ void CMClient::SendTeamDissolveMsg(int dest)
 void CMClient::doTeamDissolveMsg()
 {
 	TeamManager::getInstance()->dissolveTeam();
+	auto tipLayer = TipLayer::createTipLayer(StringValue("TeamDissolveText"));
+	if (Director::getInstance()->getRunningScene() != nullptr)
+		Director::getInstance()->getRunningScene()->addChild(tipLayer);
+}
+
+void CMClient::sendTeamFightMsg(int dest, std::string name, int nums)
+{
+	TeamFight_Msg msg;
+	msg.dest = dest;
+	strcpy_s(msg.name, name.c_str());
+	msg.nums = nums;
+	SendMsg((char*)&msg, sizeof(msg));
+}
+
+void CMClient::doTeamFightMsg(TeamFight_Msg* msg)
+{
+	if (Director::getInstance()->getRunningScene()->getName() == "GameScene")
+	{
+		Director::getInstance()->pause();
+		SetFloatData("DestX", PlayerPos.x);
+		SetFloatData("DestY", PlayerPos.y);
+		SetIntData("IsHaveGameScene", 0);
+		auto fightScene = FightLayer::createFightScene(msg->name, msg->nums);
+		Director::getInstance()->resume();
+		auto reScene = TransitionFadeUp::create(0.5, fightScene);
+		Director::getInstance()->replaceScene(reScene);
+	}
 }

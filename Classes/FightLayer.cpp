@@ -33,10 +33,10 @@ FightLayer::~FightLayer()
 
 }
 
-Scene* FightLayer::createFightScene(const std::string& name)
+Scene* FightLayer::createFightScene(const std::string& name,int nums)
 {
 	FightLayer* pRet = new FightLayer;
-	if (pRet&&pRet->init(name))
+	if (pRet&&pRet->init(name,nums))
 	{
 		pRet->autorelease();
 		Scene* scene = Scene::create();
@@ -51,7 +51,7 @@ Scene* FightLayer::createFightScene(const std::string& name)
 	}
 }
 
-bool FightLayer::init(const std::string& name)
+bool FightLayer::init(const std::string& name,int nums)
 {
 	if (Layer::init())
 	{
@@ -72,7 +72,7 @@ bool FightLayer::init(const std::string& name)
 		GetPlayerData().setcurblood(GetPlayerData().getblood());
 		GetPlayerData().setcurmana(GetPlayerData().getmana());
 		this->addChild(m_player);
-		randomNumMonster(name);
+		randomNumMonster(name, nums);
 
 		auto AutoBtn = MenuItemImage::create(StringValue("AutoBtn"),
 			StringValue("AutoBtn"));
@@ -82,8 +82,10 @@ bool FightLayer::init(const std::string& name)
 		toggle->setPosition(size.width - 35, 35);
 		m_menu->addChild(toggle);
 		
-		auto MeBtn = MenuItemImage::create(StringValue("MeNormalBtn"),
-			StringValue("MePressedBtn"), this,
+		std::string menorbtn = StringValue("MeNormalBtn");
+		std::string mepressbtn = StringValue("MePressedBtn");
+		auto MeBtn = MenuItemImage::create(menorbtn,
+			mepressbtn, this,
 			menu_selector(FightLayer::onMedicationClickCallBack));
 		MeBtn->setPosition(size.width - 35, 35 + 45);
 		m_menu->addChild(MeBtn);
@@ -161,14 +163,12 @@ bool FightLayer::init(const std::string& name)
 	return false;
 }
 
-void FightLayer::randomNumMonster(const std::string& name)
+void FightLayer::randomNumMonster(const std::string& name,int nums)
 {
-	std::random_device  rnd;
-	int num = rnd() % 4 + 1;
 	Vec2 basePos;
 	basePos.x = 80;
 	basePos.y = SCREEN.height*0.5 - 100;
-	for (int i = 0; i < num; ++i)
+	for (int i = 0; i < nums; ++i)
 	{
 		Monster* monster = Monster::createWithName(name);
 		float x = i % 2;

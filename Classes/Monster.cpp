@@ -70,8 +70,22 @@ void Monster::initProperty(const std::string& name)
 
 void Monster::initMonsterAnimation(const std::string& name, int num)
 {
-	Animation* animation;
-	LoadAnimationFromMinFile(name.c_str(), num, 0.15, animation);
+	Animation* animation = nullptr;
+	animation=AnimationCache::getInstance()->getAnimation(name);
+	if (animation == nullptr)
+	{
+		animation = Animation::create();
+		std::string filename = "";
+		animation->setDelayPerUnit(0.15);
+		AnimationCache::getInstance()->addAnimation(animation, name);
+		for (int i = 1; i <= num; ++i)
+		{
+			filename = name + NTS(i) + ".png";
+			Texture2D *texture = TextureCache::getInstance()->addImage(filename);
+			Rect rect{ 0,0,texture->getContentSize().width,texture->getContentSize().height };
+			animation->addSpriteFrameWithTexture(texture, rect);
+		}
+	}
 	auto animate = Animate::create(animation);
 	this->runAction(CCRepeatForever::create(animate));
 }

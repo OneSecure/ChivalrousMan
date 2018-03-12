@@ -41,7 +41,7 @@ void  GameLogicLayer::onTouchEnded(Touch *touch, Event *unused_event)
 	bool bRet=CameraPlayer::getPlayerInstance()->moveTo(targetPos);
 	if (CameraPlayer::getPlayerInstance()->getTeamStatus() == P_STATUS_HEADER&&bRet)
 	{
-		std::function<void(float)> func = [&targetPos](float) {
+		std::function<void(float)> func = [targetPos](float) {
 			CameraPlayer::getPlayerInstance()->moveTeamMembers(targetPos);
 		};
 		scheduleOnce(func, 0.1, "movemember");
@@ -165,9 +165,12 @@ void GameLogicLayer::randomMeetMonster()
 				SetFloatData("DestX", PlayerPos.x);
 				SetFloatData("DestY", PlayerPos.y);
 				SetIntData("IsHaveGameScene", 0);
-				auto fightScene = FightLayer::createFightScene(monsterName());
+				int nums = rand() % 4 + 1;
+				std::string name = monsterName();
+				auto fightScene = FightLayer::createFightScene(name, nums);
 				auto reScene = TransitionFadeUp::create(0.5, fightScene);
 				Director::getInstance()->replaceScene(reScene);
+				checkTeamEntryFight(name, nums);
 			}
 			interval = 0;
 		}
@@ -214,5 +217,16 @@ void GameLogicLayer::checkGotoMap()
 		unscheduleUpdate();
 		gotoDestMap(msg.map);
 		CMClient::getInstance()->getGotoMapMsgs().clear();
+	}
+}
+
+void GameLogicLayer::checkTeamEntryFight(const std::string& name, const int& nums)
+{
+	if (PlayerTeamStatus() == P_STATUS_HEADER)
+	{
+		for (auto var : TeamManager::getInstance()->getTeamMembers())
+		{
+			CMClient::getInstance()->sendTeamFightMsg(var.first, name, nums);
+		}
 	}
 }

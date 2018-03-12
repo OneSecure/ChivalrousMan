@@ -54,6 +54,11 @@ private:
 	*¼ì²éÇ°ÍùÄ³µØÍ¼
 	*/
 	void checkGotoMap();
+	
+	/*
+	*
+	*/
+	void checkTeamEntryFight(const std::string& name,const int& nums);
 };
 
 #endif // !__GAME_LOGIC_LAYER_H__

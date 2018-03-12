@@ -62,6 +62,7 @@ void TeamLayer::initTeamMember(const cocos2d::Vec2& basePos)
 	info.playertype = GetStringData("PlayerType");
 	MemberItem* item = MemberItem::create(info, PlayerTeamStatus(), PlayerTeamStatus() == P_STATUS_HEADER ? TB_DISSOLVE : TB_QUIT);
 	item->setPosition(basePos);
+	m_itemlist.push_back(item);
 	this->addChild(item);
 	int index = 1;
 	for (auto var : TeamManager::getInstance()->getTeamMembers())
@@ -70,6 +71,7 @@ void TeamLayer::initTeamMember(const cocos2d::Vec2& basePos)
 		item = MemberItem::create(info, var.second, PlayerTeamStatus() == P_STATUS_HEADER ? TB_KICKOUT : TB_NULL);
 		item->setPosition(basePos.x, basePos.y - index * 80);
 		this->addChild(item);
+		m_itemlist.push_back(item);
 		++index;
 	}
 }

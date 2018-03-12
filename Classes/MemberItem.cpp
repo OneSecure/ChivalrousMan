@@ -2,6 +2,7 @@
 #include"Commen.h"
 #include"GameData.h"
 #include"TeamManager.h"
+#include"TeamLayer.h"
 #include"CMClient.h"
 
 #define DISSOLVE_TEAM()    \
@@ -73,16 +74,19 @@ void MemberItem::onDissolveBtnClick(cocos2d::CCObject* sender)
 {
 	ClickAction(sender);
 	DISSOLVE_TEAM();
+	((TeamLayer*)getParent())->removeMsgItem(this);
 }
 
 void MemberItem::onKickOutBtnClick(cocos2d::CCObject* sender)
 {
 	ClickAction(sender);
 	DISSOLVE_TEAM();
+	((TeamLayer*)getParent())->removeMsgItem(this);
 }
 
 void MemberItem::onQuitTeamBtnClick(cocos2d::CCObject* sender)
 {
 	ClickAction(sender);
-	DISSOLVE_TEAM();
+	DISSOLVE_TEAM();	
+	((TeamLayer*)getParent())->removeMsgItem(this);
 }

@@ -118,7 +118,7 @@ void AppDelegate::applicationWillEnterForeground() {
     Director::getInstance()->startAnimation();
 
     // if you use SimpleAudioEngine, it must resume here
-    // SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
+     //SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
 }
 
 void AppDelegate::LoadResource()

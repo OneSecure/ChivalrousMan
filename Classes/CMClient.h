@@ -194,6 +194,20 @@ public:
 	*/
 	void doTeamDissolveMsg();
 
+	/*
+	*sendTeamFightMsg(int dest, std::string name, int nums);
+	*发送队伍进入战斗消息
+	*@param dest:发送消息给谁
+	*@param name:进入战斗的怪物名字
+	*@param nums:怪物数量
+	*/
+	void sendTeamFightMsg(int dest, std::string name, int nums);
+
+	/*
+	*处理队伍进入战斗消息
+	*/
+	void doTeamFightMsg(TeamFight_Msg* msg);
+
 	std::list<TeamGotoMap_Msg>& getGotoMapMsgs() { return m_gotoMapMsgs; }
 private:
 	CMClient();
