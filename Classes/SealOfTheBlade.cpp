@@ -14,9 +14,8 @@ bool SealOfTheBlade::init(Layer* parent,cocos2d::CCObject* towho, const float& b
 		this->setPosition(220, size.height*0.52);
 		m_parent->addChild(this);
 
-		Animation* animation;
-		LoadAnimationFromMinFile("Skill/SealOfTheBlade/SealOfTheBlade", 15, 0.1, animation);
-		Animate* animate = Animate::create(animation);
+		//LoadAnimationFromMinFile(, 15, 0.1, animation);
+		Animate* animate = Animate::create(getAnimation("Skill/SealOfTheBlade/SealOfTheBlade"));
 		this->runAction(animate);
 
 		scheduleOnce(schedule_selector(SealOfTheBlade::died), 1.5);

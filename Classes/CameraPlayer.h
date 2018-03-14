@@ -138,18 +138,18 @@ public:
 	*@param target：移动的目的地
 	*/
 	void moveTeamMembers(cocos2d::Vec2 target);
-private:
-	/*
-	*AdjustPlayerAndMapPos()
-	*调整玩家和地图的位置
-	*/
-	void AdjustPlayerAndMapPos();
 
 	/*
 	*clearRoadList();
 	*清空路径队列
 	*/
 	void clearRoadList();
+private:
+	/*
+	*AdjustPlayerAndMapPos()
+	*调整玩家和地图的位置
+	*/
+	void AdjustPlayerAndMapPos();
 
 	/*
 	*goNext();

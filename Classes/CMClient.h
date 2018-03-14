@@ -234,6 +234,30 @@ public:
 	*/
 	void doMonsterAtkMsg(MonsterAtk_Msg* msg);
 
+	/*
+	*发送玩家逃跑消息
+	*@param dest:发送给谁
+	*@param flag：标记逃跑是否成功
+	*/
+	void sendPlayerRunMsg(int dest, int flag);
+
+	/*
+	*处理玩家逃跑消息
+	*@param msg
+	*/
+	void doPlayerRunMsg(PlayerRun_Msg* msg);
+
+	/*
+	*发送使用药品消息
+	*@param dest：发送给谁
+	*/
+	void sendUseMedicationMsg(int dest);
+
+	/*
+	*处理使用药品消息
+	*/
+	void doUseMedicationMsg(UseMedication_Msg* msg);
+
 	std::list<TeamGotoMap_Msg>& getGotoMapMsgs() { return m_gotoMapMsgs; }
 private:
 	CMClient();

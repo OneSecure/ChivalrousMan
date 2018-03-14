@@ -2,6 +2,7 @@
 #ifndef __REAL_SKILL_H__
 #define __REAL_SKILL_H__
 #include"PreProcess.h"
+#include<string>
 
 #define SKILL__FUNC(__TYPE__)   \
 public:    \
@@ -24,6 +25,17 @@ public:
 	*消失
 	*/
 	virtual void died(float dt);
+
+	/*
+	*预加载技能动画
+	*/
+	static void loadAnimation(std::string name, int nums, float delay);
+
+	/*
+	*获取技能动画
+	*@param key:技能key值
+	*/
+	static cocos2d::Animation* getAnimation(std::string key);
 protected:
 	cocos2d::Layer* m_parent;
 	cocos2d::CCObject* m_towho;

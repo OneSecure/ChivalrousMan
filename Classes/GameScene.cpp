@@ -46,6 +46,7 @@ bool GameScene::init(const int& level)
 		char name[40] = { 0 };
 		sprintf_s(name, "%sWaitDown", GetStringData("PlayerType").c_str());
 		auto player = Sprite::create(StringValue(name));
+		player->setName("GamePlayer");
 		m_objectLayer->addChild(player);
 		SetPlayerVelocity(FloatValue("PlayerSpeed"));
 		SetPlayerFace(player);
@@ -101,4 +102,9 @@ void GameScene::pauseOrResumeLogicLayer(bool b)
 	{
 		m_logicLayer->resumeSchedulerAndActions();
 	}
+}
+
+void GameScene::resetGamePlayer()
+{
+	SetPlayerFace((Sprite*)m_objectLayer->getChildByName("GamePlayer"));
 }

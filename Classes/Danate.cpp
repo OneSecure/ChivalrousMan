@@ -27,9 +27,7 @@ bool Dante::init(cocos2d::Layer* parent,cocos2d::CCObject* towho, const float& b
 		setPosition(pos.x+10, pos.y);
 		m_parent->addChild(this);
 		
-		Animation* animation;
-		LoadAnimationFromMinFile("Skill/Dante/Dante", 14, 0.15, animation);
-		Animate* animate = Animate::create(animation);
+		Animate* animate = Animate::create(getAnimation("Skill/Dante/Dante"));
 		this->runAction(animate);
 
 		scheduleOnce(schedule_selector(Dante::died), 2.6);

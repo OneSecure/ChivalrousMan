@@ -34,8 +34,8 @@
   <key>LightStrike</key>
   <string>Skill/LightStrike/</string>
   <key>Long</key>
-  <string>Skill/Long</string>
-  <key>RecallCountermand/</key>
+  <string>Skill/Long/</string>
+  <key>RecallCountermand</key>
   <string>Skill/RecallCountermand/</string>
   <key>SealOfTheBlade</key>
   <string>Skill/SealOfTheBlade/</string>
@@ -131,6 +131,8 @@
   <key>TrunOff</key>
   <string>trunOff.png</string>
   <!-- 文本素材 -->
+  <key>MakeTeamFailed</key>
+  <string>请求失败,已有队伍!</string>
   <key>AgreeText</key>
   <string>同意组队</string>
   <key>RefuseText</key>
@@ -225,6 +227,8 @@
   <string>魔</string>
   <key>RunFailed</key>
   <string>逃跑失败</string>
+  <key>RunSuccessText</key>
+  <string>逃跑成功</string>
   <key>NoAction</key>
   <string>未到行动回合</string>
   <key>FightSuccess</key>

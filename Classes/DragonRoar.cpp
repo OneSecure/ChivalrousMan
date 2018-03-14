@@ -16,9 +16,8 @@ bool DragonRoar::init(cocos2d::Layer* parent,cocos2d::CCObject* towho, const flo
 		this->setPosition(pos.x + 90, pos.y);
 		m_parent->addChild(this);
 	
-		Animation* animation;
-		LoadAnimationFromMinFile("Skill/DragonRoar/DragonRoar", 9, 0.15, animation);
-		Animate* animate = Animate::create(animation);
+		//LoadAnimationFromMinFile(, 9, 0.15, animation);
+		Animate* animate = Animate::create(getAnimation("Skill/DragonRoar/DragonRoar"));
 		this->runAction(animate);
 
 		scheduleOnce(schedule_selector(DragonRoar::died), 1.35);

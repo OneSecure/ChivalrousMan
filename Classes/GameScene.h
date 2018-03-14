@@ -49,12 +49,14 @@ public:
 	/*
 	*获取逻辑层对象
 	*/
-	inline GameLogicLayer* getLogicLayer() { return m_logicLayer; }
+	GameLogicLayer* getLogicLayer() { return m_logicLayer; }
 
 	/*
 	*获取游戏UI层
 	*/
 	GameUILayer* getGameUiLayer() { return m_uiLayer; }
+
+	void resetGamePlayer();
 private:
 	GameLogicLayer* m_logicLayer;
 	GameMapLayer* m_mapLayer;

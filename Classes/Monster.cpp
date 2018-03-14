@@ -5,6 +5,7 @@
 #include"FightLayer.h"
 #include"TaskSystem.h"
 #include<fstream>
+#include<functional>
    
 Monster::Monster(const std::string& name)
 {
@@ -108,8 +109,11 @@ int Monster::beAttack(float attack)
 	if (m_blood <= 0)
 	{
 		m_isdie = true;
-		dynamic_cast<FightLayer*>(getParent())->removeMonster(this);
-		TaskSystem::getInstance()->checkKillMonster(m_name);
+		std::function<void(float)> func = [this](float) {
+			dynamic_cast<FightLayer*>(this->getParent())->removeMonster(this);
+			TaskSystem::getInstance()->checkKillMonster(this->getname());
+		};
+		scheduleOnce(func, 0.3, "diefunc");
 		return -1;
 	}
 	return 0;

@@ -34,7 +34,7 @@ public:
 	*@param name：怪物
 	*@param nums:怪物数量
 	*/
-	static cocos2d::Scene* createFightScene(const std::string& name, int nums = 1);
+	static FightLayer* createFightScene(const std::string& name, int nums = 1);
 
 	bool init(const std::string& name, int nums);
 
@@ -65,6 +65,12 @@ public:
 	void notifyOtherPlayerMonsterAtk(int who, int towho);
 
 	/*
+	*通知其它玩家自己逃跑了
+	*@param flag：标记逃跑失败还是成功,为1标识逃跑成功，0标识逃跑失败
+	*/
+	void notifyOtherPlayerRunAway(int flag);
+
+	/*
 	*monsterAttackPlayer();
 	*怪物攻击玩家
 	*@param index：攻击玩家的怪物
@@ -77,6 +83,19 @@ public:
 	*通过玩家唯一标识查找玩家索引
 	*/
 	int findOtherPlayerIndexByFd(int fd);
+	
+	/*
+	*其它玩家逃跑
+	*@param flag:标记逃跑失败还是成功
+	*/
+	void OtherRunAway(int flag);
+	
+	/*
+	*其它玩家下线
+	*/
+	void OtherPlayerLeave();
+
+	void setOtherPalyerEnd();
 private:
 	/*
 	*calcActionOrder();
@@ -204,6 +223,7 @@ private:
 	cocos2d::CCObject* m_selSkill = nullptr;     //选中的技能
 	std::vector<XGamePlayer*> m_otherPlayers;    //其他玩家
 	bool m_otherplayerEnd = true;   //标记其它玩家是否结束行为
+	bool m_otherNoAction = false;    //标记其它玩家是否需要行动
 };
 
 #endif // ! __FIGHT_LAYER_HH_

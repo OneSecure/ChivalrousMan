@@ -104,6 +104,12 @@ void  CMClient::OnRecv(char* buff)
 	case M_MonsterAtk:
 		doMonsterAtkMsg((MonsterAtk_Msg*)buff);
 		break;
+	case M_PlayerRun:
+		doPlayerRunMsg((PlayerRun_Msg*)buff);
+		break;
+	case M_UseMedication:
+		doUseMedicationMsg((UseMedication_Msg*)buff);
+		break;
 	default:
 		break;
 	}
@@ -205,6 +211,9 @@ void CMClient::SendPlayerLeaveMsg()
 void CMClient::doPlayerLeaveMsg(PlayerLeave_Msg* msg)
 {
 	removePlayer(msg->fd);
+	auto ftLayer = Director::getInstance()->getRunningScene()->getChildByName("FightLayer");
+	if (ftLayer != nullptr)
+		dynamic_cast<FightLayer*>(ftLayer)->OtherPlayerLeave();
 }
 
 void CMClient::removePlayer(int fd)
@@ -528,4 +537,35 @@ void CMClient::doMonsterAtkMsg(MonsterAtk_Msg* msg)
 		}
 		((FightLayer*)ftLayer)->monsterAttackPlayer(msg->who, towho);
 	}
+}
+
+void CMClient::sendPlayerRunMsg(int dest,int flag)
+{
+	PlayerRun_Msg msg;
+	msg.dest = dest;
+	msg.flag = flag;
+	SendMsg((char*)&msg, sizeof(msg));
+}
+
+void CMClient::doPlayerRunMsg(PlayerRun_Msg* msg)
+{
+	auto ftLayer = Director::getInstance()->getRunningScene()->getChildByName("FightLayer");
+	if (ftLayer != nullptr)
+	{
+		dynamic_cast<FightLayer*>(ftLayer)->OtherRunAway(msg->flag);
+	}
+}
+
+void CMClient::sendUseMedicationMsg(int dest)
+{
+	UseMedication_Msg msg;
+	msg.dest = dest;
+	SendMsg((char*)&msg, sizeof(msg));
+}
+
+void CMClient::doUseMedicationMsg(UseMedication_Msg* msg)
+{
+	auto ftLayer = Director::getInstance()->getRunningScene()->getChildByName("FightLayer");
+	if (ftLayer)
+		dynamic_cast<FightLayer*>(ftLayer)->setOtherPalyerEnd();
 }

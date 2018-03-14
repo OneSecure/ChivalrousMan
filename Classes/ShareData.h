@@ -25,6 +25,8 @@ enum M_Type
 	M_TeamFight,       //队伍进入战斗
 	M_MonsterAtk,     //怪物进攻消息
 	M_PlayerAtk,         //玩家进攻消息
+	M_PlayerRun,       //玩家逃跑消息
+	M_UseMedication,   //使用药品消息
 }; 
 
 struct Player_Info
@@ -238,6 +240,33 @@ struct PlayerAtk_Msg
 	PlayerAtk_Msg()
 	{
 		type = M_PlayerAtk;
+	}
+};
+
+struct PlayerRun_Msg
+{
+	M_Type type;
+	int fd;
+	int dest;
+	int flag;
+	
+	PlayerRun_Msg()
+	{
+		type = M_PlayerRun;
+		fd = -1;
+		dest = -1;
+	}
+};
+
+struct UseMedication_Msg
+{
+	M_Type type;
+	int fd;
+	int dest;
+
+	UseMedication_Msg()
+	{
+		type = M_UseMedication;
 	}
 };
 

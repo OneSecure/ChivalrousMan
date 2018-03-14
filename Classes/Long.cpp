@@ -14,9 +14,8 @@ bool Long::init(Layer* parent,cocos2d::CCObject* towho, const float& baseattack)
 		this->setPosition(pos.x+30, pos.y);
 		m_parent->addChild(this);
 
-		Animation* animation;
-		LoadAnimationFromMinFile("Skill/Long/Long", 10, 0.15, animation);
-		Animate* animate = Animate::create(animation);
+		//LoadAnimationFromMinFile(, 10, 0.15, animation);
+		Animate* animate = Animate::create(getAnimation("Skill/Long/Long"));
 		this->runAction(animate);
 
 		scheduleOnce(schedule_selector(Long::died), 1.5);

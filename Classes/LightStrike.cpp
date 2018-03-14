@@ -14,9 +14,8 @@ bool LightStrike::init(Layer* parent,cocos2d::CCObject* towho, const float& base
 		this->setPosition(230, pos.y+35);
 		m_parent->addChild(this);
 
-		Animation* animation;
-		LoadAnimationFromMinFile("Skill/LightStrike/LightStrike", 9, 0.15, animation);
-		Animate* animate = Animate::create(animation);
+		//LoadAnimationFromMinFile(, 9, 0.15, animation);
+		Animate* animate = Animate::create(getAnimation("Skill/LightStrike/LightStrike"));
 		this->runAction(animate);
 
 		scheduleOnce(schedule_selector(LightStrike::died), 1.35);

@@ -14,9 +14,8 @@ bool XBArrow::init(Layer* parent,cocos2d::CCObject* towho, const float& baseatta
 		this->setPosition(200, pos.y + 20);
 		m_parent->addChild(this);
 
-		Animation* animation;
-		LoadAnimationFromMinFile("Skill/XBArrow/XBArrow",9, 0.15, animation);
-		Animate* animate = Animate::create(animation);
+		//LoadAnimationFromMinFile(,9, 0.15, animation);
+		Animate* animate = Animate::create(getAnimation("Skill/XBArrow/XBArrow"));
 		this->runAction(animate);
 
 		scheduleOnce(schedule_selector(XBArrow::died), 1.35);

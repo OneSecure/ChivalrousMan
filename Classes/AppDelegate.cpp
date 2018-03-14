@@ -19,6 +19,7 @@
 #include"BackPackManager.h"
 #include"TeamManager.h"
 #include"TaskLayer.h"
+#include"RealSkill.h"
 
 #define LoadPlayerAnimation(player)    \
 {      \
@@ -142,6 +143,7 @@ void AppDelegate::LoadResource()
 	Animation* doorAnimation;
 	LoadAnimationFromMinFile("door/door", 11, 0.1, doorAnimation);
 	AnimationCache::getInstance()->addAnimation(doorAnimation, "DoorAnimation");
+	LoadSkillAnimation();
 }
 
 void AppDelegate::LoadAnimationFromFile(const char* filename,char* key,int num,float delay) 
@@ -168,4 +170,15 @@ void AppDelegate::registerReflectClass()
 	REG_REFLECT_CLASS(NpcPink);
 	REG_REFLECT_CLASS(NpcSkill);
 	REG_REFLECT_CLASS(NpcVallige);
+}
+
+void AppDelegate::LoadSkillAnimation()
+{
+	std::string skill[] = { "CrackIt","Dante","DragonRoar","LightStrike",
+		"Long","RecallCountermand","SealOfTheBlade","XBArrow" };
+	int nums[] = { 16,14,9,9,10,17,15,9 };
+	for (int i = 0; i < 8; ++i)
+	{
+		RealSkill::loadAnimation(StringValue(skill[i]) + skill[i], nums[i], 0.15);
+	}
 }

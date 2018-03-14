@@ -5,6 +5,7 @@
 #include"GameDynamicData.h"
 #include"GameScene.h"
 #include"PrivateTalkLayer.h"
+#include"CameraPlayer.h"
 #include"CMClient.h"
 
 PlayerItem* PlayerItem::create(const Player_Info& info)
@@ -60,7 +61,15 @@ void PlayerItem::onPrivateTalkClick(cocos2d::CCObject* sender)
 void PlayerItem::onMakeTeamClick(cocos2d::CCObject* sender)
 {
 	ClickAction(sender);
-	TeamApply_Msg msg;
-	msg.dest = m_fd;
-	CMClient::getInstance()->SendMsg((char*)&msg, sizeof(msg));
+	if (PlayerTeamStatus() == P_STATUS_NORMAL)
+	{
+		TeamApply_Msg msg;
+		msg.dest = m_fd;
+		CMClient::getInstance()->SendMsg((char*)&msg, sizeof(msg));
+	}
+	else
+	{
+		SetIntData("IsHaveTip", 1);
+		SetStringData("TipText", StringValue("MakeTeamFailed"));
+	}
 }

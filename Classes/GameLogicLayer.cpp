@@ -237,10 +237,10 @@ void GameLogicLayer::checkEntryFight()
 	if (GetIntData("IsEntryFight") == 1)
 	{
 		SetIntData("IsEntryFight", 0);
-		unscheduleUpdate();
-		auto fightScene = FightLayer::createFightScene(GetStringData("MonsterName"), GetIntData("MonsterNums"));
-		auto reScene = TransitionFadeUp::create(0.5, fightScene);
-		Director::getInstance()->replaceScene(reScene);
+		pauseSchedulerAndActions();
+		CameraPlayer::getPlayerInstance()->clearRoadList();
+		auto fightlayer = FightLayer::createFightScene(GetStringData("MonsterName"), GetIntData("MonsterNums"));
+		getParent()->addChild(fightlayer);
 	}
 }
 

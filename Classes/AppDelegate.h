@@ -40,6 +40,8 @@ public:
 	void registerReflectClass();
 
 	void LoadAnimationFromFile(const char* filename, char* key, int num, float delay);
+
+	void LoadSkillAnimation();
 };
 
 #endif // _APP_DELEGATE_H_

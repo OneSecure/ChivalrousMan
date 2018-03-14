@@ -14,9 +14,8 @@ bool RecallCounterMand::init(Layer* parent,cocos2d::CCObject* towho, const float
 		this->setPosition(230, pos.y+50);
 		m_parent->addChild(this);
 
-		Animation* animation;
-		LoadAnimationFromMinFile("Skill/RecallCountermand/RecallCountermand", 17, 0.15, animation);
-		Animate* animate = Animate::create(animation);
+		//LoadAnimationFromMinFile(, 17, 0.15, animation);
+		Animate* animate = Animate::create(getAnimation("Skill/RecallCountermand/RecallCountermand"));
 		this->runAction(animate);
 
 		scheduleOnce(schedule_selector(RecallCounterMand::died), 2.55);

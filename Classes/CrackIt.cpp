@@ -15,9 +15,8 @@ bool CrackIt::init(cocos2d::Layer* parent,cocos2d::CCObject* towho, const float&
 		setPosition(size.width*0.2, size.height*0.45);
 		m_parent->addChild(this);
 
-		Animation* animation;
-		LoadAnimationFromMinFile("Skill/CrackIt/CrackIt", 16, 0.15, animation);
-		Animate* animate = Animate::create(animation);
+		//LoadAnimationFromMinFile(, 16, 0.15, animation);
+		Animate* animate = Animate::create(getAnimation("Skill/CrackIt/CrackIt"));
 		this->runAction(animate);
 
 		scheduleOnce(schedule_selector(CrackIt::died), 2.5);
