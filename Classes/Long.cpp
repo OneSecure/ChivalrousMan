@@ -3,14 +3,14 @@
 #include"FightLayer.h"
 #include"Monster.h"
 
-bool Long::init(Layer* parent, const float& baseattack)
+bool Long::init(Layer* parent,cocos2d::CCObject* towho, const float& baseattack)
 {
 	if (RealSkill::init())
 	{
 		m_parent = parent;
 		m_baseattack = baseattack;
-		FightLayer* pFt = dynamic_cast<FightLayer*>(m_parent);
-		Vec2 pos = pFt->m_selectedMonster->getPosition();
+		m_towho = towho;
+		Vec2 pos = ((Monster*)m_towho)->getPosition();
 		this->setPosition(pos.x+30, pos.y);
 		m_parent->addChild(this);
 
@@ -29,5 +29,5 @@ bool Long::init(Layer* parent, const float& baseattack)
 
 void Long::heart(float dt)
 {
-	dynamic_cast<FightLayer*>(m_parent)->m_selectedMonster->beAttack(m_baseattack);
+	dynamic_cast<Monster*>(m_towho)->beAttack(m_baseattack);
 }

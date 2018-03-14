@@ -16,14 +16,14 @@ Dante::~Dante()
 }
 
 
-bool Dante::init(cocos2d::Layer* parent, const float& baseattack)
+bool Dante::init(cocos2d::Layer* parent,cocos2d::CCObject* towho, const float& baseattack)
 {
 	if (RealSkill::init())
 	{
 		m_parent = parent;
 		m_baseattack = baseattack;
-		FightLayer* pFt = dynamic_cast<FightLayer*>(parent);
-		Vec2 pos=pFt->m_selectedMonster->getPosition();
+		m_towho = towho;
+		Vec2 pos = ((Monster*)m_towho)->getPosition();
 		setPosition(pos.x+10, pos.y);
 		m_parent->addChild(this);
 		
@@ -42,5 +42,5 @@ bool Dante::init(cocos2d::Layer* parent, const float& baseattack)
 
 void Dante::heart(float dt)
 {
-	dynamic_cast<FightLayer*>(m_parent)->m_selectedMonster->beAttack(m_baseattack);
+	dynamic_cast<Monster*>(m_towho)->beAttack(m_baseattack);
 }

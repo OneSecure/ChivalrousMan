@@ -13,7 +13,6 @@ class CrackIt Inherit(RealSkill)
 {
 	CLASS_ESSENTAIL(CrackIt)
 	SKILL__FUNC(CrackIt)
-	
 private:
 	/*
 	*造成伤害时间

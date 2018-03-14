@@ -64,7 +64,7 @@ void Medication::initProperty(const std::string& name)
 	fin.close();
 }
 
-float Medication::beUse(cocos2d::CCObject* obj)
+float Medication::beUse(cocos2d::CCObject* obj,cocos2d::CCObject* who,cocos2d::CCObject* towho)
 {
 	GetPlayerData().addcurBlood(m_addblood);
 	GetPlayerData().addcurMana(m_addmana);

@@ -3,13 +3,14 @@
 #include"FightLayer.h"
 #include"Monster.h"
 
-bool SealOfTheBlade::init(Layer* parent, const float& baseattack)
+bool SealOfTheBlade::init(Layer* parent,cocos2d::CCObject* towho, const float& baseattack)
 {
 	if (RealSkill::init())
 	{
 		auto size = SCREEN;
 		m_parent = parent;
 		m_baseattack = baseattack;
+		m_towho = towho;
 		this->setPosition(220, size.height*0.52);
 		m_parent->addChild(this);
 

@@ -98,6 +98,12 @@ void  CMClient::OnRecv(char* buff)
 	case M_TeamFight:
 		doTeamFightMsg((TeamFight_Msg*)buff);
 		break;
+	case M_PlayerAtk:
+		doPlayerAtkMsg((PlayerAtk_Msg*)buff);
+		break;
+	case M_MonsterAtk:
+		doMonsterAtkMsg((MonsterAtk_Msg*)buff);
+		break;
 	default:
 		break;
 	}
@@ -341,9 +347,8 @@ void CMClient::addPrivateTalkMsg(PrivateTalk_Msg* msg)
 	tmsg.destname = findRoleNameByFd(realfd);
 	if (tmsg.destname == "")
 	{
-		TipLayer* tplayer = TipLayer::createTipLayer(StringValue("OffLine"));
-		if (GetIntData("IsHaveGameScene") == 1)
-			CurGameScene()->addChild(tplayer);
+		SetIntData("IsHaveTip", 1);
+		SetStringData("TipText", StringValue("OffLine"));
 		return;
 	}
 	tmsg.msg = msg->msg;
@@ -400,21 +405,15 @@ void CMClient::doTeamApplyMsg(TeamApply_Msg* msg)
 void CMClient::doRefuseTeamMsg(RefuseTeam_Msg* msg)
 {
 	std::string name = findRoleNameByFd(msg->fd);
-	TipLayer* tiplayer = TipLayer::createTipLayer(name + StringValue("RefuseText"));
-	if (GetIntData("IsHaveGameScene") == 1)
-	{
-		CurGameScene()->addChild(tiplayer);
-	}
+	SetIntData("IsHaveTip", 1);
+	SetStringData("TipText", name + StringValue("RefuseText"));
 }
 
 void CMClient::doAgreeTeamMsg(AgreeTeam_Msg* msg)
 {
 	std::string name = findRoleNameByFd(msg->fd);
-	TipLayer* tiplayer = TipLayer::createTipLayer(name + StringValue("AgreeText"));
-	if (GetIntData("IsHaveGameScene") == 1)
-	{
-		CurGameScene()->addChild(tiplayer);
-	}
+	SetIntData("IsHaveTip", 1);
+	SetStringData("TipText",name + StringValue("AgreeText"));
 	CameraPlayer::getPlayerInstance()->setTeamStatus(P_STATUS_HEADER);
 	TeamManager::getInstance()->createTeam(msg->fd, P_STATUS_MEMBER);
 }
@@ -460,9 +459,8 @@ void CMClient::SendTeamDissolveMsg(int dest)
 void CMClient::doTeamDissolveMsg()
 {
 	TeamManager::getInstance()->dissolveTeam();
-	auto tipLayer = TipLayer::createTipLayer(StringValue("TeamDissolveText"));
-	if (Director::getInstance()->getRunningScene() != nullptr)
-		Director::getInstance()->getRunningScene()->addChild(tipLayer);
+	SetIntData("IsHaveTip", 1);
+	SetStringData("TipText", StringValue("TeamDissolveText"));
 }
 
 void CMClient::sendTeamFightMsg(int dest, std::string name, int nums)
@@ -478,13 +476,56 @@ void CMClient::doTeamFightMsg(TeamFight_Msg* msg)
 {
 	if (Director::getInstance()->getRunningScene()->getName() == "GameScene")
 	{
-		Director::getInstance()->pause();
-		SetFloatData("DestX", PlayerPos.x);
-		SetFloatData("DestY", PlayerPos.y);
-		SetIntData("IsHaveGameScene", 0);
-		auto fightScene = FightLayer::createFightScene(msg->name, msg->nums);
-		Director::getInstance()->resume();
-		auto reScene = TransitionFadeUp::create(0.5, fightScene);
-		Director::getInstance()->replaceScene(reScene);
+		SetIntData("IsEntryFight", 1);
+		SetIntData("MonsterNums", msg->nums);
+		SetStringData("MonsterName", msg->name);
+	}
+}
+
+void CMClient::sendPlayerAtkMsg(std::string skill, int grade,int dest, int towho)
+{
+	PlayerAtk_Msg msg;
+	msg.fd = -1;
+	msg.grade = grade;
+	msg.dest = dest;
+	strcpy_s(msg.skill, skill.c_str());
+	msg.towho = towho;
+	SendMsg((char*)&msg, sizeof(msg));
+}
+
+void CMClient::sendMonsterAtkMsg(int dest, int who, int towho)
+{
+	MonsterAtk_Msg msg;
+	msg.dest = dest;
+	msg.fd = -1;
+	msg.who = who;
+	msg.towho = towho;
+	SendMsg((char*)&msg, sizeof(msg));
+}
+
+void CMClient::doPlayerAtkMsg(PlayerAtk_Msg* msg)
+{
+	auto ftLayer = Director::getInstance()->getRunningScene()->getChildByName("FightLayer");
+	if (ftLayer != nullptr)
+	{
+		((FightLayer*)ftLayer)->otherPlayerAtk(msg->fd, msg->skill, msg->grade, msg->towho);
+	}
+}
+
+void CMClient::doMonsterAtkMsg(MonsterAtk_Msg* msg)
+{
+	auto ftLayer = Director::getInstance()->getRunningScene()->getChildByName("FightLayer");
+	if (ftLayer != nullptr)
+	{
+		int towho;
+		if (msg->towho == -1)
+		{
+			towho = ((FightLayer*)ftLayer)->findOtherPlayerIndexByFd(msg->fd);
+		}
+		else
+		{
+			towho = ((FightLayer*)ftLayer)->findOtherPlayerIndexByFd(msg->towho);
+		}
+		((FightLayer*)ftLayer)->monsterAttackPlayer(msg->who, towho);
 	}
 }

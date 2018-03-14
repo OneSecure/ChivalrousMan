@@ -10,9 +10,9 @@ class XGamePlayer Inherit(cocos2d::Node)
 {
 	CLASS_ESSENTAIL(XGamePlayer)
 public:
-	static XGamePlayer* create(const Player_Info& pinfo);
+	static XGamePlayer* create(const Player_Info& pinfo,int flag=0);
 
-	bool init(const Player_Info& pinfo);
+	bool init(const Player_Info& pinfo, int flag);
 	
 	/*
 	*move()
@@ -74,6 +74,26 @@ public:
 	*@param targetPos:目标地点
 	*/
 	bool moveTo(cocos2d::Vec2 targetPos, int less = 0);
+
+	/*
+	*玩家被攻击
+	*@param attack：攻击力
+	*/
+	void beAttack(int attack);
+
+	/*
+	*进攻
+	*@param 进攻谁
+	*/
+	float normalAttack(cocos2d::CCObject* who);
+
+	/*
+	*技能进攻
+	*@param skill：使用的技能
+	*@param garde：技能的等级
+	*@param who:进攻谁
+	*/
+	float skillAttack(std::string skill, int grade,cocos2d::CCObject* who);
 private:
 	/*
 	*初始化游戏玩家数据
@@ -106,6 +126,7 @@ private:
 	PROPERTY__REF(float,m_vy,Vy)
 	PROPERTY__REF(float,m_v,V)
 	PROPERTY__REF(float,m_teamStatus,TeamStatus)
+	PROPERTY__REF(int,m_fd,Fd)
 };
 
 #endif // !__PLAYER_H__

@@ -64,6 +64,8 @@ void GameLogicLayer::update(float dt)
 		checkCollisionNpc();
 		time = 0;
 	}
+	checkEntryFight();
+	checkTip();
 }
 
 void GameLogicLayer::checkEntryDoor()
@@ -161,15 +163,14 @@ void GameLogicLayer::randomMeetMonster()
 			int randnum = rand() % 100;
 			if (randnum < 2)
 			{
-				unscheduleUpdate();
 				SetFloatData("DestX", PlayerPos.x);
 				SetFloatData("DestY", PlayerPos.y);
 				SetIntData("IsHaveGameScene", 0);
 				int nums = rand() % 4 + 1;
 				std::string name = monsterName();
-				auto fightScene = FightLayer::createFightScene(name, nums);
-				auto reScene = TransitionFadeUp::create(0.5, fightScene);
-				Director::getInstance()->replaceScene(reScene);
+				SetIntData("IsEntryFight", 1);
+				SetIntData("MonsterNums", nums);
+				SetStringData("MonsterName", name);
 				checkTeamEntryFight(name, nums);
 			}
 			interval = 0;
@@ -228,5 +229,27 @@ void GameLogicLayer::checkTeamEntryFight(const std::string& name, const int& num
 		{
 			CMClient::getInstance()->sendTeamFightMsg(var.first, name, nums);
 		}
+	}
+}
+
+void GameLogicLayer::checkEntryFight()
+{
+	if (GetIntData("IsEntryFight") == 1)
+	{
+		SetIntData("IsEntryFight", 0);
+		unscheduleUpdate();
+		auto fightScene = FightLayer::createFightScene(GetStringData("MonsterName"), GetIntData("MonsterNums"));
+		auto reScene = TransitionFadeUp::create(0.5, fightScene);
+		Director::getInstance()->replaceScene(reScene);
+	}
+}
+
+void GameLogicLayer::checkTip()
+{
+	if (GetIntData("IsHaveTip") == 1)
+	{
+		SetIntData("IsHaveTip", 0);
+		TipLayer* tiplayer = TipLayer::createTipLayer(GetStringData("TipText"));
+		getParent()->addChild(tiplayer);
 	}
 }

@@ -71,7 +71,7 @@ void EquipMent::initProperty(const std::string& name)
 	fin.close();
 }
 
-float EquipMent::beUse(cocos2d::CCObject* obj)
+float EquipMent::beUse(cocos2d::CCObject* obj,cocos2d::CCObject* who,cocos2d::CCObject* towho)
 {
 	EMInfo info;
 	info.name = m_name;

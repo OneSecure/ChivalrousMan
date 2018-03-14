@@ -8,6 +8,7 @@
 class Monster;
 class Medication;
 class Skill;
+class XGamePlayer;
 
 /*
 *class FightLayer
@@ -42,7 +43,40 @@ public:
 	*/
 	void removeMonster(Monster* monster);
 
+	/*
+	*检测是否战斗成功
+	*/
 	bool checkSuccess();
+
+	/*
+	*其它玩家进攻
+	*@param who：谁进攻
+	*@param skill:是否使用技能，若为"null"则不使用技能，否则使用
+	*@param grade：使用技能那么技能的等级为多少
+	*@param towho：进攻谁
+	*/
+	void otherPlayerAtk(int who, std::string skill, int grade, int towho);
+
+	/*
+	*通知其它玩家怪物发起了进攻，这个函数只有队长才会调用
+	*@param who：谁进攻
+	*@param towho：进攻了谁
+	*/
+	void notifyOtherPlayerMonsterAtk(int who, int towho);
+
+	/*
+	*monsterAttackPlayer();
+	*怪物攻击玩家
+	*@param index：攻击玩家的怪物
+	*@param dest：标记怪物进攻的玩家
+	*/
+	void monsterAttackPlayer(int index, int who = -1);
+
+	/*
+	* findOtherPlayerIndexByFd(int fd);
+	*通过玩家唯一标识查找玩家索引
+	*/
+	int findOtherPlayerIndexByFd(int fd);
 private:
 	/*
 	*calcActionOrder();
@@ -103,13 +137,6 @@ private:
 	*玩家对怪物进行普通攻击
 	*/
 	void playerAttackMonster();
-	
-	/*
-	*monsterAttackPlayer();
-	*怪物攻击玩家
-	*@param index：攻击玩家的怪物
-	*/
-	void monsterAttackPlayer(int index);
 
 	/*
 	*计时器回调函数
@@ -124,13 +151,33 @@ private:
 	void EndFight(std::string tip);
 
 	void endFunc(float dt);
+
+	/*
+	*checkMonsterBehavie()
+	*检查怪物行为
+	*/
+	void checkMonsterBehavie();
+
+	/*
+	*checkFightEnd();
+	*检查战斗是否结束
+	*/
+	void checkFightEnd();
 	
 	/*
 	*更新玩家血量和魔量UI
 	*/
 	void updateBloodAndMana();
 
+	/*
+	*重新选择有效的怪物
+	*/
 	void reSelectMonster();
+
+	/*
+	*初始化玩家列表
+	*/
+	void initPlayer();
 	
 	std::string m_time = "10";   //行动时间
 	std::vector<Monster*> m_monsterList; 	//保存怪物信息链表
@@ -154,8 +201,9 @@ private:
 	float m_settlementGlod = 0;    //结算金币
 	float m_settlementExp = 0;      //结算经验
 	int m_mmor = 1;                      //纪录回合数
-	cocos2d::CCObject* sender;     //选中的技能
-	std::vector<Node*> m_otherPlayers;
+	cocos2d::CCObject* m_selSkill = nullptr;     //选中的技能
+	std::vector<XGamePlayer*> m_otherPlayers;    //其他玩家
+	bool m_otherplayerEnd = true;   //标记其它玩家是否结束行为
 };
 
 #endif // ! __FIGHT_LAYER_HH_

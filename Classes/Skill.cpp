@@ -7,10 +7,6 @@
 #include"GameData.h"
 #include<fstream>
 
-#define NoMana()  \
-TipLayer* tiplayer = TipLayer::createTipLayer(StringValue("NoMana"));   \
-pFt->addChild(tiplayer)
-
 Skill::Skill(const std::string& name):
 	Thing(name)
 {
@@ -74,27 +70,22 @@ void Skill::initProperty(const std::string& name)
 	fin.close();
 }
 
-float Skill::beUse(cocos2d::CCObject* obj)
+float Skill::beUse(cocos2d::CCObject* obj,cocos2d::CCObject* who,cocos2d::CCObject* towho)
 {
 	FightLayer* pFt = dynamic_cast<FightLayer*>(obj);
-	if (GetPlayerData().getcurmana() >= m_baseMana)
-	{
-		RealSkill* skill = SkillFactory::createSkill(m_name, pFt, m_baseAttack + 30 * m_grade);
-		auto move1 = MoveBy::create(0.2, ccp(-20, 0));
-		auto move2 = MoveBy::create(0.2, ccp(20, 0));
-		pFt->m_player->runAction(Sequence::createWithTwoActions(move1, move2));
-		GetPlayerData().subcurMana(m_baseMana + 10 * m_grade);
-		return skill->getTag();
-	}
-	else
-	{
-		NoMana();
-		pFt->playerAttackMonster();
-		return -1.0;
-	}
+	RealSkill* skill = SkillFactory::createSkill(m_name, pFt, towho, m_baseAttack + 30 * m_grade);
+	auto move1 = MoveBy::create(0.2, ccp(-20, 0));
+	auto move2 = MoveBy::create(0.2, ccp(20, 0));
+	((Node*)who)->runAction(Sequence::createWithTwoActions(move1, move2));
+	return skill->getTag();
 }
 
 void Skill::incGrade()
 {
 	++m_grade;
+}
+
+float Skill::getUseMana()
+{
+	return m_baseMana + m_grade * 10;
 }

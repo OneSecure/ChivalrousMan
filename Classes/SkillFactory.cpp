@@ -9,39 +9,39 @@
 #include"SealOfTheBlade.h"
 #include"XBArrow.h"
 
-RealSkill* SkillFactory::createSkill(std::string name, cocos2d::Layer* parent, const float& attack)
+RealSkill* SkillFactory::createSkill(std::string name, cocos2d::Layer* parent,cocos2d::CCObject* towho, const float& attack)
 {
 	if (name == "CrackIt")
 	{
-		return CrackIt::create(parent, attack);
+		return CrackIt::create(parent,towho, attack);
 	}
 	else if (name=="Dante")
 	{
-		return Dante::create(parent, attack);
+		return Dante::create(parent, towho, attack);
 	}
 	else if (name == "DragonRoar")
 	{
-		return DragonRoar::create(parent, attack);
+		return DragonRoar::create(parent, towho, attack);
 	}
 	else if (name == "LightStrike")
 	{
-		return  LightStrike::create(parent, attack);
+		return  LightStrike::create(parent, towho, attack);
 	}
 	else if (name == "Long")
 	{
-		return Long::create(parent, attack);
+		return Long::create(parent, towho, attack);
 	}
 	else if (name == "RecallCountermand")
 	{
-		return RecallCounterMand::create(parent, attack);
+		return RecallCounterMand::create(parent, towho, attack);
 	}
 	else if (name == "SealOfTheBlade")
 	{
-		return SealOfTheBlade::create(parent, attack);
+		return SealOfTheBlade::create(parent, towho, attack);
 	}
 	else if (name == "XBArrow")
 	{
-		return XBArrow::create(parent, attack);
+		return XBArrow::create(parent, towho, attack);
 	}
 	else
 	{

@@ -9,7 +9,7 @@ class SkillFactory
 {
 	CLASS_ESSENTAIL(SkillFactory)
 public:
-	static RealSkill* createSkill(std::string name, cocos2d::Layer* parent, const float& attack);
+	static RealSkill* createSkill(std::string name, cocos2d::Layer* parent,cocos2d::CCObject* towho, const float& attack);
 };
 
 #endif // !__SKILL_FACTORY_H__

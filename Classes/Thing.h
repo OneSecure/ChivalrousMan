@@ -27,7 +27,7 @@ public:
 	/*
 	*物品被使用时调用
 	*/
-	virtual float beUse(cocos2d::CCObject* obj);
+	virtual float beUse(cocos2d::CCObject* obj, cocos2d::CCObject* who = nullptr, cocos2d::CCObject* towho = nullptr);
 
 	static std::string getfileName(const std::string& name);
 protected:

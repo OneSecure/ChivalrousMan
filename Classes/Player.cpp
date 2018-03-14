@@ -7,11 +7,14 @@
 #include"MapInfo.h"
 #include"CameraPlayer.h"
 #include"FindRoad.h"
+#include"HurtValueLayer.h"
+#include"Monster.h"
+#include"Skill.h"
 
-XGamePlayer* XGamePlayer::create(const Player_Info& pinfo)
+XGamePlayer* XGamePlayer::create(const Player_Info& pinfo,int flag)
 {
 	XGamePlayer* pRet = new XGamePlayer;
-	if (pRet&&pRet->init(pinfo))
+	if (pRet&&pRet->init(pinfo,flag))
 	{
 		pRet->autorelease();
 		return pRet;
@@ -24,24 +27,28 @@ XGamePlayer* XGamePlayer::create(const Player_Info& pinfo)
 	}
 }
 
-bool XGamePlayer::init(const Player_Info& pinfo)
+bool XGamePlayer::init(const Player_Info& pinfo,int flag)
 {
 	if (Node::init())
 	{
 		InitData(pinfo);
 		char name[40] = { 0 };
-		sprintf_s(name, "%sWaitDown", m_playerType.c_str());
+		if (!flag)
+			sprintf_s(name, "%sWaitDown", m_playerType.c_str());
+		else
+			sprintf_s(name, "%sWaitLeft", m_playerType.c_str());
 		m_face = Sprite::create(StringValue(name));
 		m_face->setPosition(0, 0);
 		m_face->setAnchorPoint(ccp(0.5, 0.1));
 		this->addChild(m_face);
-		m_state = new PlayerWait(m_face, m_playerType);
-
+		if (!flag)
+			m_state = new PlayerWait(m_face, m_playerType);
 		m_namelabel = LabelTTF::create(m_roleName, "¿¬Ìå", 20);
 		m_namelabel->setPosition(0, 120);
 		this->addChild(m_namelabel);
 		
-		scheduleUpdate();
+		if (!flag)
+			scheduleUpdate();
 		return true;
 	}
 	return false;
@@ -63,6 +70,7 @@ void XGamePlayer::InitData(const Player_Info& pinfo)
 	m_worldPos.x = pinfo.x;
 	m_worldPos.y = pinfo.y;
 	m_flag = 0;
+	m_fd = pinfo.fd;
 }
 
 bool XGamePlayer::move()
@@ -180,4 +188,46 @@ bool XGamePlayer::moveTo(cocos2d::Vec2 targetPos,int less)
 		return true;
 	}
 	return false;
+}
+
+void XGamePlayer::beAttack(int attack)
+{
+	auto move1 = MoveBy::create(0.2, ccp(35, 0));
+	auto move2 = MoveBy::create(0.2, ccp(-35, 0));
+	m_face->runAction(Sequence::createWithTwoActions(move1, move2));
+	float hurtvalue = attack <= m_defense ? 1 : attack - m_defense;
+	Vec2 pos = m_face->getPosition();
+	pos.y += 90;
+	auto hurtlayer = HurtsValueLayer::createWithInfo(pos, hurtvalue);
+	m_face->getParent()->addChild(hurtlayer);
+	m_blood -= hurtvalue;
+	if (m_blood<= 0)
+	{
+		m_face->getParent()->removeChild(m_face);
+	}
+}
+
+float XGamePlayer::normalAttack(cocos2d::CCObject* who)
+{
+	Vec2 pos = this->getPosition();
+	Vec2 dest = ((Monster*)who)->getPosition();
+	dest.x += 20;
+	dest.y -= 40;
+	this->runAction(MoveTo::create(0.5, dest));
+	std::function<void(float)> func = [this, pos,who](float dt) {
+		((Monster*)who)->beAttack(this->getAttack());
+		this->runAction(MoveTo::create(0.5, pos));
+	};
+	scheduleOnce(func, 0.7, "normalAttack");
+	return 1.6;
+}
+
+float XGamePlayer::skillAttack(std::string skill, int grade, CCObject* who)
+{
+	std::string filename = StringValue(skill);
+	filename += skill;
+	filename += ".png";
+	auto pSkill = Skill::createWithImage(filename);
+	pSkill->setgrade(grade);
+	return pSkill->beUse(getParent(), this, who);
 }

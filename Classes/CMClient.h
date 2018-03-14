@@ -208,6 +208,32 @@ public:
 	*/
 	void doTeamFightMsg(TeamFight_Msg* msg);
 
+	/*
+	*发送玩家进攻消息
+	*@param skill:是否使用技能
+	*@param dest:发送给谁
+	*@param towho：进攻谁
+	*/
+	void sendPlayerAtkMsg(std::string skill,int grade, int dest, int towho);
+
+	/*
+	*发送怪物进攻消息
+	*@param dest：发送给谁
+	*@param who:谁进攻
+	*@param towho:进攻谁
+	*/
+	void sendMonsterAtkMsg(int dest, int who, int towho);
+
+	/*
+	*处理玩家进攻消息
+	*/
+	void doPlayerAtkMsg(PlayerAtk_Msg* msg);
+
+	/*
+	*处理怪物进攻消息
+	*/
+	void doMonsterAtkMsg(MonsterAtk_Msg* msg);
+
 	std::list<TeamGotoMap_Msg>& getGotoMapMsgs() { return m_gotoMapMsgs; }
 private:
 	CMClient();

@@ -4,13 +4,14 @@
 #include"Monster.h"
 #include"GameData.h"
 
-bool CrackIt::init(cocos2d::Layer* parent, const float& baseattack)
+bool CrackIt::init(cocos2d::Layer* parent,cocos2d::CCObject* towho, const float& baseattack)
 {
 	if (RealSkill::init())
 	{
 		auto size = SCREEN;
 		m_parent = parent;
 		m_baseattack = baseattack;
+		m_towho = towho;
 		setPosition(size.width*0.2, size.height*0.45);
 		m_parent->addChild(this);
 

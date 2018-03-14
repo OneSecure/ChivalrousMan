@@ -59,6 +59,17 @@ private:
 	*
 	*/
 	void checkTeamEntryFight(const std::string& name,const int& nums);
+
+	/*
+	*检查是否进入战斗
+	*/
+	void checkEntryFight();
+
+	/*
+	*checkTip();
+	*检查是否有提示
+	*/
+	void checkTip();
 };
 
 #endif // !__GAME_LOGIC_LAYER_H__

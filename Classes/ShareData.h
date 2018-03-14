@@ -22,7 +22,9 @@ enum M_Type
 	M_DissolveTeam,   //解散队伍
 	M_QuitTeam,         //退出队伍
 	M_KickOutteam,    //踢出队伍
-	M_TeamFight,   //队伍进入战斗
+	M_TeamFight,       //队伍进入战斗
+	M_MonsterAtk,     //怪物进攻消息
+	M_PlayerAtk,         //玩家进攻消息
 }; 
 
 struct Player_Info
@@ -207,6 +209,35 @@ struct TeamFight_Msg
 	{
 		type = M_TeamFight;
 		fd = -1;
+	}
+};
+
+struct MonsterAtk_Msg
+{
+	M_Type type;
+	int fd;
+	int dest;        //发送给谁
+	int who;        //谁进攻
+	int towho;     //进攻谁
+
+	MonsterAtk_Msg()
+	{
+		type = M_MonsterAtk;
+	}
+};
+
+struct PlayerAtk_Msg
+{
+	M_Type type;
+	char skill[30];   //是否使用技能
+	int grade;
+	int fd;               //
+	int dest;           //发送给谁
+	int towho;        //进攻谁
+
+	PlayerAtk_Msg()
+	{
+		type = M_PlayerAtk;
 	}
 };
 

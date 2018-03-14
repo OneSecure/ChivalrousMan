@@ -74,7 +74,7 @@ std::vector<std::string>& Thing::getDetails()
 	return m_details;
 }
 
-float Thing::beUse(cocos2d::CCObject* obj)
+float Thing::beUse(cocos2d::CCObject* obj,cocos2d::CCObject* who,cocos2d::CCObject* towho)
 {
 	return 0.0f;
 }

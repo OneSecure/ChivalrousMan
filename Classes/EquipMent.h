@@ -17,7 +17,7 @@ public:
 	EquipMent(const std::string& name);
 	virtual ~EquipMent();
 
-	virtual float beUse(cocos2d::CCObject* obj) override;
+	virtual float beUse(cocos2d::CCObject* obj,cocos2d::CCObject* who=nullptr,cocos2d::CCObject* towho=nullptr) override;
 
 	/*
 	*²ðÐ¶×°±¸

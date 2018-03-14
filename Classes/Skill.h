@@ -14,7 +14,12 @@ public:
 	
 	bool init(const std::string& filename);
 
-	virtual float beUse(cocos2d::CCObject* obj) override;
+	/*
+	*使用技能
+	*@param obj:技能显示的地方
+	*@param who:谁释放技能
+	*/
+	virtual float beUse(cocos2d::CCObject* obj, cocos2d::CCObject* who,cocos2d::CCObject* towho) override;
 	Skill(const std::string& name);
 	virtual ~Skill();
 
@@ -22,10 +27,14 @@ public:
 	*提升等级
 	*/
 	void incGrade();
+
+	/*
+	*获取使用这个技能消耗的魔法
+	*/
+	float getUseMana();
 private: 
 	void initProperty(const std::string& name);
 	
-	PROPERTY__REF(std::string, m_name, name)
 	PROPERTY__REF(float, m_baseAttack, baseAttack)
 	PROPERTY__REF(float,m_baseMana,baseMana)
 	PROPERTY__REF(int, m_baseupGlod, baseupGlod)
