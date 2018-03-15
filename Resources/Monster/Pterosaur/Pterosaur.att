@@ -1,8 +1,8 @@
 //最后一行为动画帧数
 肥龙
-attack 15
-blood 300
-defense 20
+attack 300
+blood 500
+defense 100
 speed 5
 exp 300
 glod 80

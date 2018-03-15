@@ -21,6 +21,7 @@ bool GameLogicLayer::init()
 {
 	if (Layer::init())
 	{
+		m_unTouch = false;
 		LISTEN_TOUCH(GameLogicLayer);
 		scheduleUpdate();
 		return true;
@@ -30,6 +31,8 @@ bool GameLogicLayer::init()
 
 void  GameLogicLayer::onTouchEnded(Touch *touch, Event *unused_event)
 {
+	if (m_unTouch)
+		return;
 	if (PlayerTeamStatus() == P_STATUS_MEMBER)
 	{
 		auto tiplayer = TipLayer::createTipLayer(StringValue("TeamingText"));
@@ -163,9 +166,6 @@ void GameLogicLayer::randomMeetMonster()
 			int randnum = rand() % 100;
 			if (randnum < 2)
 			{
-				SetFloatData("DestX", PlayerPos.x);
-				SetFloatData("DestY", PlayerPos.y);
-				SetIntData("IsHaveGameScene", 0);
 				int nums = rand() % 4 + 1;
 				std::string name = monsterName();
 				SetIntData("IsEntryFight", 1);
@@ -236,11 +236,23 @@ void GameLogicLayer::checkEntryFight()
 {
 	if (GetIntData("IsEntryFight") == 1)
 	{
+		SetFloatData("DestX", PlayerPos.x);
+		SetFloatData("DestY", PlayerPos.y);
+		SetIntData("IsHaveGameScene", 0);
 		SetIntData("IsEntryFight", 0);
-		pauseSchedulerAndActions();
-		CameraPlayer::getPlayerInstance()->clearRoadList();
-		auto fightlayer = FightLayer::createFightScene(GetStringData("MonsterName"), GetIntData("MonsterNums"));
-		getParent()->addChild(fightlayer);
+		unscheduleUpdate();
+		CurGameScene()->pauseAllActions(CurGameScene(), this);
+		GetPlayerFace()->stopAllActions();
+		CCLayerColor* red = CCLayerColor::create(ccc4(255, 0, 0, 128));
+		red->setName("redLayer");
+		CurGameScene()->addChild(red);
+		std::function<void(float)> func = [this](float) {
+			CurGameScene()->removeChildByName("redLayer");
+			auto fightscene = FightLayer::createFightScene(GetStringData("MonsterName"), GetIntData("MonsterNums"));
+			auto reScene = TransitionFadeDown::create(1, fightscene);
+			Director::sharedDirector()->replaceScene(reScene);
+		};
+		scheduleOnce(func, 0.2, "red");
 	}
 }
 

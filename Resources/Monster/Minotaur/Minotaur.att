@@ -1,8 +1,8 @@
 //最后一行为动画帧
 牛头怪
-attack 15
-blood 200
-defense 20
+attack 255
+blood 500
+defense 100
 speed 5
 exp 200
 glod 80

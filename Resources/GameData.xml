@@ -131,6 +131,8 @@
   <key>TrunOff</key>
   <string>trunOff.png</string>
   <!-- 文本素材 -->
+  <key>UpgradeText</key>
+  <string>升级到</string>
   <key>MakeTeamFailed</key>
   <string>请求失败,已有队伍!</string>
   <key>AgreeText</key>

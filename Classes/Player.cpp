@@ -9,6 +9,7 @@
 #include"FindRoad.h"
 #include"HurtValueLayer.h"
 #include"Monster.h"
+#include"FightLayer.h"
 #include"Skill.h"
 
 XGamePlayer* XGamePlayer::create(const Player_Info& pinfo,int flag)
@@ -203,7 +204,7 @@ void XGamePlayer::beAttack(int attack)
 	m_blood -= hurtvalue;
 	if (m_blood<= 0)
 	{
-		m_face->getParent()->removeChild(m_face);
+		dynamic_cast<FightLayer*>(getParent())->removeOtherPlayer(this);
 	}
 }
 

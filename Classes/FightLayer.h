@@ -2,6 +2,7 @@
 #ifndef  __FIGHT_LAYER_H__
 #define __FIGHT_LAYER_H__
 #include"PreProcess.h"
+#include"Lock.h"
 #include<string>
 #include<vector>
 
@@ -34,7 +35,7 @@ public:
 	*@param name：怪物
 	*@param nums:怪物数量
 	*/
-	static FightLayer* createFightScene(const std::string& name, int nums = 1);
+	static cocos2d::Scene* createFightScene(const std::string& name, int nums = 1);
 
 	bool init(const std::string& name, int nums);
 
@@ -96,6 +97,10 @@ public:
 	void OtherPlayerLeave();
 
 	void setOtherPalyerEnd();
+
+	void setOtherPlayerDie();
+
+	void removeOtherPlayer(cocos2d::Node* node);
 private:
 	/*
 	*calcActionOrder();
@@ -224,6 +229,8 @@ private:
 	std::vector<XGamePlayer*> m_otherPlayers;    //其他玩家
 	bool m_otherplayerEnd = true;   //标记其它玩家是否结束行为
 	bool m_otherNoAction = false;    //标记其它玩家是否需要行动
+	bool m_otherPlayerDie = false;
+	bool m_isDie = false;
 };
 
 #endif // ! __FIGHT_LAYER_HH_

@@ -6,7 +6,7 @@
 
 /*
 *class TeamManager
-*队伍管理器
+*队伍管理器,暂时队伍人数上限为2个
 */
 class TeamManager
 {

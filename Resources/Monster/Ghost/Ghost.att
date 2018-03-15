@@ -1,8 +1,8 @@
 //最后一行为动画帧数
 亡灵
-attack 20
-blood 150
-defense 20
+attack 250
+blood 200
+defense 40
 speed 5
 exp 150
 glod 60

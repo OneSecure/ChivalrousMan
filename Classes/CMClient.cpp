@@ -46,14 +46,10 @@ void  CMClient::OnRecv(char* buff)
 	case M_EntryGame:
 		break;
 	case M_InitData:
-	{
 		doInitMsg((InitData_Msg*)buff);
-	}
 		break;
 	case M_WorldTalk:
-	{
 		addWorldTalkMsg((WorldTalk_Msg*)buff);
-	}
 		break;
 	case M_PrivateTalk:
 		addPrivateTalkMsg((PrivateTalk_Msg*)buff);
@@ -62,9 +58,7 @@ void  CMClient::OnRecv(char* buff)
 		doInitPlayerPosMsg((InitPos_Msg*)buff);
 		break;
 	case M_PlayerLeave:
-	{
 		doPlayerLeaveMsg((PlayerLeave_Msg*)buff);
-	}
 		break;
 	case M_MoveTo:
 		doPlayerMoveToMsg((MoveTo_Msg*)buff);
@@ -76,9 +70,7 @@ void  CMClient::OnRecv(char* buff)
 		doPlayerDataUpdaeMsg((UpdateData_Msg*)buff);
 		break;
 	case M_TeamApply:
-	{
 		doTeamApplyMsg((TeamApply_Msg*)buff);
-	}
 		break;
 	case M_RefuseTeam:
 		doRefuseTeamMsg((RefuseTeam_Msg*)buff);
@@ -109,6 +101,9 @@ void  CMClient::OnRecv(char* buff)
 		break;
 	case M_UseMedication:
 		doUseMedicationMsg((UseMedication_Msg*)buff);
+		break;
+	case M_PlayerDie:
+		doPlayerDieMsg((PlayerDie_Msg*)buff);
 		break;
 	default:
 		break;
@@ -194,7 +189,7 @@ void CMClient::doInitPlayerPosMsg(InitPos_Msg* msg)
 			var->x = msg->x;
 			var->y = msg->y;
 			var->curmap = msg->curmap;
-			if (GetIntData("IsHaveGameScene") == 1)
+			if (Director::getInstance()->getRunningScene()->getChildByName("ObjectLayer") != nullptr)
 				CurGameScene()->getObjectLayer()->addPlayer(*var);
 		}
 	}
@@ -222,7 +217,7 @@ void CMClient::removePlayer(int fd)
 	{
 		if (it->fd == fd)
 		{
-			if (GetIntData("IsHaveGameScene") == 1)
+			if (Director::getInstance()->getRunningScene()->getChildByName("ObjectLayer") != nullptr)
 				CurGameScene()->getObjectLayer()->removePlayer(it->playername, it->rolename);
 			TeamManager::getInstance()->removeTeamMembers(it->fd);
 			m_privateTalkMsgs.erase(it->fd);
@@ -264,7 +259,7 @@ void CMClient::doPlayerPosVerifyMsg(VerifyPos_Msg* msg)
 		{
 			var->x = msg->x;
 			var->y = msg->y;
-			if (GetIntData("IsHaveGameScene") == 1)
+			if (Director::getInstance()->getRunningScene()->getChildByName("ObjectLayer") != nullptr)
 				CurGameScene()->getObjectLayer()->verifyPlayerPos(var->playername, var->rolename, Vec2{ msg->x,msg->y });
 		}
 	}
@@ -304,7 +299,7 @@ void CMClient::doPlayerDataUpdaeMsg(UpdateData_Msg* msg)
 			var->blood = msg->blood;
 			var->grade=msg->grade;
 			var->mana = msg->mana;
-			if (GetIntData("IsHaveGameScene") == 1)
+			if (Director::getInstance()->getRunningScene()->getChildByName("ObjectLayer") != nullptr)
 				CurGameScene()->getObjectLayer()->updatePlayerData(var->playername, var->rolename, *msg);
 		}
 	}
@@ -566,6 +561,20 @@ void CMClient::sendUseMedicationMsg(int dest)
 void CMClient::doUseMedicationMsg(UseMedication_Msg* msg)
 {
 	auto ftLayer = Director::getInstance()->getRunningScene()->getChildByName("FightLayer");
-	if (ftLayer)
+	if (ftLayer != nullptr)
 		dynamic_cast<FightLayer*>(ftLayer)->setOtherPalyerEnd();
+}
+
+void CMClient::sendPlayerDieMsg(int dest)
+{
+	PlayerDie_Msg msg;
+	msg.dest = dest;
+	SendMsg((char*)&msg, sizeof(msg));
+}
+
+void CMClient::doPlayerDieMsg(PlayerDie_Msg* msg)
+{
+	auto ftLayer = Director::getInstance()->getRunningScene()->getChildByName("FightLayer");
+	if (ftLayer != nullptr)
+		dynamic_cast<FightLayer*>(ftLayer)->setOtherPlayerDie();
 }

@@ -67,6 +67,11 @@ void SelectLayer::moveArrow(float delay,cocos2d::Vec2 dest)
 
 void SelectLayer::onConfirmCallBack(cocos2d::CCObject* sender)
 {
+	if (m_roleList.size() == 0)
+	{
+		MessageBox("请先新建角色!", "提示");
+		return;
+	}
 	if (m_flag > m_roleList.size() - 1)
 	{
 		MessageBox("请选择有效角色", "提示");

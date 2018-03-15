@@ -294,9 +294,6 @@
     <ClCompile Include="..\Classes\Monster.cpp">
       <Filter>src\Monster\private</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\FightLayer.cpp">
-      <Filter>src\Layer\private</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\SkillManager.cpp">
       <Filter>src\Tool\private</Filter>
     </ClCompile>
@@ -386,6 +383,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\MemberItem.cpp">
       <Filter>src\Node\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\FightLayer.cpp">
+      <Filter>src\Layer\private</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -569,9 +569,6 @@
     <ClInclude Include="..\Classes\Monster.h">
       <Filter>src\Monster\public</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\FightLayer.h">
-      <Filter>src\Layer\public</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\SkillManager.h">
       <Filter>src\Tool\public</Filter>
     </ClInclude>
@@ -671,6 +668,9 @@
     <ClInclude Include="..\Classes\MemberItem.h">
       <Filter>src\Node\public</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\FightLayer.h">
+      <Filter>src\Layer\public</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">
@@ -679,9 +679,6 @@
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\Resources\GameData.xml">
-      <Filter>resource</Filter>
-    </Xml>
-    <Xml Include="..\Resources\GameData1.xml">
       <Filter>resource</Filter>
     </Xml>
   </ItemGroup>

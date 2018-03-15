@@ -83,6 +83,15 @@ public:
 	*@return std::list<Player*>::iterator：存在返回对应链表的迭代器，不存在返回末尾迭代器
 	*/
 	std::list<XGamePlayer*>::iterator existPlayer(const std::string& playername,const std::string& rolename);
+
+
+	/*
+	*InitOtherPlayer();
+	*初始化其它玩家
+	*/
+	void initOtherPlayer(float dt);
+
+	void clearOtherPlayer();
 private:
 	/*
 	*checkmissedTask();
@@ -120,12 +129,6 @@ private:
 	*@param level：对应关卡
 	*/
 	void initNpcObject(const int& level);
-
-	/*
-	*InitOtherPlayer();
-	*初始化其它玩家
-	*/
-	void initOtherPlayer();
 
 	/*
 	*clearNpcObjectLayer();

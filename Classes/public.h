@@ -1,4 +1,6 @@
 #pragma once
+#ifndef __PUBLIC_H__
+#define __PUBLIC_H__
 
 #define PORT 6036
 #define BUFF_SIZE 1024
@@ -24,3 +26,5 @@ typedef struct OVP_IO_UDATA
 
 #define CLOSE_MESSAGE "~#@**close**@#~"
 #define CONNECT_MESSAGE "~#@**connect**@#~"
+
+#endif // !__PUBLIC_H__

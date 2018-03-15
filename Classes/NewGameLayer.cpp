@@ -103,6 +103,7 @@ void NewGameLayer::onConfirmCallBack(cocos2d::CCObject* sender)
 		}
 		addRoleNums();
 		SetStringData("rolename", name);
+		CMClient::getInstance()->SendInitPlayerData();
 		auto gamescene = GameScene::createWithLevel(LEVEL_ONE);
 		CC_SAFE_RETAIN(gamescene);
 		std::function<bool(void)> func = [] {return true; };
@@ -213,12 +214,12 @@ void NewGameLayer::constructPlayerInfo(PlayerInfo& playerinfo,const std::string&
 	std::string tmp;
 	playerinfo.setplayerName(GetStringData("playername"));
 	playerinfo.setroleName(name);
-	SetInfo(attack, 10);
-	SetInfo(blood, 100);
-	SetInfo(defense, 10);
-	SetInfo(glod, 100);
+	SetInfo(attack, 100);
+	SetInfo(blood, 300);
+	SetInfo(defense, 20);
+	SetInfo(glod, 300);
 	SetInfo(grade, 1);
-	SetInfo(mana, 100);
+	SetInfo(mana, 150);
 	SetInfo(speed, 4);
 	SetInfo(exp, 0);
 	SetInfo(maxExp, 100);
@@ -226,5 +227,4 @@ void NewGameLayer::constructPlayerInfo(PlayerInfo& playerinfo,const std::string&
 	playerinfo.setdestx("100");
 	playerinfo.setdesty("100");
 	playerinfo.setlevel(NTS(LEVEL_ONE));
-	CMClient::getInstance()->SendInitPlayerData();
 }

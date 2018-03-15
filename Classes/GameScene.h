@@ -41,6 +41,8 @@ public:
 	*/
 	void pauseOrResumeLogicLayer(bool b);
 
+	void pauseOrResumeAllLayer(bool b);
+
 	/*
 	*获取对象层对象
 	*/
@@ -57,7 +59,10 @@ public:
 	GameUILayer* getGameUiLayer() { return m_uiLayer; }
 
 	void resetGamePlayer();
+
+	void initScene();
 private:
+	int m_level;
 	GameLogicLayer* m_logicLayer;
 	GameMapLayer* m_mapLayer;
 	ObjectLayer* m_objectLayer;

@@ -1,6 +1,8 @@
 #include"PlayerData.h"
 #include"Commen.h"
 #include"CMClient.h"
+#include"GameDynamicData.h"
+#include"GameData.h"
 
 PlayerData::PlayerData()
 {
@@ -58,6 +60,8 @@ void PlayerData::upGrade()
 	m_exp = 0;
 	++m_grade;
 	m_maxExp += m_grade * 100;
+	SetIntData("IsHaveTip", 1);
+	SetStringData("TipText", StringValue("UpgradeText") + NTS(m_grade));
 	addProperty(30, 30, 5, 5);
 }
 

@@ -41,8 +41,9 @@ bool ObjectLayer::init(const int& level)
 {
 	if (Layer::init())
 	{
+		setName("ObjectLayer");
 		initNpcObject(level);
-		initOtherPlayer();
+		scheduleOnce(schedule_selector(ObjectLayer::initOtherPlayer), 0.5);
 		this->scheduleUpdate();
 		return true;
 	}
@@ -87,17 +88,26 @@ void ObjectLayer::initNpcObject(const int& level)
 	fin.close();
 }
 
-void ObjectLayer::initOtherPlayer()
+void ObjectLayer::initOtherPlayer(float dt)
 {
 	for (auto var : CMClient::getInstance()->getPlayerList())
 	{
 		if (var.curmap == GetIntData("CurMap"))
 		{
 			auto player = XGamePlayer::create(var);
-			m_playerlist.push_back(player);
 			this->addChild(player);
+			m_playerlist.push_back(player);
 		}
 	}
+}
+
+void ObjectLayer::clearOtherPlayer()
+{
+	for (auto var : m_playerlist)
+	{
+		this->removeChild(var);
+	}
+	m_playerlist.clear();
 }
 
 void  ObjectLayer::checkmissedTask()
@@ -149,7 +159,7 @@ void ObjectLayer::updateOtherPlayerScreenPos()
 	for (auto var : m_playerlist)
 	{
 		pos.x = PlayerFacePos().x + (var->getWorldPos().x - PlayerPos.x);
-		pos.y = PlayerFacePos().y + (var->getWorldPos().y - PlayerPos.y);  //»æÖÆÎó²î
+		pos.y = PlayerFacePos().y + (var->getWorldPos().y - PlayerPos.y);  
 		var->setPosition(pos);
 		float zorder = 100.0f - (var->getWorldPos().y / MapWidth) * 100;
 		var->setZOrder(zorder);
@@ -177,8 +187,8 @@ void ObjectLayer::addPlayer(Player_Info pinfo)
 		else
 		{
 			auto player = XGamePlayer::create(pinfo);
-			m_playerlist.push_back(player);
 			this->addChild(player);
+			m_playerlist.push_back(player);
 		}
 	}
 	else

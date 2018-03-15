@@ -36,6 +36,8 @@ if (PlayerTeamStatus() != P_STATUS_NORMAL)    \
 {    \
 	if (!m_otherNoAction)    \
 		m_otherplayerEnd = false;   \
+    if(m_otherPlayerDie)   \
+       m_otherplayerEnd = true;   \
 }
 
 #define MonsterEndBehavie()   if (m_curMonster >= m_monsterList.size())    {    m_isPlayer = true;    m_timeLabel->setString(m_time);  m_timeLabel->setVisible(m_isPlayer && true && m_otherplayerEnd);  m_arrow->setVisible(m_isPlayer && true && m_otherplayerEnd);  m_curMonster = 0; return;   }
@@ -50,13 +52,15 @@ FightLayer::~FightLayer()
 
 }
 
-FightLayer* FightLayer::createFightScene(const std::string& name,int nums)
+Scene* FightLayer::createFightScene(const std::string& name,int nums)
 {
 	FightLayer* pRet = new FightLayer;
 	if (pRet&&pRet->init(name,nums))
 	{
 		pRet->autorelease();
-		return pRet;
+		Scene* scene = Scene::create();
+		scene->addChild(pRet);
+		return scene;
 	}
 	else
 	{
@@ -221,6 +225,8 @@ void FightLayer::onToggleAutoAndHand(cocos2d::CCObject* sender)
 
 void FightLayer::onMedicationClickCallBack(cocos2d::CCObject* sender)
 {
+	if (m_isDie)
+		return;
 	Vec2 basePos = dynamic_cast<MenuItemImage*>(sender)->getPosition();
 	if (!m_clickMedication)
 	{
@@ -283,6 +289,8 @@ void FightLayer::onMedicationClickCallBack(cocos2d::CCObject* sender)
 
 void FightLayer::onSkillClickCallBack(cocos2d::CCObject * sender)
 {
+	if (m_isDie)
+		return;
 	Vec2 basePos = dynamic_cast<MenuItemImage*>(sender)->getPosition();
 	if (!m_clickskill)
 	{
@@ -331,6 +339,14 @@ void FightLayer::onSkillClickCallBack(cocos2d::CCObject * sender)
 
 void FightLayer::onRunClickCallBack(cocos2d::CCObject * sender)
 {
+	if (m_isDie)
+		return;
+	if (PlayerTeamStatus() == P_STATUS_HEADER)
+	{
+		auto tiplayer = TipLayer::createTipLayer(StringValue("RunFailed"));
+		this->addChild(tiplayer);
+		return;
+	}
 	if (m_isPlayer&&m_otherplayerEnd)
 	{
 		std::random_device rand; 
@@ -340,10 +356,7 @@ void FightLayer::onRunClickCallBack(cocos2d::CCObject * sender)
 		{
 			unscheduleUpdate();
 			notifyOtherPlayerRunAway(1);
-			EndFight(StringValue("RunSuccessText"));
-		/*	auto gs = GameScene::createWithLevel(GetIntData("CurMap"));
-			auto reScene = TransitionFadeDown::create(1, gs);
-			Director::sharedDirector()->replaceScene(reScene);*/
+			EndFight("RunSuccessText");
 		}
 		else
 		{
@@ -363,6 +376,8 @@ void FightLayer::onRunClickCallBack(cocos2d::CCObject * sender)
 
 void FightLayer::onAttackClickCallBack(cocos2d::CCObject * sender)
 {
+	if (m_isDie)
+		return;
 	if (m_isPlayer&&m_otherplayerEnd)
 	{
 		if (!m_selectedMonster->isDie())
@@ -382,6 +397,8 @@ void FightLayer::onAttackClickCallBack(cocos2d::CCObject * sender)
 
 void FightLayer::onClickMonsterCallBack(cocos2d::CCObject* sender)
 {
+	if (m_isDie)
+		return;
 	auto dest = dynamic_cast<MenuItem*>(sender)->getPosition();
 	dest.y += 80;
 	auto moveto = MoveTo::create(0.3, dest);
@@ -392,20 +409,25 @@ void FightLayer::onClickMonsterCallBack(cocos2d::CCObject* sender)
 
 void FightLayer::onTimer(float dt)
 {
-	if (m_isPlayer&&m_otherplayerEnd)
+	if (m_isDie)
+		return;
+	if (m_isPlayer)
 	{
-		std::string time = m_timeLabel->getString();
-		float ftime = std::stof(time) - 1;
-		if (ftime == 0)
+		if (m_otherplayerEnd)
 		{
-			if (m_selectedMonster->isDie())
-				reSelectMonster();
-			if (m_selSkill == nullptr)
-				playerAttackMonster();
-			else
-				onSkill(m_selSkill);
+			std::string time = m_timeLabel->getString();
+			float ftime = std::stof(time) - 1;
+			if (ftime == 0)
+			{
+				if (m_selectedMonster->isDie())
+					reSelectMonster();
+				if (m_selSkill == nullptr)
+					playerAttackMonster();
+				else
+					onSkill(m_selSkill);
+			}
+			m_timeLabel->setString(NumberToString(ftime));
 		}
-		m_timeLabel->setString(NumberToString(ftime));
 	}
 }
 
@@ -413,9 +435,9 @@ void FightLayer::playerAttackMonster()
 {
 	if (PlayerTeamStatus() != P_STATUS_NORMAL)
 	{
-		for (auto var : m_otherPlayers)
+		for (auto var : TeamManager::getInstance()->getTeamMembers())
 		{
-			CMClient::getInstance()->sendPlayerAtkMsg("null", 0, var->getFd(), m_selectedMonster->getTag());
+			CMClient::getInstance()->sendPlayerAtkMsg("null", 0,var.first, m_selectedMonster->getTag());
 		}
 	}
 	m_isPlayer = false;
@@ -445,7 +467,10 @@ void FightLayer::monsterAttackPlayer(int index,int who)
 	{
 		m_isPlayer = true;
 		m_timeLabel->setString(m_time);
-		m_timeLabel->setVisible(m_isPlayer && true && m_otherplayerEnd);  m_arrow->setVisible(m_isPlayer && true && m_otherplayerEnd);  m_curMonster = 0;
+		m_timeLabel->setVisible(m_isPlayer && true && m_otherplayerEnd);  m_arrow->setVisible(m_isPlayer && true && m_otherplayerEnd);  
+		m_curMonster = 0;
+		if (m_isDie)
+			m_otherplayerEnd = false;
 		return;
 	}
 	if (m_monsterList[index]->isDie())
@@ -484,14 +509,15 @@ void FightLayer::EndFight(std::string tip)
 
 void FightLayer::endFunc(float dt)
 {
-	std::string tip = StringValue("Glod") + "+" + NTS(m_settlementGlod) +
-		"," + StringValue("Exp") + "+" + NTS(m_settlementExp);
-	TipLayer* tiplayer = TipLayer::createTipLayer(tip);
 	GetPlayerData().addGlod(m_settlementGlod);
 	GetPlayerData().addExp(m_settlementExp);
-	dynamic_cast<GameScene*>(getParent())->resetGamePlayer();
-	dynamic_cast<GameScene*>(getParent())->pauseOrResumeLogicLayer(false);
-	getParent()->removeChild(this);
+	std::string tip = StringValue("Glod") + "+" + NTS(this->m_settlementGlod) +
+		"," + StringValue("Exp") + "+" + NTS(this->m_settlementExp);
+	TipLayer* tiplayer = TipLayer::createTipLayer(tip);
+	auto gs = GameScene::createWithLevel(GetIntData("CurMap"));
+	gs->addChild(tiplayer);
+	auto reScene = TransitionFadeDown::create(1, gs);
+	Director::sharedDirector()->replaceScene(reScene);
 }
 
 void FightLayer::updateBloodAndMana()
@@ -532,9 +558,9 @@ void FightLayer::onMedication(cocos2d::CCObject* sender)
 			SetOtherPalyerAction();
 			if (PlayerTeamStatus() != P_STATUS_NORMAL)
 			{
-				for (auto var : m_otherPlayers)
+				for (auto var : TeamManager::getInstance()->getTeamMembers())
 				{
-					CMClient::getInstance()->sendUseMedicationMsg(var->getFd());
+					CMClient::getInstance()->sendUseMedicationMsg(var.first);
 				}
 			}
 			m_isPlayer = false;
@@ -571,9 +597,9 @@ void FightLayer::onSkill(cocos2d::CCObject* sender)
 			GetPlayerData().subcurMana(mana);
 			if (PlayerTeamStatus() != P_STATUS_NORMAL)
 			{
-				for (auto var : m_otherPlayers)
+				for (auto var : TeamManager::getInstance()->getTeamMembers())
 				{
-					CMClient::getInstance()->sendPlayerAtkMsg(dynamic_cast<Skill*>(sender)->getname(), dynamic_cast<Skill*>(sender)->getgrade(), var->getFd(), m_selectedMonster->getTag());
+					CMClient::getInstance()->sendPlayerAtkMsg(dynamic_cast<Skill*>(sender)->getname(), dynamic_cast<Skill*>(sender)->getgrade(),var.first, m_selectedMonster->getTag());
 				}
 			}
 			SetOtherPalyerAction();
@@ -616,16 +642,16 @@ void FightLayer::checkMonsterBehavie()
 	switch (PlayerTeamStatus())
 	{
 	case P_STATUS_HEADER:
-		if (!m_isPlayer&&m_isPlayerEnd&&m_otherplayerEnd)
+		if (((!m_isPlayer&&m_isPlayerEnd)||m_isDie)&&m_otherplayerEnd)
 		{
 			if (m_lastMonsterEnd)
 			{
 				int who = -1;
 				if (m_otherPlayers.size() > 0)
 					who = rand() % (m_otherPlayers.size() + 1) - 1;
+				who = m_isDie ? 0 : who;
 				notifyOtherPlayerMonsterAtk(m_curMonster, who);
-				monsterAttackPlayer(m_curMonster, who);
-				++m_curMonster;
+				monsterAttackPlayer(m_curMonster++, who);
 			}
 		}
 		break;
@@ -636,8 +662,7 @@ void FightLayer::checkMonsterBehavie()
 			{
 				if (m_lastMonsterEnd)
 				{
-					monsterAttackPlayer(m_curMonster);
-					++m_curMonster;
+					monsterAttackPlayer(m_curMonster++);
 				}
 			}
 		}
@@ -647,8 +672,7 @@ void FightLayer::checkMonsterBehavie()
 		{
 			if (m_lastMonsterEnd)
 			{
-				monsterAttackPlayer(m_curMonster);
-				++m_curMonster;
+				monsterAttackPlayer(m_curMonster++);
 			}
 		}
 		break;
@@ -661,11 +685,30 @@ void  FightLayer::checkFightEnd()
 {
 	if (GetPlayerData().getcurblood() <= 0)
 	{
-		EndFight("FightFailed");
+		if (PlayerTeamStatus() == P_STATUS_NORMAL)
+		{
+			EndFight("FightFailed");
+			return;
+		}
+		else
+		{
+			if (!m_isDie)
+			{
+				for (auto var : TeamManager::getInstance()->getTeamMembers())
+					CMClient::getInstance()->sendPlayerDieMsg(var.first);
+			}
+			if (m_otherPlayerDie || m_otherNoAction)
+			{
+				EndFight("FightFailed");
+				return;
+			}
+		}
+		m_isDie = true;
 	}
-	else if (checkSuccess())
+	if (checkSuccess())
 	{
 		EndFight("FightSuccess");
+		return;
 	}
 }
 
@@ -721,9 +764,9 @@ void FightLayer::otherPlayerAtk(int who, std::string skill, int grade, int towho
 
 void FightLayer::notifyOtherPlayerMonsterAtk(int who,int towho)
 {
-	for (auto var : m_otherPlayers)
+	for (auto var : TeamManager::getInstance()->getTeamMembers())
 	{
-		CMClient::getInstance()->sendMonsterAtkMsg(var->getFd(), who, towho == -1 ? -1 : m_otherPlayers[towho]->getFd());
+		CMClient::getInstance()->sendMonsterAtkMsg(var.first, who, towho == -1 ? -1 : m_otherPlayers[towho]->getFd());
 	}
 }
 
@@ -741,9 +784,9 @@ int FightLayer::findOtherPlayerIndexByFd(int fd)
 
 void FightLayer::notifyOtherPlayerRunAway(int flag)
 {
-	for (auto var : m_otherPlayers)
+	for (auto var : TeamManager::getInstance()->getTeamMembers())
 	{
-		CMClient::getInstance()->sendPlayerRunMsg(var->getFd(), flag);
+		CMClient::getInstance()->sendPlayerRunMsg(var.first, flag);
 	}
 }
 
@@ -772,4 +815,18 @@ void FightLayer::setOtherPalyerEnd()
 	this->m_otherplayerEnd = true;
 	this->m_timeLabel->setVisible(this->m_isPlayer && true && this->m_otherplayerEnd);
 	this->m_arrow->setVisible(this->m_isPlayer && true && this->m_otherplayerEnd);
+}
+
+void FightLayer::setOtherPlayerDie()
+{
+	m_otherPlayerDie = true;
+	setOtherPalyerEnd();
+}
+
+void FightLayer::removeOtherPlayer(cocos2d::Node* node)
+{
+	this->removeChild(node);
+	m_otherPlayers.clear();
+	m_otherPlayerDie = true;
+	setOtherPalyerEnd();
 }

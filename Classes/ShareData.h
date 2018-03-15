@@ -24,9 +24,10 @@ enum M_Type
 	M_KickOutteam,    //踢出队伍
 	M_TeamFight,       //队伍进入战斗
 	M_MonsterAtk,     //怪物进攻消息
-	M_PlayerAtk,         //玩家进攻消息
-	M_PlayerRun,       //玩家逃跑消息
+	M_PlayerAtk,           //玩家进攻消息
+	M_PlayerRun,           //玩家逃跑消息
 	M_UseMedication,   //使用药品消息
+	M_PlayerDie,           //玩家死亡消息
 }; 
 
 struct Player_Info
@@ -267,6 +268,18 @@ struct UseMedication_Msg
 	UseMedication_Msg()
 	{
 		type = M_UseMedication;
+	}
+};
+
+struct PlayerDie_Msg
+{
+	M_Type type;
+	int fd;
+	int dest;
+
+	PlayerDie_Msg()
+	{
+		type = M_PlayerDie;
 	}
 };
 

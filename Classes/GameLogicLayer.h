@@ -70,6 +70,8 @@ private:
 	*检查是否有提示
 	*/
 	void checkTip();
+
+	PROPERTY__REF(bool, m_unTouch, UnTouch);
 };
 
 #endif // !__GAME_LOGIC_LAYER_H__

@@ -1,8 +1,8 @@
 //最后一行为动画帧数
 小飞龙
-attack 25
-blood 300
-defense 5
+attack 100
+blood 200
+defense 60
 speed 5
 exp 150
 glod 40

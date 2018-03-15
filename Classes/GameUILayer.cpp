@@ -22,7 +22,7 @@
 if (!m_isclick##__LAYER__&&!m_isClickLayer)           \
 {     \
      m_isclick##__LAYER__ = !m_isclick##__LAYER__;        \
-	((GameScene*)getParent())->pauseOrResumeLogicLayer(true); \
+    ((GameScene*)getParent())->getLogicLayer()->setUnTouch(true); \
 	auto layer = __LAYER__::create();      \
 	layer->setName(#__LAYER__);      \
 	getParent()->addChild(layer);      \
@@ -31,7 +31,7 @@ if (!m_isclick##__LAYER__&&!m_isClickLayer)           \
 else  if(m_isclick##__LAYER__)     \
 {    \
     m_isclick##__LAYER__ = !m_isclick##__LAYER__;    \
-	((GameScene*)getParent())->pauseOrResumeLogicLayer(false);   \
+    ((GameScene*)getParent())->getLogicLayer()->setUnTouch(false);   \
     m_isClickLayer=false;              \
 	getParent()->removeChildByName(#__LAYER__);   } 
 

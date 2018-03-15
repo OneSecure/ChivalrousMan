@@ -341,7 +341,6 @@ xcopy /Y /Q "$(COCOS_X_ROOT)\cocos2d-x-3.10\prebuilt\win32\*.*" "$(OutDir)"
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\Resources\GameData.xml" />
-    <Xml Include="..\Resources\GameData1.xml" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\game.ico" />

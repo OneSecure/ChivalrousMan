@@ -258,6 +258,17 @@ public:
 	*/
 	void doUseMedicationMsg(UseMedication_Msg* msg);
 
+	/*
+	*sendPlayerDieMsg();
+	*发送玩家死亡消息
+	*/
+	void sendPlayerDieMsg(int dest);
+
+	/*
+	*处理玩家死亡消息
+	*/
+	void doPlayerDieMsg(PlayerDie_Msg* msg);
+
 	std::list<TeamGotoMap_Msg>& getGotoMapMsgs() { return m_gotoMapMsgs; }
 private:
 	CMClient();
