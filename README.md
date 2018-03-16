@@ -41,8 +41,11 @@
 ### 战斗
 
 ![输入图片说明](https://gitee.com/uploads/images/2018/0316/142932_b9efb7fc_1296205.png "21.PNG")
-聊天
+### 聊天
+
 ![输入图片说明](https://gitee.com/uploads/images/2018/0316/143000_1f735a4a_1296205.png "37.PNG")
 ![输入图片说明](https://gitee.com/uploads/images/2018/0316/143041_8eaf890e_1296205.png "36.PNG")
-组队战斗
+### 组队战斗
+![输入图片说明](https://gitee.com/uploads/images/2018/0316/143616_3415f7ad_1296205.png "41.PNG")
+![输入图片说明](https://gitee.com/uploads/images/2018/0316/143633_35fb0eae_1296205.png "42.PNG")
 
