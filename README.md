@@ -48,4 +48,10 @@
 ### 组队战斗
 ![输入图片说明](https://gitee.com/uploads/images/2018/0316/143616_3415f7ad_1296205.png "41.PNG")
 ![输入图片说明](https://gitee.com/uploads/images/2018/0316/143633_35fb0eae_1296205.png "42.PNG")
+### 其它截图
+![输入图片说明](https://gitee.com/uploads/images/2018/0316/143746_d381973b_1296205.png "28.PNG")
+![输入图片说明](https://gitee.com/uploads/images/2018/0316/143756_16ca31ca_1296205.png "26.PNG")
+![输入图片说明](https://gitee.com/uploads/images/2018/0316/143808_8afdc985_1296205.png "27.PNG")
+![输入图片说明](https://gitee.com/uploads/images/2018/0316/143823_051e5359_1296205.png "32.PNG")
+
 
