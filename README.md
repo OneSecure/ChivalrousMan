@@ -11,27 +11,35 @@
 服务器可以自己安装一个Ubuntu虚拟机然后自己编译运行服务器代码，最后就是修改可执行文件同目录下的server.cfg修改服务器
 配置和修改同目录下的DB.cfg修改数据库配置。
 
-### 游戏效果截图：
-登录注册界面
+###  **游戏效果截图：** 
+### 登录注册界面
+
 ![输入图片说明](https://gitee.com/uploads/images/2018/0316/142508_6b76ea77_1296205.png "1.PNG")
 ![输入图片说明](https://gitee.com/uploads/images/2018/0316/142517_c26cccea_1296205.png "2.PNG")
-新建角色和选角色截图
+### 新建角色和选角色截图
+
 ![输入图片说明](https://gitee.com/uploads/images/2018/0316/142616_8f68da7b_1296205.png "6.PNG")
 ![输入图片说明](https://gitee.com/uploads/images/2018/0316/142604_639c666e_1296205.png "5.PNG")
 ![输入图片说明](https://gitee.com/uploads/images/2018/0316/142556_6a801839_1296205.png "4.PNG")
-Npc对话
+### Npc对话
+
 ![输入图片说明](https://gitee.com/uploads/images/2018/0316/142639_c8467793_1296205.png "8.PNG")
 ![输入图片说明](https://gitee.com/uploads/images/2018/0316/142839_27abf543_1296205.png "16.PNG")
-接取任务
+### 接取任务
+
 ![输入图片说明](https://gitee.com/uploads/images/2018/0316/142706_eaf91117_1296205.png "9.PNG")
 ![输入图片说明](https://gitee.com/uploads/images/2018/0316/142712_e6cef6f4_1296205.png "10.PNG")
-购买技能
+### 购买技能
+
 ![输入图片说明](https://gitee.com/uploads/images/2018/0316/142735_54deca2b_1296205.png "12.PNG")
-购买装备
+### 购买装备
+
 ![输入图片说明](https://gitee.com/uploads/images/2018/0316/142757_498dfffb_1296205.png "13.PNG")
-购买药品
+### 购买药品
+
 ![输入图片说明](https://gitee.com/uploads/images/2018/0316/142814_d998a4c7_1296205.png "15.PNG")
-战斗
+### 战斗
+
 ![输入图片说明](https://gitee.com/uploads/images/2018/0316/142932_b9efb7fc_1296205.png "21.PNG")
 聊天
 ![输入图片说明](https://gitee.com/uploads/images/2018/0316/143000_1f735a4a_1296205.png "37.PNG")
